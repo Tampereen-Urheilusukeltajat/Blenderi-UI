@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function SignUpFormHeader() {
-  return <h3>Luo uusi käyttäjä</h3>;
+  return <h3 className="pt-3">Luo uusi käyttäjä</h3>;
 }
 
 function SignUpForm() {
@@ -66,7 +66,7 @@ function SignUpForm() {
   };
 
   return (
-    <div>
+    <div id="signUpForm" className="mt-5">
       <SignUpFormHeader />
       <Form>
         <Form.Group className="mb-3" controlId="formFirstName">
@@ -125,7 +125,7 @@ function SignUpForm() {
             Anna salasana.
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formConfirmPassword">
+        <Form.Group className="mb-5" controlId="formConfirmPassword">
           <Form.Label>Salasana uudelleen</Form.Label>
           <Form.Control
             aria-label="Salasana uudelleen"
@@ -139,9 +139,16 @@ function SignUpForm() {
             Toista salasana uudelleen.
           </Form.Control.Feedback>
         </Form.Group>
-        <Button aria-label="Luo käyttäjä" variant="primary" type="submit">
-          Luo käyttäjä
-        </Button>
+        <div className="d-flex justify-content-center mb-5">
+          <Button
+            className="button"
+            aria-label="Luo käyttäjä"
+            variant="primary"
+            type="submit"
+          >
+            Luo käyttäjä
+          </Button>
+        </div>
       </Form>
     </div>
   );
