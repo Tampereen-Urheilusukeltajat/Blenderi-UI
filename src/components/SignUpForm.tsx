@@ -2,11 +2,11 @@ import React, { useCallback, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function SignUpFormHeader() {
+const SignUpFormHeader = () => {
   return <h3>Luo uusi käyttäjä</h3>;
-}
+};
 
-function SignUpForm() {
+const SignUpForm = () => {
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
@@ -140,6 +140,6 @@ function SignUpForm() {
       </Form>
     </div>
   );
-}
+};
 
 export default SignUpForm;
