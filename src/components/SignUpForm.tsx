@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -15,55 +15,50 @@ function SignUpForm() {
     passwordConfirm: '',
   });
 
-  const handleFirstNameInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      firstName: event.target.value,
-    }));
-  };
+  const handleFirstNameInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValues = { ...values };
+      newValues['firstName'] = e.target.value;
+      setValues(newValues);
+    },
+    [values]
+  );
 
-  const handleLastNameInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      lastName: event.target.value,
-    }));
-  };
+  const handleLastNameInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValues = { ...values };
+      newValues['lastName'] = e.target.value;
+      setValues(newValues);
+    },
+    [values]
+  );
 
-  const handleUserIdInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      userId: event.target.value,
-    }));
-  };
+  const handleUserNameInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValues = { ...values };
+      newValues['username'] = e.target.value;
+      setValues(newValues);
+    },
+    [values]
+  );
 
-  const handlePasswordInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      password: event.target.value,
-    }));
-  };
+  const handlePasswordInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValues = { ...values };
+      newValues['password'] = e.target.value;
+      setValues(newValues);
+    },
+    [values]
+  );
 
-  const handlePasswordConfirmInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      passwordConfirm: event.target.value,
-    }));
-  };
+  const handlePasswordConfirmInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValues = { ...values };
+      newValues['passwordConfirm'] = e.target.value;
+      setValues(newValues);
+    },
+    [values]
+  );
 
   return (
     <div>
@@ -104,7 +99,7 @@ function SignUpForm() {
             type="text"
             placeholder=""
             value={values.username}
-            onChange={handleUserIdInputChange}
+            onChange={handleUserNameInputChange}
             required
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
