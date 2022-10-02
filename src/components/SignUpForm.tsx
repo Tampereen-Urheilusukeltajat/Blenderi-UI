@@ -10,7 +10,7 @@ function SignUpForm() {
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
-    userId: '',
+    username: '',
     password: '',
     passwordConfirm: '',
   });
@@ -103,7 +103,7 @@ function SignUpForm() {
             aria-label="Käyttäjätunnus"
             type="text"
             placeholder=""
-            value={values.userId}
+            value={values.username}
             onChange={handleUserIdInputChange}
             required
           ></Form.Control>
