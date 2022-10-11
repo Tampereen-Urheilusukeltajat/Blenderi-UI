@@ -4,10 +4,11 @@ import { CustomLink } from '../components/NavbarLink';
 import '../styles/navbar/navbar.css'
 
 const onLogoutClick = () => {
-  console.log('Kirjaudu ulos clicked.');
+  console.log('Log out button clicked.');
 };
 
 export const Navbar = () => {
+  // TODO refactor to to see if user is logged in.
   // Don't show navbar on register and login view.
   const path = useLocation().pathname;
   return path !== '/' && path !== '/register' ? (
