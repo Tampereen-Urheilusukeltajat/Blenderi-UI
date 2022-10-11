@@ -1,5 +1,8 @@
 FROM node:16-alpine
-COPY package.json .
+WORKDIR /app
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
-COPY . .
-CMD [ "npm start" ]
+
+COPY . ./
+CMD ["npm", "start"]
