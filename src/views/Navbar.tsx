@@ -1,7 +1,7 @@
 import { BsPersonCircle } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 import { CustomLink } from '../components/NavbarLink';
-import './navbar-styles.css';
+import '../styles/navbar/navbar.css'
 
 const onLogoutClick = () => {
   console.log('Kirjaudu ulos clicked.');
@@ -13,10 +13,10 @@ export const Navbar = () => {
   return path !== '/' && path !== '/register' ? (
     <nav className="nav">
       <ul>
-        <CustomLink to="/logbookTODO">Täyttöpäiväkirja</CustomLink>
-        <CustomLink to="/tiedotTODO">Omat tiedot</CustomLink>
-        <CustomLink to="/hallintaTODO">Käyttäjän hallinta</CustomLink>
-        <CustomLink to="/laskutusTODO">Laskutus</CustomLink>
+        <CustomLink to="/logbook">Täyttöpäiväkirja</CustomLink>
+        <CustomLink to="/user">Omat tiedot</CustomLink>
+        <CustomLink to="/management">Käyttäjän hallinta</CustomLink>
+        <CustomLink to="/billing">Laskutus</CustomLink>
 
         <div className="user">
           {/* TODO get user info from state.*/}
