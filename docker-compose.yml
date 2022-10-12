@@ -1,11 +1,9 @@
-version: "3.9"
-
 services:
-  frontend:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+  client:
+    build: ./
+    volumes:
+      - /app/node_modules
+      - ./client/src:/app/src/public
     ports:
       - 3000:3000
-    
-
+    command: npm start
