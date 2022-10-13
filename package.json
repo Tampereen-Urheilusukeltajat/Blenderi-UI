@@ -28,9 +28,11 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "start-mock": "serve -s -l 3000 build",
-    "start-playwright": "npx playwright test",
-    "test:playwright": "start-server-and-test start 3000 start-playwright"
+     "start-mock": "serve -s -l 3000 build",
+     "start-playwright": "npx playwright test",
+     "test:playwright": "start-server-and-test start-mock 3000 start-playwright"
+    
+
   },
   "eslintConfig": {
     "extends": [
@@ -56,7 +58,6 @@
     "@typescript-eslint/parser": "^5.36.2",
     "eslint": "^8.23.0",
     "sass": "^1.55.0",
-    "serve": "^14.0.1",
     "start-server-and-test": "^1.14.0",
     "typescript": "^4.8.2"
   }
