@@ -1,4 +1,7 @@
 $greyLight: #E7E7E7
+$tableHeadColor: #D9E1E9 
+$black: #000000
+$userTableButtonColor: #9AA8B5
 
 body
   margin: 0
@@ -48,3 +51,49 @@ code
   align-items: center
   justify-content: center
   width: 100%
+
+h1
+  font-family: 'Roboto'
+  font-style: normal
+  font-weight: 400
+  font-size: 24px
+  line-height: 28px
+
+#userHeading
+  position: absolute
+  width: 95px
+  height: 28px
+  left: 345px
+  top: 132px
+
+#userTable
+  position: absolute
+  left: 345px
+  top: 200px
+
+#userTableHead
+  background-color: $tableHeadColor
+  width: 1230px
+  height: 35px
+  left: 345px
+  top: 231px
+  th
+    font-style: normal
+    font-weight: 400
+    font-size: 16px
+    line-height: 19px
+
+
+
+#userTableBody
+  position: relative
+  top: 24px
+  .userTableBtn
+    position: relative
+    top: -10px
+    margin: 10px
+    width: 130px
+    height: 47px
+    background: $userTableButtonColor
+    border-radius: 12px
+    color: $black
