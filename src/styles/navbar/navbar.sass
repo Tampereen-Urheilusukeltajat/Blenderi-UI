@@ -1,0 +1,91 @@
+
+// Navbar
+$primaryColor: #526578
+$navbarHeight: 64px
+
+// Nav link
+$navTextColor: #FFFFFF
+$navLinkWidth: 180px
+$hoverColor: #777
+
+// Active
+$activecolor: #FFFFFF
+$activeTextColor: #000000
+
+// Logout button
+$logoutBtnColor: #9AA8B5
+$logoutBtnTextColor: #000000
+$logoutBtnWidth: 180px
+$logoutBtnHeight: 32px
+
+body
+    margin: 0
+
+.container
+    margin: 1rem
+    text-align: center
+
+.nav
+    background-color: $primaryColor
+    color: $navTextColor
+    display: flex
+    height: $navbarHeight
+    justify-content: space-around
+    align-items: stretch
+    gap: 2rem
+    padding: 0 1rem
+
+.nav ul
+    padding: 0
+    margin: 0
+    list-style: none
+    display: flex
+
+.nav p
+    align-items: center
+    justify-content: center
+    padding: 0
+    margin: 0
+    list-style: none
+    display: flex
+
+.nav a
+    color: inherit
+    width: $navLinkWidth
+    height: 100%
+    justify-content: center
+    text-decoration: none
+    display: flex
+    align-items: center
+    padding: .25rem
+
+.nav li.active
+    background-color: $activecolor
+    color: $activeTextColor
+
+.user
+    display: flex
+    height: 64px
+    align-items: center
+    gap: 1rem
+    padding: 0 3rem
+    overflow: hidden
+    white-space: nowrap
+
+.logout
+    display: flex
+    justify-content: center
+    align-items: center
+    width: $logoutBtnWidth
+    height: $logoutBtnHeight
+    border: none
+    margin-left: 1rem
+    color: $logoutBtnTextColor
+    background: $logoutBtnColor
+    border-radius: 12px
+
+.user .logout:hover
+    background-color: $hoverColor
+
+.nav li:hover:not(.active)
+    background-color: $hoverColor
