@@ -25,11 +25,11 @@ test.describe('Test navbar', () => {
 
   test('/ does not have navbar', async ({ page }) => {
     await page.goto('/');
-    expect(await page.locator('.nav').count()).toEqual(0);
+    expect(await page.locator('.nav').isVisible()).toBe(false);
   });
 
   test('/register does not have navbar', async ({ page }) => {
     await page.goto('/register');
-    expect(await page.locator('.nav').count()).toEqual(0);
+    expect(await page.locator('.nav').isVisible()).toBe(false);
   });
 });
