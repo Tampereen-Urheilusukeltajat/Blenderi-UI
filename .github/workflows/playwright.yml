@@ -19,8 +19,6 @@ jobs:
         run: npx playwright install --with-deps
       - name: Start server
         run: npm run test:playwright
-      - name: Run Plawywright tests
-        run: docker-compose run frontend bash -c 'npm run test:playwright''
 
       - uses: actions/upload-artifact@v2
         if: always()
