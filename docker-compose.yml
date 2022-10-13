@@ -1,9 +1,8 @@
 services:
   client:
-    build: ./
+    build: .
     volumes:
       - /app/node_modules
       - ./client/src:/app/src/public
     ports:
       - 3000:3000
-    command: npm start
