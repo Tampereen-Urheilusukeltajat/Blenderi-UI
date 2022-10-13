@@ -2,6 +2,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { Formik } from 'formik';
+import { FC, useState } from 'react';
 
 const LogBookFieldRow = () => {
   return (
@@ -32,7 +33,12 @@ const LogBookFieldRow = () => {
   );
 };
 
-const LogBookRow = () => {
+interface LogBookRowI {
+  id: number;
+  onDelete: (id: number) => void;
+}
+
+const LogBookRow: FC<LogBookRowI> = (props): JSX.Element => {
   return (
     <Row className="mt-2">
       <Form.Group as={Col} controlId="pullo">
@@ -70,13 +76,60 @@ const LogBookRow = () => {
         <p>0,00 €</p>
       </Form.Group>
       <Form.Group as={Col} controlId="poista">
-        <Button className="removeRowButton">Poista rivi</Button>
+        <Button
+          onClick={() => props.onDelete(props.id)}
+          className="removeRowButton"
+        >
+          Poista rivi
+        </Button>
       </Form.Group>
     </Row>
   );
 };
 
+interface EventRowsI {
+  events: EventRow[];
+  handleDelete: (rowId: number) => void;
+}
+
+const EventRows: FC<EventRowsI> = (props): JSX.Element => {
+  return (
+    <div>
+      {props.events.map((x) => (
+        <LogBookRow key={x.id} id={x.id} onDelete={props.handleDelete} />
+      ))}
+    </div>
+  );
+};
+
+interface EventRow {
+  id: number;
+  pullo: string;
+  kaasu: string;
+  kaasu2?: string;
+  kaasu3?: string;
+  tayttopaine: number;
+  lisatiedot?: string;
+}
+
 const LogBookNewEvent = () => {
+  const [events, setEvents] = useState<EventRow[]>([]);
+
+  const handleAdd = () => {
+    const newEvents = [...events];
+    newEvents.push({ id: events.length } as EventRow);
+    setEvents(newEvents);
+  };
+
+  const handleDelete = (rowId: number) => {
+    const newEvents = events.filter((ev) => ev.id !== rowId);
+    setEvents(newEvents);
+  };
+
+  const handleReset = () => {
+    setEvents([]);
+  };
+
   return (
     <div>
       <h3 className="mb-5">Uusi täyttötapahtuma</h3>
@@ -88,6 +141,7 @@ const LogBookNewEvent = () => {
         }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
+            // TODO: Add backend handling
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 400);
@@ -102,15 +156,21 @@ const LogBookNewEvent = () => {
           handleSubmit,
           isSubmitting,
         }) => (
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <LogBookFieldRow />
-            <LogBookRow />
+            <EventRows events={events} handleDelete={handleDelete} />
 
-            <Button className="addNewRowButton mt-5">Lisää uusi rivi</Button>
+            <Button onClick={handleAdd} className="addNewRowButton mt-5">
+              Lisää uusi rivi
+            </Button>
 
             <div className="mt-5">
-              <Button className="formButton">Tallenna</Button>
-              <Button className="formButton">Peruuta</Button>
+              <Button type="submit" className="formButton">
+                Tallenna
+              </Button>
+              <Button onClick={handleReset} className="formButton">
+                Peruuta
+              </Button>
             </div>
           </Form>
         )}
