@@ -1,6 +1,39 @@
+import { FC, useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import { LogBookHistoryRowI, LogBookHistoryRowsProps } from '../views/LogBook';
 
-const LogBookHistory = () => {
+interface LogBookHistoryRow {
+  historyRow: LogBookHistoryRowI;
+}
+
+const LogBookHistoryRow: FC<LogBookHistoryRow> = (props) => {
+  return (
+    <tr>
+      <td>{props.historyRow.pullo}</td>
+      <td>{props.historyRow.paineilma ? props.historyRow.paineilma : 0} bar</td>
+      <td>{props.historyRow.happi ? props.historyRow.happi : 0} bar</td>
+      <td>{props.historyRow.helium ? props.historyRow.helium : 0} bar</td>
+      <td>{props.historyRow.argon ? props.historyRow.argon : 0} bar</td>
+      <td>{props.historyRow.lisatiedot ? props.historyRow.lisatiedot : '-'}</td>
+      <td>{props.historyRow.hinta} &euro;</td>
+      <td>{props.historyRow.pvm.toLocaleDateString('fi-FI')}</td>
+    </tr>
+  );
+};
+
+const LogBookHistoryRows: FC<LogBookHistoryRowsProps> = (
+  props
+): JSX.Element => {
+  return (
+    <tbody>
+      {props.historyRows.map((row, i) => (
+        <LogBookHistoryRow key={i} historyRow={row} />
+      ))}
+    </tbody>
+  );
+};
+
+const LogBookHistory: FC<LogBookHistoryRowsProps> = (props): JSX.Element => {
   return (
     <div>
       <h3 className="mb-5">Historia</h3>
@@ -8,37 +41,16 @@ const LogBookHistory = () => {
         <thead>
           <tr>
             <th>Pullo</th>
-            <th>Kaasu</th>
-            <th>Kaasu2</th>
-            <th>Kaasu3</th>
-            <th>Täyttöpaine</th>
+            <th>Paineilma</th>
+            <th>Happi</th>
+            <th>Helium</th>
+            <th>Argon</th>
             <th>Lisätiedot</th>
             <th>Hinta</th>
             <th>Pvm</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Kissa1</td>
-            <td>Happi</td>
-            <td>-</td>
-            <td>-</td>
-            <td>40 bar</td>
-            <td>-</td>
-            <td>5000 €</td>
-            <td>19.09.2022</td>
-          </tr>
-          <tr>
-            <td>Kissa2</td>
-            <td>Argon</td>
-            <td>-</td>
-            <td>-</td>
-            <td>39 bar</td>
-            <td>-</td>
-            <td>4999 €</td>
-            <td>19.09.2022</td>
-          </tr>
-        </tbody>
+        <LogBookHistoryRows historyRows={props.historyRows} />
       </Table>
     </div>
   );
