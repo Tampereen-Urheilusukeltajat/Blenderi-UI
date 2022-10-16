@@ -21,8 +21,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run tests
-        run: npm run test:playwright
-
+        run: DEBUG=start-server-and-test && npm run test:playwright
       - uses: actions/upload-artifact@v2
         if: always()
         with:
