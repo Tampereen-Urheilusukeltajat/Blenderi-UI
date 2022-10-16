@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -21,7 +21,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run tests
-        run: DEBUG=start-server-and-test && npm run test:playwright
+        run: npm run test:playwright
       - uses: actions/upload-artifact@v2
         if: always()
         with:
