@@ -2,11 +2,11 @@ import React, { useCallback, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const SignUpFormHeader = () => {
+const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
 };
 
-const SignUpForm = () => {
+const SignUpForm = (): JSX.Element => {
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
@@ -18,7 +18,7 @@ const SignUpForm = () => {
   const handleFirstNameInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValues = { ...values };
-      newValues['firstName'] = e.target.value;
+      newValues.firstName = e.target.value;
       setValues(newValues);
     },
     [values]
@@ -27,7 +27,7 @@ const SignUpForm = () => {
   const handleLastNameInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValues = { ...values };
-      newValues['lastName'] = e.target.value;
+      newValues.lastName = e.target.value;
       setValues(newValues);
     },
     [values]
@@ -36,7 +36,7 @@ const SignUpForm = () => {
   const handleUserNameInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValues = { ...values };
-      newValues['username'] = e.target.value;
+      newValues.username = e.target.value;
       setValues(newValues);
     },
     [values]
@@ -45,7 +45,7 @@ const SignUpForm = () => {
   const handlePasswordInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValues = { ...values };
-      newValues['password'] = e.target.value;
+      newValues.password = e.target.value;
       setValues(newValues);
     },
     [values]
@@ -54,7 +54,7 @@ const SignUpForm = () => {
   const handlePasswordConfirmInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValues = { ...values };
-      newValues['passwordConfirm'] = e.target.value;
+      newValues.passwordConfirm = e.target.value;
       setValues(newValues);
     },
     [values]

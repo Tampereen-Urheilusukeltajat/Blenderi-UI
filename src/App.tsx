@@ -5,7 +5,7 @@ import SignUp from './views/SignUp';
 import LogBook from './views/LogBook';
 import { Navbar } from './views/Navbar';
 
-function App() {
+const App = (): JSX.Element => {
   return (
     <div>
       <Navbar />
@@ -20,6 +20,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;
