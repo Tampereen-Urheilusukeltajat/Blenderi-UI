@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,7 +12,7 @@ a {
 }
 
 input {
-  border-color: #9B9B9B;
+  border-color: #9b9b9b;
 }
 
 code {
@@ -34,14 +34,14 @@ code {
 }
 
 #signInForm {
-  background-color: #E7E7E7;
+  background-color: #e7e7e7;
   border-radius: 12px;
   margin-bottom: 3em;
   padding: 2em 3em;
 }
 
 #signUpForm {
-  background-color: #E7E7E7;
+  background-color: #e7e7e7;
   border-radius: 12px;
   margin: auto;
   margin-bottom: 3em;
@@ -49,8 +49,8 @@ code {
 }
 
 .button {
-  background-color: #C1C1C1;
-  border-color: #C1C1C1;
+  background-color: #c1c1c1;
+  border-color: #c1c1c1;
   color: #000000;
   border-radius: 12px;
   display: flex;

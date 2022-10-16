@@ -3,11 +3,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../index.css';
 
-function SignInFormHeader() {
+const SignInFormHeader = (): JSX.Element => {
   return <h3 className="pb-5">Kirjaudu sisään</h3>;
-}
+};
 
-function SignInForm() {
+const SignInForm = (): JSX.Element => {
   const [values, setValues] = useState({
     userId: '',
     password: '',
@@ -15,7 +15,7 @@ function SignInForm() {
 
   const handleUserIdInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     event.persist();
     setValues((values) => ({
       ...values,
@@ -25,7 +25,7 @@ function SignInForm() {
 
   const handlePasswordInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     event.persist();
     setValues((values) => ({
       ...values,
@@ -79,6 +79,6 @@ function SignInForm() {
       </Form>
     </div>
   );
-}
+};
 
 export default SignInForm;
