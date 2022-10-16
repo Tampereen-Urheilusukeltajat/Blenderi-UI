@@ -1,49 +1,31 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import LogBookHistory from '../components/LogBookHistory';
 import LogBookNewEvent from '../components/LogBookNewEvent';
+import EventRow from '../interfaces/EventRow';
+import LogBookHistoryRowI from '../interfaces/LogBookHistoryRowI';
 import '../styles/logbook/LogBook.css';
-
-export interface EventRow {
-  _id: number; // Tarvitaan rivien poistoa ja lisäämistä varten
-  pullo: string;
-  kaasu: string;
-  tayttopaine: number;
-  lisatiedot?: string;
-}
-
-export interface LogBookHistoryRowI {
-  pullo: string;
-  paineilma?: number;
-  happi?: number;
-  helium?: number;
-  argon?: number;
-  lisatiedot?: string;
-  hinta: number;
-  pvm: Date;
-}
-
-export interface LogBookHistoryRowsProps {
-  historyRows: LogBookHistoryRowI[];
-}
 
 const LogBook = (): JSX.Element => {
   const [events, setEvents] = useState<EventRow[]>([]);
   const [historyRows, setHistoryRows] = useState<LogBookHistoryRowI[]>([]);
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     const newEvents = [...events];
     newEvents.push({ _id: events.length } as EventRow);
     setEvents(newEvents);
-  };
+  }, [events]);
 
-  const handleDelete = (rowId: number) => {
-    const newEvents = events.filter((ev) => ev._id !== rowId);
-    setEvents(newEvents);
-  };
+  const handleDelete = useCallback(
+    (rowId: number) => {
+      const newEvents = events.filter((ev) => ev._id !== rowId);
+      setEvents(newEvents);
+    },
+    [events]
+  );
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setEvents([]);
-  };
+  }, [events]);
 
   return (
     <div>
