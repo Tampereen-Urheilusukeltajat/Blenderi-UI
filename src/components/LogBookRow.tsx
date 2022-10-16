@@ -5,28 +5,28 @@ import LogBookRowI from '../interfaces/LogBookRowI';
 const LogBookRow: FC<LogBookRowI> = (props): JSX.Element => {
   const handleCylinderChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      props.eventRow.pullo = e.target.value;
+      props.eventRow.divingCylinder = e.target.value;
     },
     []
   );
 
   const handleGasChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      props.eventRow.kaasu = e.target.value;
+      props.eventRow.gas = e.target.value;
     },
     []
   );
 
   const handlePressureChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      props.eventRow.tayttopaine = Number(e.target.value);
+      props.eventRow.pressure = Number(e.target.value);
     },
     []
   );
 
   const handleDescriptionChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      props.eventRow.lisatiedot = e.target.value;
+      props.eventRow.additionalInformation = e.target.value;
     },
     []
   );

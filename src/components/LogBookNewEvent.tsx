@@ -19,14 +19,16 @@ const LogBookNewEvent: FC<LogBookNewEventProps> = (props): JSX.Element => {
       const newRows = [...props.historyRows];
       values.map((x) => {
         newRows.push({
-          pullo: x.pullo,
-          hinta: 0,
-          paineilma: x.kaasu === 'Paineilma' ? x.tayttopaine : 0,
-          happi: x.kaasu === 'Happi' ? x.tayttopaine : 0,
-          helium: x.kaasu === 'Helium' ? x.tayttopaine : 0,
-          argon: x.kaasu === 'Argon' ? x.tayttopaine : 0,
-          lisatiedot: x.lisatiedot ? x.lisatiedot : '-',
-          pvm: new Date(),
+          divingCylinder: x.divingCylinder,
+          price: 0,
+          compressedAir: x.gas === 'Paineilma' ? x.pressure : 0,
+          oxygen: x.gas === 'Happi' ? x.pressure : 0,
+          helium: x.gas === 'Helium' ? x.pressure : 0,
+          argon: x.gas === 'Argon' ? x.pressure : 0,
+          additionalInformation: x.additionalInformation
+            ? x.additionalInformation
+            : '-',
+          date: new Date(),
         } as LogBookHistoryRowI);
       });
       props.setHistoryRows(newRows);

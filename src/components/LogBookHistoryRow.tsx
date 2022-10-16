@@ -4,14 +4,21 @@ import LogBookHistoryRow from '../interfaces/LogBookHistoryRow';
 const LogBookHistoryRowComp: FC<LogBookHistoryRow> = (props) => {
   return (
     <tr>
-      <td>{props.historyRow.pullo}</td>
-      <td>{props.historyRow.paineilma ? props.historyRow.paineilma : 0} bar</td>
-      <td>{props.historyRow.happi ? props.historyRow.happi : 0} bar</td>
+      <td>{props.historyRow.divingCylinder}</td>
+      <td>
+        {props.historyRow.compressedAir ? props.historyRow.compressedAir : 0}{' '}
+        bar
+      </td>
+      <td>{props.historyRow.oxygen ? props.historyRow.oxygen : 0} bar</td>
       <td>{props.historyRow.helium ? props.historyRow.helium : 0} bar</td>
       <td>{props.historyRow.argon ? props.historyRow.argon : 0} bar</td>
-      <td>{props.historyRow.lisatiedot ? props.historyRow.lisatiedot : '-'}</td>
-      <td>{props.historyRow.hinta} &euro;</td>
-      <td>{props.historyRow.pvm.toLocaleDateString('fi-FI')}</td>
+      <td>
+        {props.historyRow.additionalInformation
+          ? props.historyRow.additionalInformation
+          : '-'}
+      </td>
+      <td>{props.historyRow.price} &euro;</td>
+      <td>{props.historyRow.date.toLocaleDateString('fi-FI')}</td>
     </tr>
   );
 };

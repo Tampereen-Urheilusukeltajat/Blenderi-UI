@@ -1,9 +1,9 @@
 interface EventRow {
   _id: number; // Tarvitaan rivien poistoa ja lisäämistä varten
-  pullo: string;
-  kaasu: string;
-  tayttopaine: number;
-  lisatiedot?: string;
+  divingCylinder: string;
+  gas: string;
+  pressure: number;
+  additionalInformation?: string;
 }
 
 export default EventRow;

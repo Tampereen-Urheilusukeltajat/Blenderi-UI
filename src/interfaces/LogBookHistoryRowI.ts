@@ -1,12 +1,12 @@
 interface LogBookHistoryRowI {
-  pullo: string;
-  paineilma?: number;
-  happi?: number;
+  divingCylinder: string;
+  compressedAir?: number;
+  oxygen?: number;
   helium?: number;
   argon?: number;
-  lisatiedot?: string;
-  hinta: number;
-  pvm: Date;
+  additionalInformation?: string;
+  price: number;
+  date: Date;
 }
 
 export default LogBookHistoryRowI;
