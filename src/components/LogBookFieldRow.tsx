@@ -1,6 +1,6 @@
 import { Col, Form, Row } from 'react-bootstrap';
 
-const LogBookFieldRow = () => {
+const LogBookFieldRow = (): JSX.Element => {
   return (
     <Row>
       <Form.Group as={Col}>

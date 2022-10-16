@@ -1,8 +1,8 @@
-import EventRow from "./EventRow";
+import EventRow from './EventRow';
 
-interface EventRowsI {
+type EventRowsI = {
   events: EventRow[];
   handleDelete: (rowId: number) => void;
-}
+};
 
 export default EventRowsI;

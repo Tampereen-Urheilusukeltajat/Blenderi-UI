@@ -6,14 +6,20 @@ const LogBookHistoryRowComp: FC<LogBookHistoryRow> = (props) => {
     <tr>
       <td>{props.historyRow.divingCylinder}</td>
       <td>
-        {props.historyRow.compressedAir ? props.historyRow.compressedAir : 0}{' '}
+        {props.historyRow.compressedAir != null
+          ? props.historyRow.compressedAir
+          : 0}{' '}
         bar
       </td>
-      <td>{props.historyRow.oxygen ? props.historyRow.oxygen : 0} bar</td>
-      <td>{props.historyRow.helium ? props.historyRow.helium : 0} bar</td>
-      <td>{props.historyRow.argon ? props.historyRow.argon : 0} bar</td>
       <td>
-        {props.historyRow.additionalInformation
+        {props.historyRow.oxygen != null ? props.historyRow.oxygen : 0} bar
+      </td>
+      <td>
+        {props.historyRow.helium != null ? props.historyRow.helium : 0} bar
+      </td>
+      <td>{props.historyRow.argon != null ? props.historyRow.argon : 0} bar</td>
+      <td>
+        {props.historyRow.additionalInformation != null
           ? props.historyRow.additionalInformation
           : '-'}
       </td>

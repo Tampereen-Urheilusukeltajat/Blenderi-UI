@@ -1,9 +1,9 @@
-import EventRow from "./EventRow";
+import EventRow from './EventRow';
 
-interface LogBookRowI {
-    id: number;
-    eventRow: EventRow;
-    onDelete: (id: number) => void;
-  }
+type LogBookRowI = {
+  id: number;
+  eventRow: EventRow;
+  onDelete: (id: number) => void;
+};
 
 export default LogBookRowI;

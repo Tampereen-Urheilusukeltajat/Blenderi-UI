@@ -1,4 +1,4 @@
-interface LogBookHistoryRowI {
+type LogBookHistoryRowI = {
   divingCylinder: string;
   compressedAir?: number;
   oxygen?: number;
@@ -7,6 +7,6 @@ interface LogBookHistoryRowI {
   additionalInformation?: string;
   price: number;
   date: Date;
-}
+};
 
 export default LogBookHistoryRowI;

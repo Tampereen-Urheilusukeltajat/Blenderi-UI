@@ -1,7 +1,7 @@
-import LogBookHistoryRowI from "./LogBookHistoryRowI";
+import LogBookHistoryRowI from './LogBookHistoryRowI';
 
-interface LogBookHistoryRowsProps {
+type LogBookHistoryRowsProps = {
   historyRows: LogBookHistoryRowI[];
-}
+};
 
 export default LogBookHistoryRowsProps;

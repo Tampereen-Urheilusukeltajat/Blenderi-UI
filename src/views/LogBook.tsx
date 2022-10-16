@@ -11,7 +11,13 @@ const LogBook = (): JSX.Element => {
 
   const handleAdd = useCallback(() => {
     const newEvents = [...events];
-    newEvents.push({ _id: events.length } as EventRow);
+    const c: EventRow = {
+      _id: events.length,
+      divingCylinder: '',
+      gas: '',
+      pressure: 0,
+    };
+    newEvents.push(c);
     setEvents(newEvents);
   }, [events]);
 

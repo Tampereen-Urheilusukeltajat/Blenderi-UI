@@ -13,23 +13,23 @@ const LogBookNewEvent: FC<LogBookNewEventProps> = (props): JSX.Element => {
   const handleFormSubmit = (
     values: EventRow[],
     actions: FormikHelpers<EventRow[]>
-  ) => {
+  ): void => {
     props.events.forEach((x) => values.push(x));
     if (props.events.length > 0) {
       const newRows = [...props.historyRows];
-      values.map((x) => {
-        newRows.push({
+      values.forEach((x) => {
+        const c: LogBookHistoryRowI = {
           divingCylinder: x.divingCylinder,
           price: 0,
           compressedAir: x.gas === 'Paineilma' ? x.pressure : 0,
           oxygen: x.gas === 'Happi' ? x.pressure : 0,
           helium: x.gas === 'Helium' ? x.pressure : 0,
           argon: x.gas === 'Argon' ? x.pressure : 0,
-          additionalInformation: x.additionalInformation
-            ? x.additionalInformation
-            : '-',
+          additionalInformation:
+            x.additionalInformation != null ? x.additionalInformation : '-',
           date: new Date(),
-        } as LogBookHistoryRowI);
+        };
+        newRows.push(c);
       });
       props.setHistoryRows(newRows);
     }
@@ -42,7 +42,7 @@ const LogBookNewEvent: FC<LogBookNewEventProps> = (props): JSX.Element => {
       <h3 className="mb-5">Uusi täyttötapahtuma</h3>
       <Formik
         initialValues={props.events}
-        validate={(values) => {
+        validate={() => {
           // TODO: Add validation checks
           const errors = {};
           return errors;
