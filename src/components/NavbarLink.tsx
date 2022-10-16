@@ -12,7 +12,7 @@ export const CustomLink = ({
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
   return (
-    <li className={isActive != null ? 'active' : ''}>
+    <li className={isActive !== null ? 'active' : ''}>
       <Link to={to} {...props}>
         {children}
       </Link>
