@@ -4,7 +4,7 @@ import Home from './views/Home';
 import SignUp from './views/SignUp';
 import { Navbar } from './views/Navbar';
 
-function App() {
+const App = (): JSX.Element => {
   return (
     <div>
       <Navbar />
@@ -16,6 +16,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;

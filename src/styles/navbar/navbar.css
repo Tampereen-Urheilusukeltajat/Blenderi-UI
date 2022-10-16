@@ -9,7 +9,7 @@ body {
 
 .nav {
   background-color: #526578;
-  color: white;
+  color: #ffffff;
   display: flex;
   height: 64px;
   justify-content: space-around;
@@ -46,8 +46,8 @@ body {
 }
 
 .nav li.active {
-  background-color: white;
-  color: black;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .user {
@@ -68,8 +68,8 @@ body {
   height: 32px;
   border: none;
   margin-left: 1rem;
-  color: black;
-  background: #9AA8B5;
+  color: #000000;
+  background: #9aa8b5;
   border-radius: 12px;
 }
 
@@ -80,5 +80,3 @@ body {
 .nav li:hover:not(.active) {
   background-color: #777;
 }
-
-/*# sourceMappingURL=navbar.css.map */

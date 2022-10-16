@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SignInForm from '../components/SignInForm';
 
-function Home() {
+const Home = (): JSX.Element => {
   return (
     <div>
       <div
@@ -16,6 +16,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;
