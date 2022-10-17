@@ -36,7 +36,7 @@ const LogBook = (): JSX.Element => {
   }, [events]);
 
   return (
-    <div>
+    <div id="logBook">
       <h2 className="mb-5">Täyttöpäiväkirja</h2>
       <div id="logBookNewEvent" className="mb-5 p-5">
         <LogBookNewEvent
