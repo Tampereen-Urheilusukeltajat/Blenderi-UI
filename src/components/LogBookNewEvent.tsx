@@ -25,10 +25,7 @@ const LogBookNewEvent: FC<LogBookNewEventProps> = (props): JSX.Element => {
           oxygen: value.gas === 'Happi' ? value.pressure : 0,
           helium: value.gas === 'Helium' ? value.pressure : 0,
           argon: value.gas === 'Argon' ? value.pressure : 0,
-          additionalInformation:
-            value.additionalInformation != null
-              ? value.additionalInformation
-              : '-',
+          additionalInformation: value.additionalInformation ?? '-',
           date: new Date(),
         };
         newRows.push(c);
