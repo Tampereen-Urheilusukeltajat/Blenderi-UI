@@ -14,19 +14,21 @@ const LogBookNewEvent: FC<LogBookNewEventProps> = (props): JSX.Element => {
     values: EventRow[],
     actions: FormikHelpers<EventRow[]>
   ): void => {
-    props.events.forEach((x) => values.push(x));
+    props.events.forEach((event) => values.push(event));
     if (props.events.length > 0) {
       const newRows = [...props.historyRows];
-      values.forEach((x) => {
+      values.forEach((value) => {
         const c: LogBookHistoryRowI = {
-          divingCylinder: x.divingCylinder,
+          divingCylinder: value.divingCylinder,
           price: 0,
-          compressedAir: x.gas === 'Paineilma' ? x.pressure : 0,
-          oxygen: x.gas === 'Happi' ? x.pressure : 0,
-          helium: x.gas === 'Helium' ? x.pressure : 0,
-          argon: x.gas === 'Argon' ? x.pressure : 0,
+          compressedAir: value.gas === 'Paineilma' ? value.pressure : 0,
+          oxygen: value.gas === 'Happi' ? value.pressure : 0,
+          helium: value.gas === 'Helium' ? value.pressure : 0,
+          argon: value.gas === 'Argon' ? value.pressure : 0,
           additionalInformation:
-            x.additionalInformation != null ? x.additionalInformation : '-',
+            value.additionalInformation != null
+              ? value.additionalInformation
+              : '-',
           date: new Date(),
         };
         newRows.push(c);
