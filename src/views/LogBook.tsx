@@ -8,15 +8,17 @@ import '../styles/logbook/LogBook.css';
 const LogBook = (): JSX.Element => {
   const [events, setEvents] = useState<EventRow[]>([]);
   const [historyRows, setHistoryRows] = useState<LogBookHistoryRowI[]>([]);
+  const [counter, setCounter] = useState(0);
 
   const handleAdd = useCallback(() => {
     const newEvents = [...events];
     const c: EventRow = {
-      _id: events.length,
+      _id: counter,
       divingCylinder: '',
       gas: '',
       pressure: 0,
     };
+    setCounter(counter + 1);
     newEvents.push(c);
     setEvents(newEvents);
   }, [events]);

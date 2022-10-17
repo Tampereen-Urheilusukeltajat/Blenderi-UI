@@ -31,10 +31,6 @@ const LogBookRow: FC<LogBookRowI> = (props): JSX.Element => {
     []
   );
 
-  const handleRowDelete = useCallback(() => {
-    props.onDelete(props.id);
-  }, []);
-
   return (
     <Row className="mt-2">
       <Form.Group as={Col}>
@@ -85,7 +81,10 @@ const LogBookRow: FC<LogBookRowI> = (props): JSX.Element => {
         <p>0,00 €</p>
       </Form.Group>
       <Form.Group as={Col}>
-        <Button onClick={() => handleRowDelete()} className="removeRowButton">
+        <Button
+          onClick={() => props.onDelete(props.id)}
+          className="removeRowButton"
+        >
           Poista rivi
         </Button>
       </Form.Group>

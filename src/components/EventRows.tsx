@@ -7,8 +7,8 @@ const EventRows: FC<EventRowsI> = (props): JSX.Element => {
     <div>
       {props.events.map((event) => (
         <LogBookRow
-          key={event._id}
           id={event._id}
+          key={event._id}
           eventRow={props.events[event._id]}
           onDelete={props.handleDelete}
         />
