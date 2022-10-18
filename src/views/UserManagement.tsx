@@ -1,5 +1,7 @@
 import { UserManagementTable } from '../components/UserManagementTable'
 import { Button } from 'react-bootstrap';
+import '../styles/UserManagement/UserManagement.css'
+
 // TODO: Hae käyttäjät API:sta
 // TODO: Tee dialogi muutosten tallentamiselle
 // TODO: Tee dialogi muutosten tekemiselle
