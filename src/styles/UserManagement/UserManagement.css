@@ -8,7 +8,7 @@
   gap: 3em;
 }
 #userManagementRoot button {
-  background: #9AA8B5;
+  background: #9aa8b5;
   color: #000000;
   border-radius: 12px;
   border: 0px;
@@ -21,7 +21,7 @@
   width: 64vw;
 }
 #userManagementRoot #userManagementTableRoot #userTableHead {
-  background-color: #D9E1E9;
+  background-color: #d9e1e9;
   width: 1230px;
   height: 35px;
 }

@@ -21,7 +21,7 @@ export const UserManagementTable = (): JSX.Element => {
       forename: 'Seppo',
       surname: 'Sukeltaja',
       isAdmin: false,
-      isBlender: true
+      isBlender: true,
     },
     {
       id: 'esimerkkiID2',
@@ -29,7 +29,7 @@ export const UserManagementTable = (): JSX.Element => {
       forename: 'Hilma',
       surname: 'Happi',
       isAdmin: true,
-      isBlender: true
+      isBlender: true,
     },
     {
       id: 'esimerkkiID3',
@@ -37,11 +37,12 @@ export const UserManagementTable = (): JSX.Element => {
       forename: 'Dan',
       surname: 'Dyykkaaja',
       isAdmin: true,
-      isBlender: false
+      isBlender: false,
     },
   ]);
   useEffect(() => {
-    setUsers([...users,
+    setUsers([
+      ...users,
       {
         id: 'esimerkkiID4',
         email: 'annikaa.argon@suomi25.fi',
@@ -49,7 +50,7 @@ export const UserManagementTable = (): JSX.Element => {
         surname: 'Argon',
         isAdmin: false,
         isBlender: true,
-      }
+      },
     ]);
   }, []);
 
@@ -66,18 +67,24 @@ export const UserManagementTable = (): JSX.Element => {
           </tr>
         </thead>
         <tbody id="userTableBody">
-          {
-          users.map(user =>
+          {users.map((user) => (
             <tr key={user.id}>
-              <td>{user.forename} {user.surname}</td>
+              <td>
+                {user.forename} {user.surname}
+              </td>
               <td>{user.email}</td>
               <td>{user.isBlender ? 'Kyllä' : 'Ei'}</td>
-              <td><a href="">Näytä historia</a></td>
-              <td><div id="btnHolder">
-                <Button className="userTableBtn">Muokkaa</Button>
-                <Button className="userTableBtn">Poista</Button>
-              </div></td>
-            </tr>) }
+              <td>
+                <a href="">Näytä historia</a>
+              </td>
+              <td>
+                <div id="btnHolder">
+                  <Button className="userTableBtn">Muokkaa</Button>
+                  <Button className="userTableBtn">Poista</Button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
