@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
-import UserManagement from './views/UserManagement'
+import UserManagement from './views/UserManagement';
 import { Navbar } from './views/Navbar';
 
 const App = (): JSX.Element => {
