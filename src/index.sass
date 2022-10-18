@@ -60,40 +60,36 @@ h1
   line-height: 28px
 
 #userHeading
-  position: absolute
   width: 95px
   height: 28px
-  left: 345px
-  top: 132px
 
-#userTable
-  position: absolute
-  left: 345px
-  top: 200px
+#userControlTable
+  width: 1230px
 
 #userTableHead
   background-color: $tableHeadColor
   width: 1230px
   height: 35px
-  left: 345px
-  top: 231px
   th
     font-style: normal
     font-weight: 400
     font-size: 16px
     line-height: 19px
 
-
-
 #userTableBody
+  width: 1230px
   position: relative
   top: 24px
-  .userTableBtn
-    position: relative
-    top: -10px
-    margin: 10px
-    width: 130px
-    height: 47px
-    background: $userTableButtonColor
-    border-radius: 12px
-    color: $black
+  div
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    .userTableBtn
+      position: relative
+      top: -20px
+      margin: 10px
+      width: 130px
+      height: 47px
+      background: $userTableButtonColor
+      border-radius: 12px
+      color: $black

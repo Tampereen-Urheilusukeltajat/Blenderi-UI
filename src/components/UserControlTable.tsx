@@ -50,7 +50,6 @@ export const UserControlTable = () => {
             <th>Blenderioikeudet</th>
             <th>Täyttöhistoria</th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody id="userTableBody">
@@ -61,8 +60,10 @@ export const UserControlTable = () => {
               <td>{user.email}</td>
               <td>{user.isBlender ? "Kyllä" : "Ei"}</td>
               <td><a href="">Näytä historia</a></td>
-              <Button className="userTableBtn">Muokkaa</Button>
-              <Button className="userTableBtn">Poista</Button>
+              <td><div id="btnHolder">
+                <Button className="userTableBtn">Muokkaa</Button>
+                <Button className="userTableBtn">Poista</Button>
+              </div></td>
             </tr>) }
         </tbody>
       </Table>

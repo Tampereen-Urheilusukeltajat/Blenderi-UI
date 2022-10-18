@@ -65,25 +65,18 @@ h1 {
 }
 
 #userHeading {
-  position: absolute;
   width: 95px;
   height: 28px;
-  left: 345px;
-  top: 132px;
 }
 
-#userTable {
-  position: absolute;
-  left: 345px;
-  top: 200px;
+#userControlTable {
+  width: 1230px;
 }
 
 #userTableHead {
   background-color: #D9E1E9;
   width: 1230px;
   height: 35px;
-  left: 345px;
-  top: 231px;
 }
 #userTableHead th {
   font-style: normal;
@@ -93,12 +86,18 @@ h1 {
 }
 
 #userTableBody {
+  width: 1230px;
   position: relative;
   top: 24px;
 }
-#userTableBody .userTableBtn {
+#userTableBody div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+#userTableBody div .userTableBtn {
   position: relative;
-  top: -10px;
+  top: -20px;
   margin: 10px;
   width: 130px;
   height: 47px;
