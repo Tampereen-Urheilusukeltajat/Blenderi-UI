@@ -12,7 +12,7 @@ type User = {
   isBlender: boolean
 };
 
-export const UserControlTable = () => {
+export const UserManagementTable = () => {
   const [ users, setUsers ] = useState([
     {
       id: "esimerkkiID",
@@ -41,7 +41,7 @@ export const UserControlTable = () => {
   ]);
 
   return (
-    <div id="userControlTable">
+    <div id="userManagementTableRoot">
       <Table borderless id="userTable">
         <thead id="userTableHead">
           <tr>
@@ -55,7 +55,7 @@ export const UserControlTable = () => {
         <tbody id="userTableBody">
           {
           users.map(user => 
-            <tr>
+            <tr key={user.id}>
               <td>{user.forename} {user.surname}</td>
               <td>{user.email}</td>
               <td>{user.isBlender ? "Kyllä" : "Ei"}</td>

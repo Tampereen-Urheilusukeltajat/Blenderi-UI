@@ -1,7 +1,7 @@
 $greyLight: #E7E7E7
 $tableHeadColor: #D9E1E9 
 $black: #000000
-$userTableButtonColor: #9AA8B5
+$userManagementBtnColor: #9AA8B5
 
 body
   margin: 0
@@ -59,37 +59,50 @@ h1
   font-size: 24px
   line-height: 28px
 
-#userHeading
-  width: 95px
-  height: 28px
-
-#userControlTable
-  width: 1230px
-
-#userTableHead
-  background-color: $tableHeadColor
-  width: 1230px
-  height: 35px
-  th
-    font-style: normal
-    font-weight: 400
-    font-size: 16px
-    line-height: 19px
-
-#userTableBody
-  width: 1230px
+#userManagementRoot
   position: relative
-  top: 24px
-  div
-    display: flex
-    flex-direction: row
-    justify-content: flex-start
-    .userTableBtn
+  top: 2em
+  left: 35em
+  display: flex
+  flex-direction: column
+  gap: 3em
+  button
+    background: $userManagementBtnColor
+    color: $black
+    border-radius: 12px
+    border: 0px
+  #userHeading
+    width: 95px
+    height: 28px
+  #userManagementTableRoot
+    width: 1230px
+    #userTableHead
+      background-color: $tableHeadColor
+      width: 1230px
+      height: 35px
+      th
+        font-style: normal
+        font-weight: 400
+        font-size: 16px
+        line-height: 19px
+    #userTableBody
       position: relative
-      top: -20px
-      margin: 10px
-      width: 130px
-      height: 47px
-      background: $userTableButtonColor
-      border-radius: 12px
-      color: $black
+      top: 24px
+      div
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        .userTableBtn
+          position: relative
+          top: -20px
+          margin: 10px
+          width: 130px
+          height: 47px
+  #saveChangesBtn
+    width: 293px
+    height: 49px
+  #cancelChangesBtn
+    width: 293px
+    height: 49px
+    position: relative
+    left: 2em

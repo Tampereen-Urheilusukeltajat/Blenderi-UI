@@ -64,46 +64,63 @@ h1 {
   line-height: 28px;
 }
 
-#userHeading {
+#userManagementRoot {
+  position: relative;
+  top: 2em;
+  left: 35em;
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+}
+#userManagementRoot button {
+  background: #9AA8B5;
+  color: #000000;
+  border-radius: 12px;
+  border: 0px;
+}
+#userManagementRoot #userHeading {
   width: 95px;
   height: 28px;
 }
-
-#userControlTable {
+#userManagementRoot #userManagementTableRoot {
   width: 1230px;
 }
-
-#userTableHead {
+#userManagementRoot #userManagementTableRoot #userTableHead {
   background-color: #D9E1E9;
   width: 1230px;
   height: 35px;
 }
-#userTableHead th {
+#userManagementRoot #userManagementTableRoot #userTableHead th {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
 }
-
-#userTableBody {
-  width: 1230px;
+#userManagementRoot #userManagementTableRoot #userTableBody {
   position: relative;
   top: 24px;
 }
-#userTableBody div {
+#userManagementRoot #userManagementTableRoot #userTableBody div {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
-#userTableBody div .userTableBtn {
+#userManagementRoot #userManagementTableRoot #userTableBody div .userTableBtn {
   position: relative;
   top: -20px;
   margin: 10px;
   width: 130px;
   height: 47px;
-  background: #9AA8B5;
-  border-radius: 12px;
-  color: #000000;
+}
+#userManagementRoot #saveChangesBtn {
+  width: 293px;
+  height: 49px;
+}
+#userManagementRoot #cancelChangesBtn {
+  width: 293px;
+  height: 49px;
+  position: relative;
+  left: 2em;
 }
 
 /*# sourceMappingURL=index.css.map */

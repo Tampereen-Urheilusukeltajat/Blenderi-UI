@@ -25,4 +25,4 @@ yarn-error.log*
 /playwright-report/
 /playwright/.cache/
 
-src/index.css.map
+*.css.map
