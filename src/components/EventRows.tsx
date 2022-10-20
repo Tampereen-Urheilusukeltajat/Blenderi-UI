@@ -14,7 +14,7 @@ const EventRows: FC<EventRowsI> = (props): JSX.Element => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
 export default EventRows;
