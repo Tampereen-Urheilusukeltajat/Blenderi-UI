@@ -25,3 +25,5 @@ yarn-error.log*
 /playwright-report/
 /playwright/.cache/
 *.css.map
+
+.env
