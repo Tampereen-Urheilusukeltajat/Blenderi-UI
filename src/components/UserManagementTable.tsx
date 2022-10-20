@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
-// TODO: sync types with backend
-/*
-type User = {
-  id: string,
-  email: string,
-  forename: string,
-  surname: string,
-  isAdmin: boolean,
-  isBlender: boolean
-}; */
-
 export const UserManagementTable = (): JSX.Element => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [users, setUsers] = useState([
     {
       id: 'esimerkkiID',
@@ -40,19 +30,6 @@ export const UserManagementTable = (): JSX.Element => {
       isBlender: false,
     },
   ]);
-  useEffect(() => {
-    setUsers([
-      ...users,
-      {
-        id: 'esimerkkiID4',
-        email: 'annikaa.argon@suomi25.fi',
-        forename: 'Annika',
-        surname: 'Argon',
-        isAdmin: false,
-        isBlender: true,
-      },
-    ]);
-  }, []);
 
   return (
     <div id="userManagementTableRoot">

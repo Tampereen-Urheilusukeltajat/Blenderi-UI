@@ -10,7 +10,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', 'playwright.config.ts'],
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 'latest',
