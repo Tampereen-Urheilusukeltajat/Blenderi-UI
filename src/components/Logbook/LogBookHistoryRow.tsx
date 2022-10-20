@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import LogBookHistoryRow from '../interfaces/LogBookHistoryRow';
+import LogBookHistoryRow from '../../interfaces/LogBookHistoryRow';
 
 const LogBookHistoryRowComp: FC<LogBookHistoryRow> = (props) => {
   return (

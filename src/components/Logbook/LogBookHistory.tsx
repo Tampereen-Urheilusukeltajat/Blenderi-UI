@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Table from 'react-bootstrap/Table';
-import LogBookHistoryRowsProps from '../interfaces/LogBookHistoryRowsProps';
+import LogBookHistoryRowsProps from '../../interfaces/LogBookHistoryRowsProps';
 import LogBookHistoryRows from './LogBookHistoryRows';
 
 const LogBookHistory: FC<LogBookHistoryRowsProps> = (props): JSX.Element => {

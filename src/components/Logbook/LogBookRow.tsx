@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
-import LogBookRowI from '../interfaces/LogBookRowI';
+import LogBookRowI from '../../interfaces/LogBookRowI';
 
 const LogBookRow: FC<LogBookRowI> = (props): JSX.Element => {
   const handleCylinderChange = useCallback(

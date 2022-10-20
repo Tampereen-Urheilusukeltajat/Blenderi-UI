@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
-import LogBookHistory from '../components/LogBookHistory';
-import LogBookNewEvent from '../components/LogBookNewEvent';
+import LogBookHistory from '../components/Logbook/LogBookHistory';
+import LogBookNewEvent from '../components/Logbook/LogBookNewEvent';
 import EventRow from '../interfaces/EventRow';
 import LogBookHistoryRowI from '../interfaces/LogBookHistoryRowI';
 import '../styles/logbook/LogBook.css';

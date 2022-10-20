@@ -2,11 +2,11 @@ import Button from 'react-bootstrap/Button';
 import { Form } from 'react-bootstrap';
 import { Formik, FormikHelpers } from 'formik';
 import { FC } from 'react';
-import LogBookNewEventProps from '../interfaces/LogBookEventProps';
+import LogBookNewEventProps from '../../interfaces/LogBookEventProps';
 import LogBookFieldRow from './LogBookFieldRow';
+import LogBookHistoryRowI from '../../interfaces/LogBookHistoryRowI';
+import EventRow from '../../interfaces/EventRow';
 import EventRows from './EventRows';
-import LogBookHistoryRowI from '../interfaces/LogBookHistoryRowI';
-import EventRow from '../interfaces/EventRow';
 
 const LogBookNewEvent: FC<LogBookNewEventProps> = (props): JSX.Element => {
   // Formik does not support useCallback
