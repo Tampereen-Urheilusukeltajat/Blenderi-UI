@@ -29,8 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint-fix": "eslint . --fix",
+    "lint": "eslint src",
+    "lint-fix": "eslint src --fix",
     "start-playwright": "npx playwright test",
     "test:playwright": "start-server-and-test start 3000 start-playwright",
     "enforce-style": "npx eslint src --max-warnings 0 && npx prettier -c ."
