@@ -61,7 +61,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
   }, []);
 
   return (
-    <table className="table">
+    <table className="table" data-testid="common-table">
       <thead>
         <tr>
           {includeRowNumber ? (
