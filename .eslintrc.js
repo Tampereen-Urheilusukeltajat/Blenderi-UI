@@ -29,5 +29,6 @@ module.exports = {
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/member-delimiter-style': 'off',
+    'multiline-ternary': 'off', // Conflicts with prettier
   },
 };
