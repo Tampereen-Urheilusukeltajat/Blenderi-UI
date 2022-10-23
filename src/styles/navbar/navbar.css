@@ -4,7 +4,7 @@ body {
 
 .nav {
   background-color: #526578;
-  color: #ffffff;
+  color: #FFFFFF;
   display: flex;
   height: 64px;
   justify-content: space-around;
@@ -41,7 +41,7 @@ body {
 }
 
 .nav li.active {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   color: #000000;
 }
 
@@ -64,7 +64,7 @@ body {
   border: none;
   margin-left: 1rem;
   color: #000000;
-  background: #9aa8b5;
+  background: #9AA8B5;
   border-radius: 12px;
 }
 

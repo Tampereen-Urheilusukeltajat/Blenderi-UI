@@ -20,7 +20,7 @@ export const Navbar = (): JSX.Element | null => {
     <nav className="nav">
       <ul>
         <CustomLink to="/logbook">Täyttöpäiväkirja</CustomLink>
-        <CustomLink to="/user">Omat tiedot</CustomLink>
+        <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
         <CustomLink to="/management">Käyttäjän hallinta</CustomLink>
         <CustomLink to="/billing">Laskutus</CustomLink>
 

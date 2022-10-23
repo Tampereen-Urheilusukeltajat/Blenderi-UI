@@ -10,6 +10,8 @@ import {
   useIsFetching,
 } from '@tanstack/react-query';
 import { PageLoadingSpinner } from './components/Spinner';
+import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
+import UserManagement from './views/UserManagement';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -22,6 +24,11 @@ const Content = (): JSX.Element => {
       <Container className="pt-4">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route
+            path="diving-cylinder-set"
+            element={<DivingCylinderSetManagement />}
+          />
+          <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
           <Route path="logbook" element={<LogBook />} />
         </Routes>
