@@ -11,7 +11,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  ignorePatterns: ['.eslintrc.js', 'playwright.config.ts'],
+  ignorePatterns: ['.eslintrc.js, playwright.config.js'],
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 'latest',

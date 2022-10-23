@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
+import UserManagement from './views/UserManagement';
 import LogBook from './views/LogBook';
 import { Navbar } from './views/Navbar';
 import { User } from './views/UserSettings';
