@@ -11,7 +11,7 @@ const DIVING_CYLINDER_SET_COLUMNS: TableColumn[] = [
     title: 'Materiaali',
   },
   {
-    title: 'Koeponnistuspaine (bar)',
+    title: 'Suurin täyttöpaine (bar)',
   },
   {
     title: 'Sarjanumero',
