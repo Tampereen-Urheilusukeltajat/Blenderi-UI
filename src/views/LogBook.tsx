@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
-import LogBookHistory from '../components/LogBookHistory';
-import LogBookNewEvent from '../components/LogBookNewEvent';
+import LogBookHistory from '../components/Logbook/LogBookHistory';
+import LogBookNewEvent from '../components/Logbook/LogBookNewEvent';
 import EventRow from '../interfaces/EventRow';
 import LogBookHistoryRowI from '../interfaces/LogBookHistoryRowI';
 import '../styles/logbook/LogBook.css';
@@ -21,7 +21,7 @@ const LogBook = (): JSX.Element => {
     setCounter(counter + 1);
     newEvents.push(c);
     setEvents(newEvents);
-  }, [events]);
+  }, [counter, events]);
 
   const handleDelete = useCallback(
     (rowId: number) => {
@@ -33,11 +33,10 @@ const LogBook = (): JSX.Element => {
 
   const handleReset = useCallback(() => {
     setEvents([]);
-  }, [events]);
+  }, []);
 
   return (
     <div id="logBook">
-      <h2 className="mb-5">Täyttöpäiväkirja</h2>
       <div id="logBookNewEvent" className="mb-5 p-5">
         <LogBookNewEvent
           events={events}

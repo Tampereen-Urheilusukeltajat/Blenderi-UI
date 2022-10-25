@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # FIXME Lint staged fails with newer node versions
+        # FIXME start-server-and-test fails with newer node versions
         node-version: [14.x]
     steps:
       - uses: actions/checkout@v3

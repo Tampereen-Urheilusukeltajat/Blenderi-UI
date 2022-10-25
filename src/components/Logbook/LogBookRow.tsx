@@ -1,34 +1,34 @@
 import { FC, useCallback } from 'react';
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
-import LogBookRowI from '../interfaces/LogBookRowI';
+import LogBookRowI from '../../interfaces/LogBookRowI';
 
 const LogBookRow: FC<LogBookRowI> = (props): JSX.Element => {
   const handleCylinderChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       props.eventRow.divingCylinder = e.target.value;
     },
-    []
+    [props.eventRow]
   );
 
   const handleGasChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       props.eventRow.gas = e.target.value;
     },
-    []
+    [props.eventRow]
   );
 
   const handlePressureChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       props.eventRow.pressure = Number(e.target.value);
     },
-    []
+    [props.eventRow]
   );
 
   const handleDescriptionChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       props.eventRow.additionalInformation = e.target.value;
     },
-    []
+    [props.eventRow]
   );
 
   return (
