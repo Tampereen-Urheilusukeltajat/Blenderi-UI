@@ -42,7 +42,7 @@ const IconButtonCell: React.FC<IconButtonCellProps> = ({
 
 /**
  * Common table element, which can be used in number of situations.
- * HOX Row length MUST ALAWYS match the length of columns! Otherwise
+ * HOX Row length MUST ALWAYS match the length of columns! Otherwise
  * the styling will break! Empty values can be indicated by using null
  */
 export const CommonTable: React.FC<CommonTableProps> = ({
