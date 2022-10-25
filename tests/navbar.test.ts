@@ -5,8 +5,8 @@ test.describe('Test navbar', () => {
     await page.goto('/logbook');
 
     // Click text=Omat tiedot
-    await page.locator('text=Omat tiedot').click();
-    await expect(page).toHaveURL('/user');
+    await page.locator('text=Omat pullot').click();
+    await expect(page).toHaveURL('/diving-cylinder-set');
 
     // Click text=Käyttäjän hallinta
     await page.locator('text=Käyttäjän hallinta').click();
