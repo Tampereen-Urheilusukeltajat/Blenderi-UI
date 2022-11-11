@@ -15,8 +15,11 @@ $transparentColor: rgba(0, 0, 0, 0)
     flex-direction: row
     flex-wrap: nowrap
     align-items: flex-end
+    margin: 0 0 1rem 0
 
-
+  .gridRow
+    display: grid
+    grid-template-columns: 15% 20% 20% 20% 20% 5%
     margin: 0 0 1rem 0
 
   .labelAndInput
@@ -24,6 +27,9 @@ $transparentColor: rgba(0, 0, 0, 0)
     display: flex
     padding: 0 1rem 0 0
     flex-direction: column
+
+    span
+      font-weight: bold
   
   .rightPart
     display: flex
@@ -46,5 +52,21 @@ $transparentColor: rgba(0, 0, 0, 0)
   
   .addNewDivingCylinder
     min-width: 100%
-    
 
+  button:disabled
+    background-color: $grey
+    border-color: $grey
+    
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+input[type=number]
+  -moz-appearance: textfield
+
+.titleBar
+  font-weight: bold
+
+  span
+    padding: 0 1rem 0 0

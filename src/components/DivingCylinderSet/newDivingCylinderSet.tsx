@@ -1,10 +1,31 @@
-import { Field, FieldArray, FieldArrayRenderProps, Form, Formik } from 'formik';
-import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Field, FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
+import React, { useCallback } from 'react';
+import { Button, Col, InputGroup } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { IconButton } from '../common/IconButton';
+
+type DivingCylinder = {
+  volume: string;
+  material: string;
+  maximumFillingPressure: string;
+  serialNumber: string;
+  inspectionYear: string;
+};
+
+type DivingCylinderSet = {
+  divingCylinderSetName: string;
+  divingCylinders: DivingCylinder[];
+};
+
+const EmptyDivingCylinder: DivingCylinder = {
+  volume: '',
+  material: '',
+  maximumFillingPressure: '',
+  serialNumber: '',
+  inspectionYear: '',
+};
 
 const NewDivingCylinderRow = (
   { remove, push }: FieldArrayRenderProps,
@@ -13,26 +34,59 @@ const NewDivingCylinderRow = (
 ): JSX.Element => {
   return (
     <div key={index}>
-      <div className="flexRow">
+      <div className="gridRow">
         <div className="labelAndInput">
-          <span>Koko (l)</span>
-          <Field name={`divingCylinders.${index}.volume`} />
+          <InputGroup as={Col}>
+            <Field
+              className="form-control"
+              name={`divingCylinders.${index}.volume`}
+            />
+            <InputGroup.Text>l</InputGroup.Text>
+          </InputGroup>
         </div>
         <div className="labelAndInput">
-          <span>Materiaali</span>
-          <Field name={`divingCylinders.${index}.material`} />
+          <InputGroup as={Col}>
+            <Field
+              type="text"
+              list={`divingCylinders.${index}.material`}
+              className="form-select"
+              name={`divingCylinders.${index}.material`}
+            />
+            <datalist id={`divingCylinders.${index}.material`}>
+              <option>Alumiini</option>
+              <option>Hiilikuitu</option>
+              <option>Teräs</option>
+            </datalist>
+          </InputGroup>
         </div>
         <div className="labelAndInput">
-          <span>Suurin täyttöpaine (bar)</span>
-          <Field name={`divingCylinders.${index}.maximumFillingPressure`} />
+          <InputGroup as={Col}>
+            <Field
+              type="number"
+              list={`divingCylinders.${index}.maximumFillingPressures`}
+              className="form-select"
+              name={`divingCylinders.${index}.maximumFillingPressure`}
+            />
+            <datalist id={`divingCylinders.${index}.maximumFillingPressures`}>
+              <option>200</option>
+              <option>207</option>
+              <option>232</option>
+              <option>300</option>
+            </datalist>
+            <InputGroup.Text>bar</InputGroup.Text>
+          </InputGroup>
         </div>
         <div className="labelAndInput">
-          <span>Sarjanumero</span>
-          <Field name={`divingCylinders.${index}.serialNumber`} />
+          <Field
+            className="form-control"
+            name={`divingCylinders.${index}.serialNumber`}
+          />
         </div>
         <div className="labelAndInput">
-          <span>Katsastusvuosi</span>
-          <Field name={`divingCylinders.${index}.inspectionYear`} />
+          <Field
+            className="form-control"
+            name={`divingCylinders.${index}.inspectionYear`}
+          />
         </div>
         <IconButton
           className="btn-danger deleteRowButton"
@@ -42,7 +96,10 @@ const NewDivingCylinderRow = (
         />
       </div>
       {lastItem ? (
-        <Button className="addNewDivingCylinder" onClick={() => push({})}>
+        <Button
+          className="addNewDivingCylinder"
+          onClick={() => push(EmptyDivingCylinder)}
+        >
           Lisää pullo
         </Button>
       ) : null}
@@ -51,27 +108,42 @@ const NewDivingCylinderRow = (
 };
 
 export const NewDivingCylinderSet = (): JSX.Element => {
+  const handleFormSubmit = useCallback((values: DivingCylinderSet) => {
+    // TODO send request to backend
+    // eslint-disable-next-line no-console
+    console.log(values);
+  }, []);
+
   return (
     <div>
       <h2>Uusi pullosetti</h2>
       <Formik
         initialValues={{
           divingCylinderSetName: '',
-          divingCylinders: [{}],
+          divingCylinders: [EmptyDivingCylinder],
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleFormSubmit}
       >
         {({ values }) => (
           <Form className="newCylinderSetForm">
             <div className="flexRow">
               <div className="labelAndInput">
-                <label htmlFor="divingCylinderSetName">Pullosetin nimi</label>
+                <span>Pullosetin nimi</span>
                 <Field
-                  id="divingCylinderSetName"
                   name="divingCylinderSetName"
+                  className="form-control"
+                  placeholder="Esim. D12"
                 />
               </div>
               <Button type="submit">Tallenna pullosetti</Button>
+            </div>
+            <div className="gridRow titleBar">
+              <span>Koko (l)</span>
+              <span>Materiaali</span>
+              <span>Suurin täyttöpaine (bar)</span>
+              <span>Sarjanumero</span>
+              <span>Katsastusvuosi</span>
+              <span>Poista</span>
             </div>
             <FieldArray name="divingCylinders">
               {(arrayHelpers) => (

@@ -11,11 +11,19 @@
   align-items: flex-end;
   margin: 0 0 1rem 0;
 }
+.newCylinderSetForm .gridRow {
+  display: grid;
+  grid-template-columns: 15% 20% 20% 20% 20% 5%;
+  margin: 0 0 1rem 0;
+}
 .newCylinderSetForm .labelAndInput {
   flex-grow: 0;
   display: flex;
   padding: 0 1rem 0 0;
   flex-direction: column;
+}
+.newCylinderSetForm .labelAndInput span {
+  font-weight: bold;
 }
 .newCylinderSetForm .rightPart {
   display: flex;
@@ -37,4 +45,25 @@
 }
 .newCylinderSetForm .addNewDivingCylinder {
   min-width: 100%;
+}
+.newCylinderSetForm button:disabled {
+  background-color: #a3a3a3;
+  border-color: #a3a3a3;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.titleBar {
+  font-weight: bold;
+}
+.titleBar span {
+  padding: 0 1rem 0 0;
 }
