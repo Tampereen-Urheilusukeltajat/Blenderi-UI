@@ -1,9 +1,23 @@
 import { Field, Form, Formik } from 'formik';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import '../../styles/user/user.css';
 
-type UserProps = Record<string, never>;
+type UserPropertiesFormProps = {
+  handleSubmit: () => void;
+  handleReset: () => void;
+  values: FormUser;
+};
+
+type FormUser = {
+  firstName: string;
+  surname: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  newPassword: string;
+  newPasswordAgain: string;
+};
 
 type UserVariableRowProps = {
   title: string;
@@ -16,8 +30,15 @@ type EditableUserVariableRowProps = {
   fieldNames: string[];
   changeEditingStatus: () => void;
   resetFields: () => void;
+  submitForm: () => void;
   hideInput?: boolean;
   requirePassword?: boolean;
+};
+
+type NewPasswordRowProps = {
+  changeEditingStatus: () => void;
+  resetFields: () => void;
+  submitForm: () => void;
 };
 
 const UserVariableRow: React.FC<UserVariableRowProps> = ({
@@ -48,12 +69,17 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
   changeEditingStatus,
   resetFields,
   requirePassword,
-  hideInput,
+  submitForm,
 }) => {
   const handleCancelButtonClick = useCallback(() => {
     changeEditingStatus();
     resetFields();
   }, [changeEditingStatus, resetFields]);
+
+  const handleSubmitButtonClick = useCallback(() => {
+    changeEditingStatus();
+    submitForm();
+  }, [changeEditingStatus, submitForm]);
 
   return (
     <div className="flexRow">
@@ -64,19 +90,24 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
             key={fieldName}
             className="form-control"
             name={fieldName}
-            type={hideInput ?? false ? 'password' : 'text'}
+            type="text"
           />
         ))}
 
         {requirePassword ?? false ? (
           <>
             <span className="title">Nykyinen salasana</span>
-            <Field type="password" className="form-control" name="password" />
+            <Field
+              autoComplete="current-password"
+              type="password"
+              className="form-control"
+              name="password"
+            />
           </>
         ) : null}
       </div>
       <div className="editButtons">
-        <Button className="primaryButton" type="submit">
+        <Button className="primaryButton" onClick={handleSubmitButtonClick}>
           Tallenna
         </Button>
         <Button
@@ -91,7 +122,71 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
   );
 };
 
-export const User: React.FC<UserProps> = () => {
+const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
+  changeEditingStatus,
+  resetFields,
+  submitForm,
+}) => {
+  const handleCancelButtonClick = useCallback(() => {
+    changeEditingStatus();
+    resetFields();
+  }, [changeEditingStatus, resetFields]);
+
+  const handleSubmitButtonClick = useCallback(() => {
+    changeEditingStatus();
+    submitForm();
+  }, [changeEditingStatus, submitForm]);
+
+  return (
+    <div className="flexRow">
+      <div className="flexColumn">
+        <span className="title">Nykyinen salasana</span>
+        <Field
+          autoComplete="current-password"
+          className="form-control"
+          name="password"
+          type="password"
+        />
+        <span className="title">Uusi salasana</span>
+        <Field
+          autoComplete="new-password"
+          className="form-control"
+          name="newPassword"
+          type="password"
+        />
+        <span className="title">Uusi salasana uudestaan</span>
+        <Field
+          autoComplete="new-password"
+          className="form-control"
+          name="newPasswordAgain"
+          type="password"
+        />
+      </div>
+      <div className="editButtons">
+        <Button
+          className="primaryButton"
+          type="submit"
+          onClick={handleSubmitButtonClick}
+        >
+          Tallenna
+        </Button>
+        <Button
+          className="secondaryButton btn-secondary"
+          onClick={handleCancelButtonClick}
+          type="button"
+        >
+          Peruuta
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
+  handleReset,
+  handleSubmit,
+  values,
+}) => {
   const [editingName, setEditingName] = useState(false);
   const [editingEmail, setEditingEmail] = useState(false);
   const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
@@ -99,19 +194,113 @@ export const User: React.FC<UserProps> = () => {
 
   const changeNameEditingStatus = useCallback(() => {
     setEditingName(!editingName);
-  }, [editingName]);
+
+    // Set all other fields to false and reset form
+    handleReset();
+    setEditingEmail(false);
+    setEditingPhoneNumber(false);
+    setEditingNewPassword(false);
+  }, [editingName, handleReset]);
+
   const changeEmailEditingStatus = useCallback(() => {
     setEditingEmail(!editingEmail);
-  }, [editingEmail]);
+
+    // Set all other fields to false and reset form
+    handleReset();
+    setEditingName(false);
+    setEditingPhoneNumber(false);
+    setEditingNewPassword(false);
+  }, [editingEmail, handleReset]);
+
   const changePhoneEditingStatus = useCallback(() => {
     setEditingPhoneNumber(!editingPhoneNumber);
-  }, [editingPhoneNumber]);
-  const changeEditingNewPasswordStatus = useCallback(() => {
-    setEditingNewPassword(!editingNewPassword);
-  }, [editingNewPassword]);
 
-  const handleSubmit = useCallback(() => {
-    // TODO
+    // Set all other fields to false and reset form
+    handleReset();
+    setEditingName(false);
+    setEditingEmail(false);
+    setEditingNewPassword(false);
+  }, [editingPhoneNumber, handleReset]);
+
+  const changeNewPasswordEditingStatus = useCallback(() => {
+    setEditingNewPassword(!editingNewPassword);
+
+    // Set all other fields to false and reset form
+    handleReset();
+    setEditingName(false);
+    setEditingEmail(false);
+    setEditingPhoneNumber(false);
+  }, [editingNewPassword, handleReset]);
+
+  return (
+    <Form>
+      {!editingName ? (
+        <UserVariableRow
+          title="Nimi"
+          content={`${values.firstName} ${values.surname}`}
+          handleEditButtonClick={changeNameEditingStatus}
+        />
+      ) : (
+        <EditableUserVariableRow
+          fieldNames={['firstName', 'surname']}
+          title="Etu- ja sukunimi"
+          changeEditingStatus={changeNameEditingStatus}
+          resetFields={handleReset}
+          submitForm={handleSubmit}
+        />
+      )}
+      {!editingEmail ? (
+        <UserVariableRow
+          title="Sähköposti"
+          content={values.email}
+          handleEditButtonClick={changeEmailEditingStatus}
+        />
+      ) : (
+        <EditableUserVariableRow
+          fieldNames={['email']}
+          title="Sähköposti"
+          changeEditingStatus={changeEmailEditingStatus}
+          resetFields={handleReset}
+          requirePassword
+          submitForm={handleSubmit}
+        />
+      )}
+      {!editingPhoneNumber ? (
+        <UserVariableRow
+          title="Puhelinnumero"
+          content={values.phoneNumber}
+          handleEditButtonClick={changePhoneEditingStatus}
+        />
+      ) : (
+        <EditableUserVariableRow
+          fieldNames={['phoneNumber']}
+          title="Puhelinnumero"
+          changeEditingStatus={changePhoneEditingStatus}
+          resetFields={handleReset}
+          submitForm={handleSubmit}
+        />
+      )}
+      {!editingNewPassword ? (
+        <UserVariableRow
+          title="Salasana"
+          content={'**********'}
+          handleEditButtonClick={changeNewPasswordEditingStatus}
+        />
+      ) : (
+        <NewPasswordRow
+          changeEditingStatus={changeNewPasswordEditingStatus}
+          resetFields={handleReset}
+          submitForm={handleSubmit}
+        />
+      )}
+    </Form>
+  );
+};
+
+export const User: React.FC = () => {
+  const handleFormSubmit = useCallback(() => {
+    // TODO send updates to backend
+    // TODO make sure new password fields are matching
   }, []);
 
   return (
@@ -125,71 +314,16 @@ export const User: React.FC<UserProps> = () => {
             phoneNumber: '+358501112233',
             password: '',
             newPassword: '',
+            newPasswordAgain: '',
           }}
-          onSubmit={handleSubmit}
+          onSubmit={handleFormSubmit}
         >
-          {({ values, resetForm }) => (
-            <Form>
-              {!editingName ? (
-                <UserVariableRow
-                  title="Nimi"
-                  content={`${values.firstName} ${values.surname}`}
-                  handleEditButtonClick={changeNameEditingStatus}
-                />
-              ) : (
-                <EditableUserVariableRow
-                  fieldNames={['firstName', 'surname']}
-                  title="Etu- ja sukunimi"
-                  changeEditingStatus={changeNameEditingStatus}
-                  resetFields={resetForm}
-                />
-              )}
-              {!editingEmail ? (
-                <UserVariableRow
-                  title="Sähköposti"
-                  content={values.email}
-                  handleEditButtonClick={changeEmailEditingStatus}
-                />
-              ) : (
-                <EditableUserVariableRow
-                  fieldNames={['email']}
-                  title="Sähköposti"
-                  changeEditingStatus={changeEmailEditingStatus}
-                  resetFields={resetForm}
-                  requirePassword
-                />
-              )}
-              {!editingPhoneNumber ? (
-                <UserVariableRow
-                  title="Puhelinnumero"
-                  content={values.phoneNumber}
-                  handleEditButtonClick={changePhoneEditingStatus}
-                />
-              ) : (
-                <EditableUserVariableRow
-                  fieldNames={['phoneNumber']}
-                  title="Puhelinnumero"
-                  changeEditingStatus={changePhoneEditingStatus}
-                  resetFields={resetForm}
-                />
-              )}
-              {!editingNewPassword ? (
-                <UserVariableRow
-                  title="Salasana"
-                  content={'**********'}
-                  handleEditButtonClick={changeEditingNewPasswordStatus}
-                />
-              ) : (
-                <EditableUserVariableRow
-                  fieldNames={['newPassword']}
-                  title="Uusi salasana"
-                  changeEditingStatus={changeEditingNewPasswordStatus}
-                  resetFields={resetForm}
-                  requirePassword
-                  hideInput
-                />
-              )}
-            </Form>
+          {({ values, handleReset, handleSubmit }) => (
+            <UserPropertiesForm
+              handleReset={handleReset}
+              handleSubmit={handleSubmit}
+              values={values}
+            />
           )}
         </Formik>
       </div>

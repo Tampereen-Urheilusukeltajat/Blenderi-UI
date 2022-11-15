@@ -4,10 +4,12 @@
 
 .primaryButton {
   background: #0D4D7B;
+  border: none;
 }
 
 .secondaryButton {
   background: rgba(110, 108, 108, 0.6901960784);
+  border: none;
 }
 
 .blueBackground {
