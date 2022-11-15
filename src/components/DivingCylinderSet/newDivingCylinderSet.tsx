@@ -21,7 +21,7 @@ type DivingCylinderSet = {
 
 const EmptyDivingCylinder: DivingCylinder = {
   volume: '',
-  material: '',
+  material: 'steel',
   maximumFillingPressure: '',
   serialNumber: '',
   inspectionYear: '',
@@ -40,6 +40,7 @@ const NewDivingCylinderRow = (
             <Field
               className="form-control"
               name={`divingCylinders.${index}.volume`}
+              type="number"
             />
             <InputGroup.Text>l</InputGroup.Text>
           </InputGroup>
@@ -47,16 +48,15 @@ const NewDivingCylinderRow = (
         <div className="labelAndInput">
           <InputGroup as={Col}>
             <Field
-              type="text"
+              as="select"
               list={`divingCylinders.${index}.material`}
               className="form-select"
               name={`divingCylinders.${index}.material`}
-            />
-            <datalist id={`divingCylinders.${index}.material`}>
-              <option>Alumiini</option>
-              <option>Hiilikuitu</option>
-              <option>Teräs</option>
-            </datalist>
+            >
+              <option value="steel">Teräs</option>
+              <option value="aluminium">Alumiini</option>
+              <option value="carbonFiber">Hiilikuitu</option>
+            </Field>
           </InputGroup>
         </div>
         <div className="labelAndInput">
@@ -64,15 +64,9 @@ const NewDivingCylinderRow = (
             <Field
               type="number"
               list={`divingCylinders.${index}.maximumFillingPressures`}
-              className="form-select"
+              className="form-control"
               name={`divingCylinders.${index}.maximumFillingPressure`}
             />
-            <datalist id={`divingCylinders.${index}.maximumFillingPressures`}>
-              <option>200</option>
-              <option>207</option>
-              <option>232</option>
-              <option>300</option>
-            </datalist>
             <InputGroup.Text>bar</InputGroup.Text>
           </InputGroup>
         </div>
@@ -86,6 +80,7 @@ const NewDivingCylinderRow = (
           <Field
             className="form-control"
             name={`divingCylinders.${index}.inspectionYear`}
+            type="number"
           />
         </div>
         <IconButton
@@ -138,9 +133,9 @@ export const NewDivingCylinderSet = (): JSX.Element => {
               <Button type="submit">Tallenna pullosetti</Button>
             </div>
             <div className="gridRow titleBar">
-              <span>Koko (l)</span>
+              <span>Koko</span>
               <span>Materiaali</span>
-              <span>Suurin täyttöpaine (bar)</span>
+              <span>Suurin täyttöpaine</span>
               <span>Sarjanumero</span>
               <span>Katsastusvuosi</span>
               <span>Poista</span>
