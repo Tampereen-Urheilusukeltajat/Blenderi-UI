@@ -6,3 +6,9 @@
 .table {
   white-space: nowrap;
 }
+.table .greyBackground {
+  background-color: rgba(222, 226, 230, 0.4);
+}
+.table .whiteBackground {
+  background-color: white;
+}

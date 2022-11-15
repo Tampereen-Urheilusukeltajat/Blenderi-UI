@@ -1,0 +1,72 @@
+$primaryButtonBlue: #0D4D7B
+$white: rgba(255, 255, 255, 1)
+$black: rgba(0,0,0,1)
+$grey: #a3a3a3
+$transparentColor: rgba(0, 0, 0, 0)
+
+.newCylinderSetForm
+  display: flex
+  flex-direction: column
+  flex-wrap: nowrap
+
+  .flexRow
+    display: flex
+    justify-content: space-between
+    flex-direction: row
+    flex-wrap: nowrap
+    align-items: flex-end
+    margin: 0 0 1rem 0
+
+  .gridRow
+    display: grid
+    grid-template-columns: 15% 20% 20% 20% 20% 5%
+    margin: 0 0 1rem 0
+
+  .labelAndInput
+    flex-grow: 0
+    display: flex
+    padding: 0 1rem 0 0
+    flex-direction: column
+
+    span
+      font-weight: bold
+  
+  .rightPart
+    display: flex
+    flex-direction: row
+    gap: 1rem
+    width: 376px
+
+
+  button
+    background-color: $primaryButtonBlue
+    border: 1px solid $grey
+    border-radius: 8px
+    color: $white
+    width: 180px
+
+  .deleteRowButton
+    color: $black
+    background-color: $transparentColor
+    width: 54px
+  
+  .addNewDivingCylinder
+    min-width: 100%
+
+  button:disabled
+    background-color: $grey
+    border-color: $grey
+    
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+input[type=number]
+  -moz-appearance: textfield
+
+.titleBar
+  font-weight: bold
+
+  span
+    padding: 0 1rem 0 0

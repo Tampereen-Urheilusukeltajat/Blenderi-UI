@@ -1,14 +1,12 @@
 #userManagementRoot {
   position: relative;
-  top: 2em;
-  left: 20vw;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 3em;
 }
 #userManagementRoot button {
-  background: #9aa8b5;
+  background: #9AA8B5;
   color: #000000;
   border-radius: 12px;
   border: 0px;
@@ -21,7 +19,7 @@
   width: 64vw;
 }
 #userManagementRoot #userManagementTableRoot #userTableHead {
-  background-color: #d9e1e9;
+  background-color: #D9E1E9;
   width: 1230px;
   height: 35px;
 }
@@ -57,4 +55,3 @@
   position: relative;
   left: 2em;
 }
-

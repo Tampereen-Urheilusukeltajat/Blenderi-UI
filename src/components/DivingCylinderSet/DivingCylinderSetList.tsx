@@ -26,12 +26,15 @@ const TEMP_TEST_ROWS: TableRow[] = [
     // Parser which creates this is going to be lit ! :)
     mainRow: ['Mun D12', 24, null, null, null, null],
     childRows: [
-      [null, 12, 'Teräs', 450, '11-22-33-44-55', '2016'],
-      [null, 12, 'Teräs', 450, '66-77-88-99-00', '2016'],
+      [null, 12, 'Teräs', 200, '11-22-33-44-55', '2016'],
+      [null, 12, 'Teräs', 200, '66-77-88-99-00', '2016'],
     ],
   },
   {
-    mainRow: ['Mun sinkkupullo', '10', 'Teräs', '450', '55-22-33-55', '2020'],
+    mainRow: ['Mun sinkkupullo', 10, 'Teräs', 300, '55-22-33-55', '2020'],
+  },
+  {
+    mainRow: ['Mun toka sinkkupullo', 12, 'Teräs', 200, '55-42-33-55', '2013'],
   },
 ];
 
