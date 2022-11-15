@@ -75,3 +75,13 @@ body {
 .nav li:hover:not(.active) {
   background-color: #777;
 }
+
+.nav span {
+  padding-left: 0.5rem;
+}
+
+.nav .iconLink {
+  display: flex;
+  height: 64px;
+  align-items: center;
+}

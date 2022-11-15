@@ -25,8 +25,13 @@ export const Navbar = (): JSX.Element | null => {
         <CustomLink to="/billing">Laskutus</CustomLink>
 
         <div className="user">
-          {/* TODO get user info from state. */}
-          <BsPersonCircle size={35} /> Seppo Sukeltaja
+          <CustomLink to="/user">
+            <div className="iconLink">
+              <BsPersonCircle size={35} />
+              {/* TODO get user info from state. */}
+              <span>Seppo Sukeltaja</span>
+            </div>
+          </CustomLink>
           <button className="logout" onClick={onLogoutClick}>
             Kirjaudu ulos
           </button>

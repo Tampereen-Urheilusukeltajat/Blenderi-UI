@@ -12,6 +12,7 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
+import { User } from './components/User/user';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -31,6 +32,7 @@ const Content = (): JSX.Element => {
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
           <Route path="logbook" element={<LogBook />} />
+          <Route path="user" element={<User />} />
         </Routes>
       </Container>
     </main>

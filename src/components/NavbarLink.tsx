@@ -6,7 +6,7 @@ export const CustomLink = ({
   ...props
 }: {
   to: string;
-  children: string;
+  children: string | JSX.Element;
 }): JSX.Element => {
   const resolvedPath = useResolvedPath(to);
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
