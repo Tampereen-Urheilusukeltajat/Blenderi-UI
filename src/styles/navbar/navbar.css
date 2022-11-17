@@ -7,17 +7,17 @@ body {
   color: #FFFFFF;
   display: flex;
   height: 64px;
-  justify-content: space-around;
-  align-items: stretch;
   gap: 2rem;
   padding: 0 1rem;
+  justify-content: center;
 }
 
 .nav ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
   display: flex;
+  padding: 0 1rem;
+  list-style: none;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .nav p {
@@ -50,7 +50,13 @@ body {
   height: 64px;
   align-items: center;
   gap: 1rem;
-  padding: 0 3rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.leftPart {
+  display: flex;
+  height: 64px;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -66,10 +72,6 @@ body {
   color: #000000;
   background: #9AA8B5;
   border-radius: 12px;
-}
-
-.user .logout:hover {
-  background-color: #777;
 }
 
 .nav li:hover:not(.active) {

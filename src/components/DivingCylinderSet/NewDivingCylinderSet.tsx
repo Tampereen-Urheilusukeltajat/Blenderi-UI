@@ -1,10 +1,10 @@
 import { Field, FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback } from 'react';
-import { Button, Col, InputGroup } from 'react-bootstrap';
+import { Col, InputGroup } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
-import { IconButton } from '../common/IconButton';
+import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
 
 type DivingCylinder = {
   volume: string;
@@ -28,7 +28,7 @@ const EmptyDivingCylinder: DivingCylinder = {
 };
 
 const NewDivingCylinderRow = (
-  { remove, push }: FieldArrayRenderProps,
+  { remove, push, replace }: FieldArrayRenderProps,
   index: number,
   lastItem: boolean
 ): JSX.Element => {
@@ -84,19 +84,21 @@ const NewDivingCylinderRow = (
           />
         </div>
         <IconButton
-          className="btn-danger deleteRowButton"
           icon={<BsTrash />}
-          onClick={() => remove(index)}
-          disabled={lastItem && index === 0}
+          onClick={() =>
+            lastItem && index === 0
+              ? replace(index, EmptyDivingCylinder)
+              : remove(index)
+          }
         />
       </div>
       {lastItem ? (
-        <Button
+        <PrimaryButton
           className="addNewDivingCylinder"
           onClick={() => push(EmptyDivingCylinder)}
-        >
-          Lisää pullo
-        </Button>
+          type={ButtonType.button}
+          text="Lisää pullo"
+        />
       ) : null}
     </div>
   );
@@ -110,7 +112,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-5">
       <h2>Uusi pullosetti</h2>
       <Formik
         initialValues={{
@@ -130,7 +132,10 @@ export const NewDivingCylinderSet = (): JSX.Element => {
                   placeholder="Esim. D12"
                 />
               </div>
-              <Button type="submit">Tallenna pullosetti</Button>
+              <PrimaryButton
+                text="Tallenna pullosetti"
+                type={ButtonType.submit}
+              />
             </div>
             <div className="gridRow titleBar">
               <span>Koko</span>

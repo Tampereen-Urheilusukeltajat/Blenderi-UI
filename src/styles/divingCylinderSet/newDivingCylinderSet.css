@@ -31,24 +31,8 @@
   gap: 1rem;
   width: 376px;
 }
-.newCylinderSetForm button {
-  background-color: #0D4D7B;
-  border: 1px solid #a3a3a3;
-  border-radius: 8px;
-  color: rgb(255, 255, 255);
-  width: 180px;
-}
-.newCylinderSetForm .deleteRowButton {
-  color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0);
-  width: 54px;
-}
 .newCylinderSetForm .addNewDivingCylinder {
   min-width: 100%;
-}
-.newCylinderSetForm button:disabled {
-  background-color: #a3a3a3;
-  border-color: #a3a3a3;
 }
 
 input::-webkit-outer-spin-button,

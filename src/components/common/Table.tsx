@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 import '../../styles/commonTable/commonTable.css';
-import { IconButton, IconButtonProps } from './IconButton';
+import { IconButton, IconButtonProps } from './Buttons';
 
 type Row = Array<number | string | null>;
 
@@ -28,11 +28,7 @@ const IconButtonCell: React.FC<IconButtonProps> = ({
 }): JSX.Element => {
   return (
     <td>
-      <IconButton
-        className="no-background btn-light"
-        icon={icon}
-        onClick={onClick}
-      />
+      <IconButton className="no-background" icon={icon} onClick={onClick} />
     </td>
   );
 };
