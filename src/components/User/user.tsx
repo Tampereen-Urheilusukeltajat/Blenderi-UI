@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import React, { useCallback, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import '../../styles/user/user.css';
+import { ButtonType, PrimaryButton, SecondaryButton } from '../common/Buttons';
 
 type UserPropertiesFormProps = {
   handleSubmit: () => void;
@@ -52,13 +52,7 @@ const UserVariableRow: React.FC<UserVariableRowProps> = ({
         <span className="title">{title}</span>
         <span className="content">{content}</span>
       </div>
-      <Button
-        className="primaryButton"
-        onClick={handleEditButtonClick}
-        type="button"
-      >
-        Muokkaa
-      </Button>
+      <PrimaryButton onClick={handleEditButtonClick} text="Muokkaa" />
     </div>
   );
 };
@@ -107,16 +101,8 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
         ) : null}
       </div>
       <div className="editButtons">
-        <Button className="primaryButton" onClick={handleSubmitButtonClick}>
-          Tallenna
-        </Button>
-        <Button
-          className="secondaryButton btn-secondary"
-          onClick={handleCancelButtonClick}
-          type="button"
-        >
-          Peruuta
-        </Button>
+        <PrimaryButton onClick={handleSubmitButtonClick} text="Tallenna" />
+        <SecondaryButton onClick={handleCancelButtonClick} text="Peruuta" />
       </div>
     </div>
   );
@@ -163,20 +149,17 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
         />
       </div>
       <div className="editButtons">
-        <Button
+        <PrimaryButton
           className="primaryButton"
-          type="submit"
           onClick={handleSubmitButtonClick}
-        >
-          Tallenna
-        </Button>
-        <Button
+          text="Tallenna"
+          type={ButtonType.submit}
+        />
+        <PrimaryButton
           className="secondaryButton btn-secondary"
           onClick={handleCancelButtonClick}
-          type="button"
-        >
-          Peruuta
-        </Button>
+          text="Peruuta"
+        />
       </div>
     </div>
   );

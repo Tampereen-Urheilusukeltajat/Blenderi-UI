@@ -7,14 +7,6 @@ test.describe('Test navbar', () => {
     // Click text=Omat tiedot
     await page.locator('text=Omat pullot').click();
     await expect(page).toHaveURL('/diving-cylinder-set');
-
-    // Click text=Käyttäjän hallinta
-    await page.locator('text=Käyttäjän hallinta').click();
-    await expect(page).toHaveURL('/management');
-
-    // Click text=Laskutus
-    await page.locator('text=Laskutus').click();
-    await expect(page).toHaveURL('/billing');
   });
 
   test('navbar has logout button', async ({ page }) => {
