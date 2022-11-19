@@ -16,7 +16,7 @@ import { FC, useEffect, useState } from 'react';
 import getCookie from './components/common/GetCookie';
 import { getUser, User } from './lib/apiRequests/userRequests';
 import { AXIOS_CONFIG } from './lib/apiRequests/api';
-import { User } from './components/User/user';
+import { UserComp } from './components/User/user';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -39,8 +39,8 @@ const Content: FC<ContentCompProps> = (props): JSX.Element => {
           />
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
-          <Route path="logbook" element={<LogBook />} />
-          <Route path="user" element={<User />} />
+          <Route path="logbook" element={<LogBook user={props.user} />} />
+          <Route path="user" element={<UserComp />} />
         </Routes>
       </Container>
     </main>

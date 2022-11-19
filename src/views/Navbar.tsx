@@ -38,8 +38,9 @@ export const Navbar: FC<NavbarCompProps> = (props): JSX.Element | null => {
           <CustomLink to="/user">
             <div className="iconLink">
               <BsPersonCircle size={35} />
-              {/* TODO get user info from state. */}
-              <span>{props.user?.forename ?? ''}{' '}{props.user?.surname ?? ''}</span>
+              <span>
+                {props.user?.forename ?? ''} {props.user?.surname ?? ''}
+              </span>
             </div>
           </CustomLink>
           <TertiaryButton onClick={onLogoutClick} text="Kirjaudu ulos" />
