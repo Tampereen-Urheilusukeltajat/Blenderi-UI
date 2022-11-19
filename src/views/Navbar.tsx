@@ -1,6 +1,8 @@
+import { FC } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 import { CustomLink } from '../components/NavbarLink';
+import { User } from '../lib/apiRequests/userRequests';
 import '../styles/navbar/navbar.css';
 
 const onLogoutClick = (): void => {
@@ -8,7 +10,11 @@ const onLogoutClick = (): void => {
   console.log('Log out button clicked.');
 };
 
-export const Navbar = (): JSX.Element | null => {
+type NavbarCompProps = {
+  user: User | undefined;
+};
+
+export const Navbar: FC<NavbarCompProps> = (props): JSX.Element | null => {
   // TODO refactor to to see if user is logged in.
   // Don't show navbar on register and login view.
   const path = useLocation().pathname;
@@ -26,7 +32,8 @@ export const Navbar = (): JSX.Element | null => {
 
         <div className="user">
           {/* TODO get user info from state. */}
-          <BsPersonCircle size={35} /> Seppo Sukeltaja
+          <BsPersonCircle size={35} /> {props.user?.forename ?? ''}{' '}
+          {props.user?.surname ?? ''}
           <button className="logout" onClick={onLogoutClick}>
             Kirjaudu ulos
           </button>

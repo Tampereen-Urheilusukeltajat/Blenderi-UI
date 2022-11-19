@@ -1,11 +1,16 @@
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import LogBookHistory from '../components/Logbook/LogBookHistory';
 import LogBookNewEvent from '../components/Logbook/LogBookNewEvent';
 import EventRow from '../interfaces/EventRow';
 import LogBookHistoryRowI from '../interfaces/LogBookHistoryRowI';
+import { User } from '../lib/apiRequests/userRequests';
 import '../styles/logbook/LogBook.css';
 
-const LogBook = (): JSX.Element => {
+type LogBookCompProps = {
+  user: User | undefined;
+};
+
+const LogBook: FC<LogBookCompProps> = (props): JSX.Element => {
   const [events, setEvents] = useState<EventRow[]>([]);
   const [historyRows, setHistoryRows] = useState<LogBookHistoryRowI[]>([]);
   const [counter, setCounter] = useState(0);

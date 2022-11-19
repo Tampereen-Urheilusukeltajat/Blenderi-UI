@@ -12,10 +12,18 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
+import { FC, useEffect, useState } from 'react';
+import getCookie from './components/common/GetCookie';
+import { getUser, User } from './lib/apiRequests/userRequests';
+import { AXIOS_CONFIG } from './lib/apiRequests/api';
 
 const QUERY_CLIENT = new QueryClient();
 
-const Content = (): JSX.Element => {
+type ContentCompProps = {
+  user: User | undefined;
+};
+
+const Content: FC<ContentCompProps> = (props): JSX.Element => {
   const isFetching = useIsFetching();
 
   return (
@@ -26,11 +34,11 @@ const Content = (): JSX.Element => {
           <Route path="/" element={<Home />} />
           <Route
             path="diving-cylinder-set"
-            element={<DivingCylinderSetManagement />}
+            element={<DivingCylinderSetManagement user={props.user} />}
           />
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
-          <Route path="logbook" element={<LogBook />} />
+          <Route path="logbook" element={<LogBook user={props.user} />} />
         </Routes>
       </Container>
     </main>
@@ -38,10 +46,26 @@ const Content = (): JSX.Element => {
 };
 
 const App = (): JSX.Element => {
+  const [userId, setUserId] = useState<string>('');
+  const [currentUser, setCurrentUser] = useState<User>();
+
+  useEffect(() => {
+    if (currentUser === undefined) {
+      const accessToken = getCookie('accessToken');
+      const id = getCookie('userId');
+      AXIOS_CONFIG.headers = { Authorization: `Bearer ${accessToken}` };
+      setUserId(id);
+      getUser(userId, accessToken)
+        .then((userResponse) => {
+          setCurrentUser(userResponse.data);
+        })
+        .catch((err) => alert(err));
+    }
+  }, [userId, currentUser]);
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
-      <Navbar />
-      <Content />
+      <Navbar user={currentUser} />
+      <Content user={currentUser} />
     </QueryClientProvider>
   );
 };

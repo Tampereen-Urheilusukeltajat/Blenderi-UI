@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { getAsync } from './api';
 
-type User = {
+export type User = {
   email: string;
   forename: string;
   surname: string;
@@ -9,5 +9,7 @@ type User = {
   isBlender: boolean;
 };
 
-export const getUser = async (userId: string): Promise<AxiosResponse<User>> =>
-  getAsync<User>(`/api/user/${userId}`);
+export const getUser = async (
+  userId: string,
+  accessToken: string
+): Promise<AxiosResponse<User>> => getAsync<User>(`/api/user/${userId}`);

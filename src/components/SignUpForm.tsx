@@ -2,12 +2,23 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Formik } from 'formik';
 import { postAsync } from '../lib/apiRequests/api';
+import LoginResponse from './common/LoginResponse';
+import LoginRequest from './common/LoginRequest';
+import { useNavigate } from 'react-router-dom';
+import SignUpResponse from './common/SignUpResponse';
+import SignUpRequest from './common/SignUpRequest';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
 };
 
 const SignUpForm = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  // needed for /api/login
+  let email = '';
+  let pass = '';
+
   return (
     <div id="signUpForm" className="mt-5">
       <SignUpFormHeader />
@@ -16,6 +27,7 @@ const SignUpForm = (): JSX.Element => {
           firstName: '',
           lastName: '',
           email: '',
+          phone: '',
           password: '',
           repeatPassword: '',
         }}
@@ -25,13 +37,31 @@ const SignUpForm = (): JSX.Element => {
           return errors;
         }}
         onSubmit={async (values, actions) => {
-          postAsync('/api/user/', {
+          email = values.email;
+          pass = values.password;
+          postAsync<SignUpResponse, SignUpRequest>('/api/user/', {
             forename: values.firstName,
             surname: values.lastName,
             email: values.email,
+            phone: values.phone,
             password: values.password,
           })
-            .then((response) => alert(response))
+            .then((signUpResponse) => {
+              // Needed to get user data
+              document.cookie = `userId=${signUpResponse.data.id}; SameSite=None; Secure`;
+              postAsync<LoginResponse, LoginRequest>('/api/login', {
+                email,
+                password: pass,
+              })
+                .then((loginResponse) => {
+                  // Session tokens
+                  document.cookie = `refreshToken=${loginResponse.data.refreshToken}; SameSite=None; Secure`;
+                  document.cookie = `accessToken=${loginResponse.data.accessToken}; SameSite=None; Secure`;
+                  navigate(-1);
+                  navigate('/logbook');
+                })
+                .catch((err) => alert(err));
+            })
             .catch((err) => alert(err));
         }}
       >
@@ -82,7 +112,23 @@ const SignUpForm = (): JSX.Element => {
                 required
               ></Form.Control>
               <Form.Control.Feedback type="invalid">
-                Anna käyttäjätunnus.
+                Anna sähköpostiosoite.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Puhelinnumero</Form.Label>
+              <Form.Control
+                aria-label="Puhelinnumero"
+                id="phone"
+                name="phone"
+                type="phone"
+                placeholder=""
+                value={form.values.phone}
+                onChange={form.handleChange}
+                required
+              ></Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Anna sähköpostiosoite.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
