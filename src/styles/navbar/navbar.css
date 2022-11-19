@@ -7,17 +7,17 @@ body {
   color: #FFFFFF;
   display: flex;
   height: 64px;
-  justify-content: space-around;
-  align-items: stretch;
   gap: 2rem;
   padding: 0 1rem;
+  justify-content: center;
 }
 
 .nav ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
   display: flex;
+  padding: 0 1rem;
+  list-style: none;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .nav p {
@@ -50,7 +50,13 @@ body {
   height: 64px;
   align-items: center;
   gap: 1rem;
-  padding: 0 3rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.leftPart {
+  display: flex;
+  height: 64px;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -68,10 +74,16 @@ body {
   border-radius: 12px;
 }
 
-.user .logout:hover {
+.nav li:hover:not(.active) {
   background-color: #777;
 }
 
-.nav li:hover:not(.active) {
-  background-color: #777;
+.nav span {
+  padding-left: 0.5rem;
+}
+
+.nav .iconLink {
+  display: flex;
+  height: 64px;
+  align-items: center;
 }

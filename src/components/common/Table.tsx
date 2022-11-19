@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { Button } from 'react-bootstrap';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 import '../../styles/commonTable/commonTable.css';
+import { IconButton, IconButtonProps } from './Buttons';
 
 type Row = Array<number | string | null>;
 
@@ -22,26 +22,19 @@ type CommonTableProps = {
   includeDeleteButton?: boolean;
 };
 
-type IconButtonCellProps = {
-  onClick: React.MouseEventHandler;
-  icon: JSX.Element;
-};
-
-const IconButtonCell: React.FC<IconButtonCellProps> = ({
+const IconButtonCell: React.FC<IconButtonProps> = ({
   onClick,
   icon,
 }): JSX.Element => {
   return (
     <td>
-      <Button className="no-background btn-light" onClick={onClick}>
-        {icon}
-      </Button>
+      <IconButton className="no-background" icon={icon} onClick={onClick} />
     </td>
   );
 };
 
 /**
- * Common table element, which can be used in number of situations.
+ * Common table element which can be used in a number of situations.
  * HOX Row length MUST ALWAYS match the length of columns! Otherwise
  * the styling will break! Empty values can be indicated by using null
  */
@@ -89,7 +82,10 @@ export const CommonTable: React.FC<CommonTableProps> = ({
       <tbody>
         {rows.map((row, index) => (
           <React.Fragment key={`row-fragment-${index + 1}`}>
-            <tr key={`row-${index + 1}`}>
+            <tr
+              key={`row-${index + 1}`}
+              className={index % 2 === 0 ? 'greyBackground' : 'whiteBackground'}
+            >
               {includeRowNumber ? (
                 <td key={`row-number-${index + 1}`} scope="row">
                   {index + 1}
@@ -121,8 +117,14 @@ export const CommonTable: React.FC<CommonTableProps> = ({
                 />
               ) : null}
             </tr>
+            {/* Does the row have "child" rows  */}
             {row.childRows?.map((childRow, childRowIndex) => (
-              <tr key={`row-${index + 1}-child-row-${childRowIndex}`}>
+              <tr
+                key={`row-${index + 1}-child-row-${childRowIndex}`}
+                className={
+                  index % 2 === 0 ? 'greyBackground' : 'whiteBackground'
+                }
+              >
                 {includeRowNumber ? (
                   <td
                     key={`row-number-${index + 1}-child-row-${childRowIndex}`}

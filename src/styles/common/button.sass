@@ -1,0 +1,60 @@
+// Blenderi specific
+$primaryBlue: #0D4D7B
+$primaryBlueHover: #1971b1
+$secondaryBlueHover: #e9e9e9
+$tertiaryBlue: #142d45
+$tertiaryBlueHover: #1a466e
+
+// Classics
+$transparent: rgba(0,0,0,0)
+$grey: #C7C7CD
+$white: #FFFFFF
+
+button
+  align-items: center
+  border-radius: 8px
+  border: none
+  display: flex
+  position: relative
+  flex-direction: row
+  font-weight: 500
+  font-family: roboto
+  min-width: 180px
+  justify-content: center
+  padding: 0.5rem 1rem
+
+  &:hover
+    transition-duration: 0.25s
+
+  &:disabled
+    background-color: $grey
+    &:hover
+      background-color: $grey
+
+.primaryButton
+  background-color: $primaryBlue
+  color: $white
+  &:hover
+    background-color: $primaryBlueHover
+
+.secondaryButton
+  background-color: $transparent
+  outline: 2px solid $primaryBlue
+  color: $primaryBlue
+  &:hover
+    background-color: $secondaryBlueHover
+
+
+.tertiaryButton
+  background-color: $tertiaryBlue
+  color: $white
+  &:hover
+    background-color: $tertiaryBlueHover
+
+.iconButton
+  padding: 0.5rem 1rem
+  min-width: 100%
+
+  &:hover
+    background-color: $grey
+  
