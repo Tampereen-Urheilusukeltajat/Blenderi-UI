@@ -5,6 +5,7 @@ import { CustomLink } from '../components/NavbarLink';
 import '../styles/navbar/navbar.css';
 
 const onLogoutClick = (): void => {
+  // TODO Send logout call to the backend.
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
 };
