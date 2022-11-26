@@ -9,6 +9,7 @@ import { useCallback } from 'react';
 
 import '../styles/user/user.css';
 import { ButtonType, PrimaryButton } from './common/Buttons';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
@@ -23,26 +24,32 @@ type SignUpFormFields = {
 };
 
 const SignUpForm = (): JSX.Element => {
-  const handleSubmit = useCallback(async (values: SignUpFormFields) => {
-    const signUpResponse = await postAsync<SignUpResponse, SignUpRequest>(
-      '/api/user/',
-      values
-    );
+  const navigate = useNavigate();
 
-    if (signUpResponse.data !== undefined) {
-      const loginResponse = await postAsync<LoginResponse, LoginRequest>(
-        '/api/login/',
-        {
-          email: signUpResponse.data.email,
-          password: '',
-        }
+  const handleSubmit = useCallback(
+    async (values: SignUpFormFields) => {
+      const signUpResponse = await postAsync<SignUpResponse, SignUpRequest>(
+        '/api/user/',
+        values
       );
-      if (loginResponse.data !== undefined) {
-        localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
-        localStorage.setItem('accessToken', loginResponse.data.accessToken);
+
+      if (signUpResponse.data !== undefined) {
+        const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+          '/api/login/',
+          {
+            email: values.email,
+            password: values.password,
+          }
+        );
+        if (loginResponse.data !== undefined) {
+          localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+          localStorage.setItem('accessToken', loginResponse.data.accessToken);
+          navigate('/logbook');
+        }
       }
-    }
-  }, []);
+    },
+    [navigate]
+  );
 
   return (
     <div id="signUpForm" className="mt-5">

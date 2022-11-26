@@ -7,6 +7,7 @@ import { postAsync } from '../lib/apiRequests/api';
 import LoginResponse from './common/LoginResponse';
 import LoginRequest from './common/LoginRequest';
 import { ButtonType, PrimaryButton } from './common/Buttons';
+import { useNavigate } from 'react-router-dom';
 
 type SignInFormFiels = {
   email: string;
@@ -18,20 +19,26 @@ const SignInFormHeader = (): JSX.Element => {
 };
 
 const SignInForm = (): JSX.Element => {
-  const handleSubmit = useCallback(async (formFields: SignInFormFiels) => {
-    const loginResponse = await postAsync<LoginResponse, LoginRequest>(
-      '/api/login/',
-      {
-        email: formFields.email,
-        password: formFields.password,
-      }
-    );
+  const navigate = useNavigate();
 
-    if (loginResponse.data !== undefined) {
-      localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
-      localStorage.setItem('accessToken', loginResponse.data.accessToken);
-    }
-  }, []);
+  const handleSubmit = useCallback(
+    async (formFields: SignInFormFiels) => {
+      const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+        '/api/login/',
+        {
+          email: formFields.email,
+          password: formFields.password,
+        }
+      );
+
+      if (loginResponse.data !== undefined) {
+        localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+        localStorage.setItem('accessToken', loginResponse.data.accessToken);
+        navigate('/logbook');
+      }
+    },
+    [navigate]
+  );
 
   return (
     <div id="signInForm">
