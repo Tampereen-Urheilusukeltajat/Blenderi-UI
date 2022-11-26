@@ -1,82 +1,104 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import '../index.css';
+import '../styles/user/user.css';
+import { Field, Formik } from 'formik';
+import { postAsync } from '../lib/apiRequests/api';
+import LoginResponse from './common/LoginResponse';
+import LoginRequest from './common/LoginRequest';
+import { ButtonType, PrimaryButton } from './common/Buttons';
+import { useNavigate } from 'react-router-dom';
+
+type SignInFormFiels = {
+  email: string;
+  password: string;
+};
 
 const SignInFormHeader = (): JSX.Element => {
   return <h3 className="pb-5">Kirjaudu sisään</h3>;
 };
 
 const SignInForm = (): JSX.Element => {
-  const [values, setValues] = useState({
-    userId: '',
-    password: '',
-  });
+  const navigate = useNavigate();
 
-  const handleUserIdInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      userId: event.target.value,
-    }));
-  };
+  const handleSubmit = useCallback(
+    async (formFields: SignInFormFiels) => {
+      const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+        '/api/login/',
+        {
+          email: formFields.email,
+          password: formFields.password,
+        }
+      );
 
-  const handlePasswordInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.persist();
-    setValues((values) => ({
-      ...values,
-      password: event.target.value,
-    }));
-  };
+      if (loginResponse.data !== undefined) {
+        localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+        localStorage.setItem('accessToken', loginResponse.data.accessToken);
+        navigate('/logbook');
+      }
+    },
+    [navigate]
+  );
 
   return (
     <div id="signInForm">
       <SignInFormHeader />
-      <Form>
-        <Form.Group className="mb-3" controlId="formUserId">
-          <Form.Label>Käyttäjätunnus</Form.Label>
-          <Form.Control
-            aria-label="Käyttäjätunnus"
-            type="text"
-            placeholder=""
-            value={values.userId}
-            onChange={handleUserIdInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Anna käyttäjätunnus.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-5" controlId="formPassword">
-          <Form.Label>Salasana</Form.Label>
-          <Form.Control
-            aria-label="Salasana"
-            type="password"
-            placeholder=""
-            value={values.password}
-            onChange={handlePasswordInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Anna salasana.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <div className="d-flex justify-content-center">
-          <Button
-            id="signInButton"
-            className="mb-5 button"
-            aria-label="Kirjaudu sisään"
-            variant="primary"
-            type="submit"
-          >
-            Kirjaudu sisään
-          </Button>
-        </div>
-      </Form>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validate={() => {
+          // TODO: Add validation checks
+          const errors = {};
+          return errors;
+        }}
+        onSubmit={async (values) => handleSubmit(values)}
+      >
+        {(form) => (
+          <Form onSubmit={form.handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Sähköpostiosoite</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Sähköpostiosoite"
+                id="email"
+                name="email"
+                type="email"
+                placeholder=""
+                value={form.values.email}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna käyttäjätunnus.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-5">
+              <Form.Label>Salasana</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Salasana"
+                id="password"
+                name="password"
+                type="password"
+                placeholder=""
+                value={form.values.password}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna salasana.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="d-flex justify-content-center">
+              <PrimaryButton text="Kirjaudu sisään" type={ButtonType.submit} />
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

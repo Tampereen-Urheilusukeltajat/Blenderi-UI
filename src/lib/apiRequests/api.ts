@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const AXIOS_CONFIG: AxiosRequestConfig = {
+export const AXIOS_CONFIG: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_BACKEND_URL,
 };
 

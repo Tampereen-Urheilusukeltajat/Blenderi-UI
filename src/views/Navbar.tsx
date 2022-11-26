@@ -32,7 +32,6 @@ export const Navbar = (): JSX.Element | null => {
           <CustomLink to="/user">
             <div className="iconLink">
               <BsPersonCircle size={35} />
-              {/* TODO get user info from state. */}
               <span>Seppo Sukeltaja</span>
             </div>
           </CustomLink>
