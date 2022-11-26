@@ -60,8 +60,9 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
 
   // User has managed to select cylinder that has invalid id from the dropdown menu
   // => programming error
-  if (storageCylinder === undefined)
+  if (storageCylinder === undefined) {
     throw new Error('Storage cylinder not found!');
+  }
 
   const gasPriceEurCents = prices.find(
     (price) => price.gas === storageCylinder.gas
