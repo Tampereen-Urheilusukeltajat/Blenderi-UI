@@ -1,9 +1,13 @@
 .newCylinderSetForm {
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  padding: 1rem;
 }
-.newCylinderSetForm .flexRow {
+.newCylinderSetForm .divingCylinderFlexRow {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -11,7 +15,7 @@
   align-items: flex-end;
   margin: 0 0 1rem 0;
 }
-.newCylinderSetForm .gridRow {
+.newCylinderSetForm .divingCylinderGridRow {
   display: grid;
   grid-template-columns: 15% 20% 20% 20% 20% 5%;
   margin: 0 0 1rem 0;

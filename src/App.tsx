@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
-import LogBook from './views/LogBook';
+import { BlenderLogBook } from './views/BlenderLogBook';
 import { Navbar } from './views/Navbar';
 import {
   QueryClient,
@@ -12,7 +12,7 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
-import { User } from './components/User/user';
+import { User } from './components/User/User';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -31,7 +31,7 @@ const Content = (): JSX.Element => {
           />
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
-          <Route path="logbook" element={<LogBook />} />
+          <Route path="blender-logbook" element={<BlenderLogBook />} />
           <Route path="user" element={<User />} />
         </Routes>
       </Container>

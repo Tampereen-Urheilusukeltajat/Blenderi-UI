@@ -21,7 +21,8 @@ export const Navbar = (): JSX.Element | null => {
     <nav className="nav">
       <ul className="container">
         <div className="leftPart">
-          <CustomLink to="/logbook">Täyttöpäiväkirja</CustomLink>
+          <CustomLink to="/logbook">Paineilmatäyttö</CustomLink>
+          <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
           <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
 
           {/* Not part of the MVP

@@ -1,16 +1,22 @@
 $transparentColor: rgba(0, 0, 0, 0)
-$greyLight: #f1f1f1
-$white: #ffffff
+$evenRow: #D9E1E947
+$oddRow: #FFFFFF
+$titleBarBlue: #D9E1E9
+$borderColor: #D6D6D6
 
 .no-background:not(:hover)
   background-color: $transparentColor !important
   border-color: $transparentColor !important
 
 .table
+  border: 1px solid $borderColor
   white-space: nowrap
 
-  .greyBackground
-    background-color: $greyLight
+  .tableHead
+    background-color: $titleBarBlue
 
-  .whiteBackground
-    background-color: $white
+  .evenRow
+    background-color: $evenRow
+
+  .oddRow
+    background-color: $oddRow

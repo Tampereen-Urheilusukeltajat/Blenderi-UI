@@ -4,11 +4,15 @@
 }
 
 .table {
+  border: 1px solid #D6D6D6;
   white-space: nowrap;
 }
-.table .greyBackground {
-  background-color: #f1f1f1;
+.table .tableHead {
+  background-color: #D9E1E9;
 }
-.table .whiteBackground {
-  background-color: #ffffff;
+.table .evenRow {
+  background-color: rgba(217, 225, 233, 0.2784313725);
+}
+.table .oddRow {
+  background-color: #FFFFFF;
 }

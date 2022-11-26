@@ -12,14 +12,14 @@
   width: 660px;
 }
 
-.flexRow {
+.userFlexRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 0 0 0;
 }
 
-.flexColumn {
+.userFlexColumn {
   display: flex;
   flex-direction: column;
 }

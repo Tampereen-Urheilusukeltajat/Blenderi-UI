@@ -31,5 +31,9 @@ module.exports = {
     '@typescript-eslint/member-delimiter-style': 'off',
     'multiline-ternary': 'off', // Conflicts with prettier
     '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/strict-boolean-expressions': [
+      'error',
+      { allowNullableObject: true },
+    ],
   },
 };
