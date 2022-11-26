@@ -5,8 +5,8 @@ import { CustomLink } from '../components/NavbarLink';
 import '../styles/navbar/navbar.css';
 
 const onLogoutClick = (): void => {
-  // eslint-disable-next-line no-console
-  console.log('Log out button clicked.');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
 };
 
 export const Navbar = (): JSX.Element | null => {
