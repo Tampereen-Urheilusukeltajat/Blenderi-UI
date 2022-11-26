@@ -12,19 +12,15 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import getCookie from './components/common/GetCookie';
 import { getUser, User } from './lib/apiRequests/userRequests';
 import { AXIOS_CONFIG } from './lib/apiRequests/api';
-import { UserComp } from './components/User/user';
+import { UserSettings } from './components/User/user';
 
 const QUERY_CLIENT = new QueryClient();
 
-type ContentCompProps = {
-  user: User | undefined;
-};
-
-const Content: FC<ContentCompProps> = (props): JSX.Element => {
+const Content = (): JSX.Element => {
   const isFetching = useIsFetching();
 
   return (
@@ -35,12 +31,12 @@ const Content: FC<ContentCompProps> = (props): JSX.Element => {
           <Route path="/" element={<Home />} />
           <Route
             path="diving-cylinder-set"
-            element={<DivingCylinderSetManagement user={props.user} />}
+            element={<DivingCylinderSetManagement />}
           />
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
-          <Route path="logbook" element={<LogBook user={props.user} />} />
-          <Route path="user" element={<UserComp />} />
+          <Route path="logbook" element={<LogBook />} />
+          <Route path="user" element={<UserSettings />} />
         </Routes>
       </Container>
     </main>
@@ -66,8 +62,8 @@ const App = (): JSX.Element => {
   }, [userId, currentUser]);
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
-      <Navbar user={currentUser} />
-      <Content user={currentUser} />
+      <Navbar />
+      <Content />
     </QueryClientProvider>
   );
 };

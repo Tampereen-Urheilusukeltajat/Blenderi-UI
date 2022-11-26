@@ -1,31 +1,56 @@
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import { postAsync } from '../lib/apiRequests/api';
 import LoginResponse from './common/LoginResponse';
 import LoginRequest from './common/LoginRequest';
-import { useNavigate } from 'react-router-dom';
 import SignUpResponse from './common/SignUpResponse';
 import SignUpRequest from './common/SignUpRequest';
+import { useCallback } from 'react';
+
+import '../styles/user/user.css';
+import { ButtonType, PrimaryButton } from './common/Buttons';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
 };
 
-const SignUpForm = (): JSX.Element => {
-  const navigate = useNavigate();
+type SignUpFormFields = {
+  forename: string;
+  surname: string;
+  email: string;
+  phone: string;
+  password: string;
+};
 
-  // needed for /api/login
-  let email = '';
-  let pass = '';
+const SignUpForm = (): JSX.Element => {
+  const handleSubmit = useCallback(async (values: SignUpFormFields) => {
+    const signUpResponse = await postAsync<SignUpResponse, SignUpRequest>(
+      '/api/user/',
+      values
+    );
+
+    if (signUpResponse.data !== undefined) {
+      const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+        '/api/login/',
+        {
+          email: signUpResponse.data.email,
+          password: '',
+        }
+      );
+      if (loginResponse.data !== undefined) {
+        localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+        localStorage.setItem('accessToken', loginResponse.data.accessToken);
+      }
+    }
+  }, []);
 
   return (
     <div id="signUpForm" className="mt-5">
       <SignUpFormHeader />
       <Formik
         initialValues={{
-          firstName: '',
-          lastName: '',
+          forename: '',
+          surname: '',
           email: '',
           phone: '',
           password: '',
@@ -36,72 +61,50 @@ const SignUpForm = (): JSX.Element => {
           const errors = {};
           return errors;
         }}
-        onSubmit={async (values, actions) => {
-          email = values.email;
-          pass = values.password;
-          postAsync<SignUpResponse, SignUpRequest>('/api/user/', {
-            forename: values.firstName,
-            surname: values.lastName,
-            email: values.email,
-            phone: values.phone,
-            password: values.password,
-          })
-            .then((signUpResponse) => {
-              // Needed to get user data
-              document.cookie = `userId=${signUpResponse.data.id}; SameSite=None; Secure`;
-              postAsync<LoginResponse, LoginRequest>('/api/login', {
-                email,
-                password: pass,
-              })
-                .then((loginResponse) => {
-                  // Session tokens
-                  document.cookie = `refreshToken=${loginResponse.data.refreshToken}; SameSite=None; Secure`;
-                  document.cookie = `accessToken=${loginResponse.data.accessToken}; SameSite=None; Secure`;
-                  navigate(-1);
-                  navigate('/logbook');
-                })
-                .catch((err) => alert(err));
-            })
-            .catch((err) => alert(err));
-        }}
+        onSubmit={async (values) => handleSubmit(values)}
       >
         {(form) => (
           <Form onSubmit={form.handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Etunimi</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Etunimi"
-                id="firstName"
-                name="firstName"
+                id="forename"
+                name="forename"
                 type="text"
                 placeholder=""
-                value={form.values.firstName}
+                value={form.values.forename}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna etunimi.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Sukunimi</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Sukunimi"
-                id="lastName"
-                name="lastName"
+                id="surname"
+                name="surname"
                 type="text"
                 placeholder=""
-                value={form.values.lastName}
+                value={form.values.surname}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna sukunimi.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Sähköpostiosoite</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Sähköpostiosoite"
                 id="email"
                 name="email"
@@ -109,15 +112,17 @@ const SignUpForm = (): JSX.Element => {
                 placeholder=""
                 value={form.values.email}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna sähköpostiosoite.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Puhelinnumero</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Puhelinnumero"
                 id="phone"
                 name="phone"
@@ -125,15 +130,17 @@ const SignUpForm = (): JSX.Element => {
                 placeholder=""
                 value={form.values.phone}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna sähköpostiosoite.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Salasana</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Salasana"
                 id="password"
                 name="password"
@@ -141,15 +148,17 @@ const SignUpForm = (): JSX.Element => {
                 placeholder=""
                 value={form.values.password}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna salasana.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-5">
               <Form.Label>Salasana uudelleen</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Salasana uudelleen"
                 id="repeatPassword"
                 name="repeatPassword"
@@ -158,20 +167,13 @@ const SignUpForm = (): JSX.Element => {
                 value={form.values.repeatPassword}
                 onChange={form.handleChange}
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Toista salasana uudelleen.
               </Form.Control.Feedback>
             </Form.Group>
             <div className="d-flex justify-content-center mb-5">
-              <Button
-                className="button"
-                aria-label="Luo käyttäjä"
-                variant="primary"
-                type="submit"
-              >
-                Luo käyttäjä
-              </Button>
+              <PrimaryButton text="Luo käyttäjä" type={ButtonType.submit} />
             </div>
           </Form>
         )}

@@ -1,9 +1,7 @@
-import { FC } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 import { TertiaryButton } from '../components/common/Buttons';
 import { CustomLink } from '../components/NavbarLink';
-import { User } from '../lib/apiRequests/userRequests';
 import '../styles/navbar/navbar.css';
 
 const onLogoutClick = (): void => {
@@ -11,11 +9,7 @@ const onLogoutClick = (): void => {
   console.log('Log out button clicked.');
 };
 
-type NavbarCompProps = {
-  user: User | undefined;
-};
-
-export const Navbar: FC<NavbarCompProps> = (props): JSX.Element | null => {
+export const Navbar = (): JSX.Element | null => {
   // TODO refactor to to see if user is logged in.
   // Don't show navbar on register and login view.
   const path = useLocation().pathname;
@@ -38,9 +32,7 @@ export const Navbar: FC<NavbarCompProps> = (props): JSX.Element | null => {
           <CustomLink to="/user">
             <div className="iconLink">
               <BsPersonCircle size={35} />
-              <span>
-                {props.user?.forename ?? ''} {props.user?.surname ?? ''}
-              </span>
+              <span>Seppo Sukeltaja</span>
             </div>
           </CustomLink>
           <TertiaryButton onClick={onLogoutClick} text="Kirjaudu ulos" />

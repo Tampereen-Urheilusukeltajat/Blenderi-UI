@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import '../index.css';
-import { Formik } from 'formik';
+import '../styles/user/user.css';
+import { Field, Formik } from 'formik';
 import { postAsync } from '../lib/apiRequests/api';
+import LoginResponse from './common/LoginResponse';
+import LoginRequest from './common/LoginRequest';
+import { ButtonType, PrimaryButton } from './common/Buttons';
+
+type SignInFormFiels = {
+  email: string;
+  password: string;
+};
 
 const SignInFormHeader = (): JSX.Element => {
   return <h3 className="pb-5">Kirjaudu sisään</h3>;
 };
 
 const SignInForm = (): JSX.Element => {
+  const handleSubmit = useCallback(async (formFields: SignInFormFiels) => {
+    const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+      '/api/login/',
+      {
+        email: formFields.email,
+        password: formFields.password,
+      }
+    );
+
+    if (loginResponse.data !== undefined) {
+      localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+      localStorage.setItem('accessToken', loginResponse.data.accessToken);
+    }
+  }, []);
+
   return (
     <div id="signInForm">
       <SignInFormHeader />
@@ -23,20 +46,14 @@ const SignInForm = (): JSX.Element => {
           const errors = {};
           return errors;
         }}
-        onSubmit={async (values, actions) => {
-          postAsync('/api/user/', {
-            email: values.email,
-            password: values.password,
-          })
-            .then((response) => alert(JSON.stringify(response, null, 2)))
-            .catch((err) => alert(err));
-        }}
+        onSubmit={async (values) => handleSubmit(values)}
       >
         {(form) => (
           <Form onSubmit={form.handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Käyttäjätunnus</Form.Label>
-              <Form.Control
+              <Form.Label>Sähköpostiosoite</Form.Label>
+              <Field
+                className="form-control"
                 aria-label="Sähköpostiosoite"
                 id="email"
                 name="email"
@@ -44,15 +61,17 @@ const SignInForm = (): JSX.Element => {
                 placeholder=""
                 value={form.values.email}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna käyttäjätunnus.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-5">
               <Form.Label>Salasana</Form.Label>
-              <Form.Control
+              <Field
+                className="form-control"
                 aria-label="Salasana"
                 id="password"
                 name="password"
@@ -60,22 +79,15 @@ const SignInForm = (): JSX.Element => {
                 placeholder=""
                 value={form.values.password}
                 onChange={form.handleChange}
+                autoComplete="on"
                 required
-              ></Form.Control>
+              ></Field>
               <Form.Control.Feedback type="invalid">
                 Anna salasana.
               </Form.Control.Feedback>
             </Form.Group>
             <div className="d-flex justify-content-center">
-              <Button
-                id="signInButton"
-                className="mb-5 button"
-                aria-label="Kirjaudu sisään"
-                variant="primary"
-                type="submit"
-              >
-                Kirjaudu sisään
-              </Button>
+              <PrimaryButton text="Kirjaudu sisään" type={ButtonType.submit} />
             </div>
           </Form>
         )}
