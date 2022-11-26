@@ -12,7 +12,11 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
-import { User } from './components/User/User';
+import { useEffect, useState } from 'react';
+import getCookie from './components/common/GetCookie';
+import { getUser, User } from './lib/apiRequests/userRequests';
+import { AXIOS_CONFIG } from './lib/apiRequests/api';
+import { UserSettings } from './components/User/User';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -32,7 +36,7 @@ const Content = (): JSX.Element => {
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
           <Route path="blender-logbook" element={<BlenderLogBook />} />
-          <Route path="user" element={<User />} />
+          <Route path="user" element={<UserSettings />} />
         </Routes>
       </Container>
     </main>
@@ -40,6 +44,22 @@ const Content = (): JSX.Element => {
 };
 
 const App = (): JSX.Element => {
+  const [userId, setUserId] = useState<string>('');
+  const [currentUser, setCurrentUser] = useState<User>();
+
+  useEffect(() => {
+    if (currentUser === undefined) {
+      const accessToken = getCookie('accessToken');
+      const id = getCookie('userId');
+      AXIOS_CONFIG.headers = { Authorization: `Bearer ${accessToken}` };
+      setUserId(id);
+      getUser(userId, accessToken)
+        .then((userResponse) => {
+          setCurrentUser(userResponse.data);
+        })
+        .catch((err) => alert(err));
+    }
+  }, [userId, currentUser]);
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
       <Navbar />

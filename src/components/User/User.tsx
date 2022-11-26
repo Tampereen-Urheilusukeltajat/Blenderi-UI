@@ -280,7 +280,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
   );
 };
 
-export const User: React.FC = () => {
+export const UserSettings: React.FC = () => {
   const handleFormSubmit = useCallback(() => {
     // TODO send updates to backend
     // TODO make sure new password fields are matching

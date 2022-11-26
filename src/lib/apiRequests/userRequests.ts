@@ -1,13 +1,19 @@
 import { AxiosResponse } from 'axios';
 import { getAsync } from './api';
 
-type User = {
+export type User = {
+  id: string;
   email: string;
+  phone: string;
   forename: string;
   surname: string;
-  isAdmin: boolean;
-  isBlender: boolean;
+  phoneNumber: string;
+  isAdmin: true;
+  isBlender: true;
+  archivedAt: string;
 };
 
-export const getUser = async (userId: string): Promise<AxiosResponse<User>> =>
-  getAsync<User>(`/api/user/${userId}`);
+export const getUser = async (
+  userId: string,
+  accessToken: string
+): Promise<AxiosResponse<User>> => getAsync<User>(`/api/user/${userId}`);

@@ -1,150 +1,190 @@
-import React, { useCallback, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Field, Formik } from 'formik';
+import { postAsync } from '../lib/apiRequests/api';
+import LoginResponse from './common/LoginResponse';
+import LoginRequest from './common/LoginRequest';
+import SignUpResponse from './common/SignUpResponse';
+import SignUpRequest from './common/SignUpRequest';
+import { useCallback } from 'react';
+
+import '../styles/user/user.css';
+import { ButtonType, PrimaryButton } from './common/Buttons';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
 };
 
+type SignUpFormFields = {
+  forename: string;
+  surname: string;
+  email: string;
+  phone: string;
+  password: string;
+};
+
 const SignUpForm = (): JSX.Element => {
-  const [values, setValues] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    password: '',
-    passwordConfirm: '',
-  });
+  const navigate = useNavigate();
 
-  const handleFirstNameInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValues = { ...values };
-      newValues.firstName = e.target.value;
-      setValues(newValues);
-    },
-    [values]
-  );
+  const handleSubmit = useCallback(
+    async (values: SignUpFormFields) => {
+      const signUpResponse = await postAsync<SignUpResponse, SignUpRequest>(
+        '/api/user/',
+        values
+      );
 
-  const handleLastNameInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValues = { ...values };
-      newValues.lastName = e.target.value;
-      setValues(newValues);
+      if (signUpResponse.data !== undefined) {
+        const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+          '/api/login/',
+          {
+            email: values.email,
+            password: values.password,
+          }
+        );
+        if (loginResponse.data !== undefined) {
+          localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+          localStorage.setItem('accessToken', loginResponse.data.accessToken);
+          navigate('/logbook');
+        }
+      }
     },
-    [values]
-  );
-
-  const handleUserNameInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValues = { ...values };
-      newValues.username = e.target.value;
-      setValues(newValues);
-    },
-    [values]
-  );
-
-  const handlePasswordInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValues = { ...values };
-      newValues.password = e.target.value;
-      setValues(newValues);
-    },
-    [values]
-  );
-
-  const handlePasswordConfirmInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValues = { ...values };
-      newValues.passwordConfirm = e.target.value;
-      setValues(newValues);
-    },
-    [values]
+    [navigate]
   );
 
   return (
     <div id="signUpForm" className="mt-5">
       <SignUpFormHeader />
-      <Form>
-        <Form.Group className="mb-3" controlId="formFirstName">
-          <Form.Label>Etunimi</Form.Label>
-          <Form.Control
-            aria-label="Etunimi"
-            type="text"
-            placeholder=""
-            value={values.firstName}
-            onChange={handleFirstNameInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Anna etunimi.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formLastName">
-          <Form.Label>Sukunimi</Form.Label>
-          <Form.Control
-            aria-label="Sukunimi"
-            type="text"
-            placeholder=""
-            value={values.lastName}
-            onChange={handleLastNameInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Anna sukunimi.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formUserId">
-          <Form.Label>Käyttäjätunnus</Form.Label>
-          <Form.Control
-            aria-label="Käyttäjätunnus"
-            type="text"
-            placeholder=""
-            value={values.username}
-            onChange={handleUserNameInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Anna käyttäjätunnus.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formPassword">
-          <Form.Label>Salasana</Form.Label>
-          <Form.Control
-            aria-label="Salasana"
-            type="password"
-            placeholder=""
-            value={values.password}
-            onChange={handlePasswordInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Anna salasana.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-5" controlId="formConfirmPassword">
-          <Form.Label>Salasana uudelleen</Form.Label>
-          <Form.Control
-            aria-label="Salasana uudelleen"
-            type="password"
-            placeholder=""
-            value={values.passwordConfirm}
-            onChange={handlePasswordConfirmInputChange}
-            required
-          ></Form.Control>
-          <Form.Control.Feedback type="invalid">
-            Toista salasana uudelleen.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <div className="d-flex justify-content-center mb-5">
-          <Button
-            className="button"
-            aria-label="Luo käyttäjä"
-            variant="primary"
-            type="submit"
-          >
-            Luo käyttäjä
-          </Button>
-        </div>
-      </Form>
+      <Formik
+        initialValues={{
+          forename: '',
+          surname: '',
+          email: '',
+          phone: '',
+          password: '',
+          repeatPassword: '',
+        }}
+        validate={() => {
+          // TODO: Add validation checks
+          const errors = {};
+          return errors;
+        }}
+        onSubmit={async (values) => handleSubmit(values)}
+      >
+        {(form) => (
+          <Form onSubmit={form.handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Etunimi</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Etunimi"
+                id="forename"
+                name="forename"
+                type="text"
+                placeholder=""
+                value={form.values.forename}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna etunimi.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Sukunimi</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Sukunimi"
+                id="surname"
+                name="surname"
+                type="text"
+                placeholder=""
+                value={form.values.surname}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna sukunimi.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Sähköpostiosoite</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Sähköpostiosoite"
+                id="email"
+                name="email"
+                type="email"
+                placeholder=""
+                value={form.values.email}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna sähköpostiosoite.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Puhelinnumero</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Puhelinnumero"
+                id="phone"
+                name="phone"
+                type="phone"
+                placeholder=""
+                value={form.values.phone}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna sähköpostiosoite.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Salasana</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Salasana"
+                id="password"
+                name="password"
+                type="password"
+                placeholder=""
+                value={form.values.password}
+                onChange={form.handleChange}
+                autoComplete="on"
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Anna salasana.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-5">
+              <Form.Label>Salasana uudelleen</Form.Label>
+              <Field
+                className="form-control"
+                aria-label="Salasana uudelleen"
+                id="repeatPassword"
+                name="repeatPassword"
+                type="password"
+                placeholder=""
+                value={form.values.repeatPassword}
+                onChange={form.handleChange}
+                required
+              ></Field>
+              <Form.Control.Feedback type="invalid">
+                Toista salasana uudelleen.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div className="d-flex justify-content-center mb-5">
+              <PrimaryButton text="Luo käyttäjä" type={ButtonType.submit} />
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
