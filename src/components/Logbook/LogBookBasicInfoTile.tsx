@@ -12,10 +12,10 @@ export const LogBookBasicInfoTile: React.FC<LogBookBasicInfoTileProps> = ({
       <h2>Esitiedot</h2>
       <div className="basicInfoGridRow">
         <TextInput
-          errorText={errors.gas}
+          name={'gas'}
           label="Kaasu"
-          placeholder="Esim. EAN32"
-          name="gas"
+          disabled
+          placeholder="Paineilma"
         />
         <TextInput
           errorText={errors.additionalInformation}

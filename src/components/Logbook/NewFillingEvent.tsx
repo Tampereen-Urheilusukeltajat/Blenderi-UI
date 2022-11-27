@@ -1,9 +1,8 @@
 import { Formik } from 'formik';
 import { useCallback } from 'react';
 import { Form } from 'react-bootstrap';
-import { AvailableGasses, mapGasToName } from '../../lib/utils';
 import { LogBookFillingTile } from '../BlenderLogbook/components/FillingTile';
-import { SavingTile } from '../BlenderLogbook/components/SavingTile';
+import { LogBookSavingTile } from '../BlenderLogbook/components/SavingTile';
 import { LogBookBasicInfoTile } from './LogBookBasicInfoTile';
 
 type FillingEventBasicInfo = {
@@ -56,47 +55,6 @@ export const NewFillingEvent = (): JSX.Element => {
     console.log('TODO');
   }, []);
 
-  const storageCylinders = [
-    {
-      gas: AvailableGasses.oxygen,
-      id: '1',
-      maxPressure: 200,
-      name: '1',
-      volume: 50,
-    },
-    {
-      gas: AvailableGasses.helium,
-      id: '2',
-      maxPressure: 200,
-      name: '2',
-      volume: 50,
-    },
-    {
-      gas: AvailableGasses.argon,
-      id: '3',
-      maxPressure: 200,
-      name: '3',
-      volume: 50,
-    },
-  ];
-  const prices = [
-    {
-      gas: AvailableGasses.oxygen,
-      name: mapGasToName(AvailableGasses.oxygen),
-      priceEurCents: 1,
-    },
-    {
-      gas: AvailableGasses.helium,
-      name: mapGasToName(AvailableGasses.helium),
-      priceEurCents: 5,
-    },
-    {
-      gas: AvailableGasses.argon,
-      name: mapGasToName(AvailableGasses.argon),
-      priceEurCents: 2,
-    },
-  ];
-
   return (
     <div>
       <h1 className="pb-4">Luo uusi täyttötapahtuma</h1>
@@ -117,21 +75,13 @@ export const NewFillingEvent = (): JSX.Element => {
           <Form>
             <div className="fillingEventFlexRow">
               <LogBookBasicInfoTile errors={errors} values={values} />
-              <SavingTile
-                totalPrice={values.fillingEventRows
-                  .map((row) => row.priceEurCents)
-                  .reduce((partialSum, price) => partialSum + price, 0)}
-                errors={errors}
-                values={values}
-              />
+              <LogBookSavingTile errors={errors} values={values} />
             </div>
             <div className="fillingEventFlexRow">
               <LogBookFillingTile
                 setFieldValue={setFieldValue}
                 errors={errors}
                 values={values}
-                storageCylinders={storageCylinders}
-                prices={prices}
               />
             </div>
           </Form>

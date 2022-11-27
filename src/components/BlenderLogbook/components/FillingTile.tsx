@@ -37,6 +37,18 @@ type FillingEventRowProps = CommonTileProps & {
   prices: GasPrice[];
 };
 
+type LogBookFillingEventRowProps = CommonTileProps & {
+  index: number;
+  replace: (index: number, newValue: unknown) => void;
+  remove: (index: number) => void;
+  push: (value: unknown) => void;
+  setFieldValue: (
+    field: string,
+    value: unknown,
+    shouldValidate?: boolean
+  ) => void;
+};
+
 const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   index,
   errors,
@@ -171,90 +183,16 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   );
 };
 
-const LogBookFillingEventRowComponent: React.FC<FillingEventRowProps> = ({
-  index,
-  errors,
-  values,
-  replace,
-  remove,
-  push,
-  setFieldValue,
-  storageCylinders,
-  prices,
-}) => {
-  const startPressure = values.fillingEventRows.at(index)?.startPressure;
-  const endPressure = values.fillingEventRows.at(index)?.endPressure;
-  const storageCylinderId =
-    values.fillingEventRows.at(index)?.storageCylinderId;
-
-  // TODO Query these based on given storageCylinderId
-  const storageCylinder = storageCylinders.find(
-    (sc) => sc.id === storageCylinderId
-  );
-
-  // User has managed to select cylinder that has invalid id from the dropdown menu
-  // => programming error
-  if (storageCylinder === undefined) {
-    throw new Error('Storage cylinder not found!');
-  }
-
-  const gasPriceEurCents = prices.find(
-    (price) => price.gas === storageCylinder.gas
-  )?.priceEurCents;
-  const storageCylinderVolume = storageCylinder.volume;
-
-  // Calculate price and consumption when row values change
-  useEffect(() => {
-    setFieldValue(
-      `fillingEventRows.${index}.priceEurCents`,
-      formatEurCentsToEur(
-        calculateGasConsumption(
-          storageCylinderVolume,
-          startPressure ?? 0,
-          endPressure ?? 0
-        ) * (gasPriceEurCents ?? 0)
-      )
-    );
-  }, [
-    startPressure,
-    endPressure,
-    storageCylinderId,
-    setFieldValue,
-    index,
-    gasPriceEurCents,
-    storageCylinderVolume,
-  ]);
-  useEffect(() => {
-    setFieldValue(
-      `fillingEventRows.${index}.consumption`,
-      calculateGasConsumption(
-        storageCylinderVolume,
-        startPressure ?? 0,
-        endPressure ?? 0
-      )
-    );
-  }, [
-    startPressure,
-    endPressure,
-    storageCylinderId,
-    setFieldValue,
-    index,
-    gasPriceEurCents,
-    storageCylinderVolume,
-  ]);
+const LogBookFillingEventRowComponent: React.FC<
+  LogBookFillingEventRowProps
+> = ({ index, errors, values, replace, remove, push }) => {
   return (
     <div>
       <div className="fillingEventGridRow">
         <DropdownMenu
           name={`fillingEventRows.${index}.storageCylinderId`}
           errorText={errors.fillingEventRows?.at(index)?.storageCylinderId}
-        >
-          {storageCylinders.map((sc) => (
-            <option key={sc.id} value={sc.id}>
-              {sc.name} ({mapGasToName(sc.gas)})
-            </option>
-          ))}
-        </DropdownMenu>
+        ></DropdownMenu>
         <IconButton
           className="deleteRowButton"
           icon={<BsTrash />}
@@ -262,7 +200,6 @@ const LogBookFillingEventRowComponent: React.FC<FillingEventRowProps> = ({
             index === 0
               ? replace(index, {
                   ...EMPTY_FILLING_EVENT_ROW,
-                  storageCylinderId: storageCylinders[0].id,
                 })
               : remove(index)
           }
@@ -274,7 +211,6 @@ const LogBookFillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           onClick={() =>
             push({
               ...EMPTY_FILLING_EVENT_ROW,
-              storageCylinderId: storageCylinders[0].id,
             })
           }
           type={ButtonType.button}
@@ -283,6 +219,14 @@ const LogBookFillingEventRowComponent: React.FC<FillingEventRowProps> = ({
       ) : null}
     </div>
   );
+};
+
+type LogBookFillingTileProps = CommonTileProps & {
+  setFieldValue: (
+    field: string,
+    value: unknown,
+    shouldValidate?: boolean
+  ) => void;
 };
 
 type FillingTileProps = CommonTileProps & {
@@ -337,12 +281,10 @@ export const FillingTile: React.FC<FillingTileProps> = ({
   );
 };
 
-export const LogBookFillingTile: React.FC<FillingTileProps> = ({
+export const LogBookFillingTile: React.FC<LogBookFillingTileProps> = ({
   errors,
   setFieldValue,
   values,
-  storageCylinders,
-  prices,
 }) => {
   return (
     <div className="tileWrapper">
@@ -356,15 +298,13 @@ export const LogBookFillingTile: React.FC<FillingTileProps> = ({
           <>
             {values.fillingEventRows.map((row, index) => (
               <LogBookFillingEventRowComponent
-                key={`${row.storageCylinderId}-${index}`}
+                key={index}
                 errors={errors}
                 index={index}
                 push={push}
-                prices={prices}
                 remove={remove}
                 replace={replace}
                 setFieldValue={setFieldValue}
-                storageCylinders={storageCylinders}
                 values={values}
               />
             ))}
