@@ -1,10 +1,10 @@
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useCallback } from 'react';
-import { Form } from 'react-bootstrap';
 import { AirLogbookSavingTile } from '../BlenderLogbook/components/SavingTile';
 import { EMPTY_LOGBOOK_FILLING_EVENT_ROW } from '../BlenderLogbook/NewBlenderFillingEvent';
 import { LogbookFillingTile } from './FillingTile';
 import { LogbookBasicInfoTile } from './LogBookBasicInfoTile';
+import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -36,6 +36,9 @@ export const NewFillingEvent = (): JSX.Element => {
             },
           ],
         }}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validationSchema={AIR_FILLING_EVENT_VALIDATION_SCHEMA}
         onSubmit={handleSubmit}
       >
         {({ errors, values, setFieldValue }) => (
