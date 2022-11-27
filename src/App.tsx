@@ -1,5 +1,5 @@
 import Container from 'react-bootstrap/Container';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './views/Login';
 import SignUp from './views/SignUp';
 import { Navbar } from './views/Navbar';
@@ -73,7 +73,7 @@ const Content = (): JSX.Element => {
           />
 
           {/* 404 */}
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Container>
     </main>

@@ -30,3 +30,6 @@ export const calculateGasConsumption = (
   startPressure: number,
   endPressure: number
 ): number => (startPressure - endPressure) * cylinderVolume;
+
+export const tokenExpired = (exp: number): boolean =>
+  new Date().getTime() > exp;
