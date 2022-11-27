@@ -41,7 +41,7 @@ const TEMP_TEST_ROWS: TableRow[] = [
 export const DivingCylinderSetList = (): JSX.Element => {
   return (
     <div>
-      <h2>Omat pullot</h2>
+      <h1>Omat pullot</h1>
       <div>
         <CommonTable
           columns={DIVING_CYLINDER_SET_COLUMNS}

@@ -9,6 +9,7 @@ export enum ButtonType {
 export type CommonButtonProps = {
   className?: string;
   disabled?: boolean;
+  key?: string;
   onClick?: React.MouseEventHandler;
   type?: ButtonType;
 };
@@ -24,6 +25,7 @@ export type IconButtonProps = CommonButtonProps & {
 export const IconButton: React.FC<IconButtonProps> = ({
   className = '',
   disabled,
+  key,
   icon,
   onClick,
   type = ButtonType.button,
@@ -31,6 +33,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   <button
     className={`iconButton ${className}`}
     onClick={onClick}
+    key={key}
     disabled={disabled}
     type={type}
   >
@@ -41,6 +44,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
 export const PrimaryButton: React.FC<TextButtonProps> = ({
   className = '',
   disabled,
+  key,
   onClick,
   text,
   type = ButtonType.button,
@@ -48,6 +52,7 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
   <button
     className={`primaryButton ${className}`}
     disabled={disabled}
+    key={key}
     onClick={onClick}
     type={type}
   >
@@ -58,6 +63,7 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
 export const SecondaryButton: React.FC<TextButtonProps> = ({
   className = '',
   disabled,
+  key,
   onClick,
   text,
   type = ButtonType.button,
@@ -65,6 +71,7 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
   <button
     className={`secondaryButton ${className}`}
     disabled={disabled}
+    key={key}
     onClick={onClick}
     type={type}
   >
@@ -75,6 +82,7 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
 export const TertiaryButton: React.FC<TextButtonProps> = ({
   className = '',
   disabled,
+  key,
   onClick,
   text,
   type = ButtonType.button,
@@ -82,6 +90,7 @@ export const TertiaryButton: React.FC<TextButtonProps> = ({
   <button
     className={`tertiaryButton ${className}`}
     disabled={disabled}
+    key={key}
     onClick={onClick}
     type={type}
   >

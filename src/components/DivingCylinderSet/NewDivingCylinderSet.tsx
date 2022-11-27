@@ -34,7 +34,7 @@ const NewDivingCylinderRow = (
 ): JSX.Element => {
   return (
     <div key={index}>
-      <div className="gridRow">
+      <div className="divingCylinderGridRow">
         <div className="labelAndInput">
           <InputGroup as={Col}>
             <Field
@@ -123,9 +123,9 @@ export const NewDivingCylinderSet = (): JSX.Element => {
       >
         {({ values }) => (
           <Form className="newCylinderSetForm">
-            <div className="flexRow">
+            <div className="divingCylinderFlexRow">
               <div className="labelAndInput">
-                <span>Pullosetin nimi</span>
+                <span className="pb-2">Pullosetin nimi</span>
                 <Field
                   name="divingCylinderSetName"
                   className="form-control"
@@ -137,7 +137,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
                 type={ButtonType.submit}
               />
             </div>
-            <div className="gridRow titleBar">
+            <div className="divingCylinderGridRow titleBar">
               <span>Koko</span>
               <span>Materiaali</span>
               <span>Suurin täyttöpaine</span>

@@ -55,7 +55,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
 
   return (
     <table className="table" data-testid="common-table">
-      <thead>
+      <thead className="tableHead">
         <tr>
           {includeRowNumber ? (
             <th key="row-number" scope="col">
@@ -84,7 +84,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
           <React.Fragment key={`row-fragment-${index + 1}`}>
             <tr
               key={`row-${index + 1}`}
-              className={index % 2 === 0 ? 'greyBackground' : 'whiteBackground'}
+              className={index % 2 === 0 ? 'evenRow' : 'oddRow'}
             >
               {includeRowNumber ? (
                 <td key={`row-number-${index + 1}`} scope="row">
@@ -121,9 +121,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
             {row.childRows?.map((childRow, childRowIndex) => (
               <tr
                 key={`row-${index + 1}-child-row-${childRowIndex}`}
-                className={
-                  index % 2 === 0 ? 'greyBackground' : 'whiteBackground'
-                }
+                className={index % 2 === 0 ? 'evenRow' : 'oddRow'}
               >
                 {includeRowNumber ? (
                   <td

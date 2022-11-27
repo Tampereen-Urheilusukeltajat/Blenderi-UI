@@ -47,8 +47,8 @@ const UserVariableRow: React.FC<UserVariableRowProps> = ({
   title,
 }) => {
   return (
-    <div className="flexRow">
-      <div className="flexColumn">
+    <div className="userFlexRow">
+      <div className="userFlexColumn">
         <span className="title">{title}</span>
         <span className="content">{content}</span>
       </div>
@@ -76,8 +76,8 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
   }, [changeEditingStatus, submitForm]);
 
   return (
-    <div className="flexRow">
-      <div className="flexColumn">
+    <div className="userFlexRow">
+      <div className="userFlexColumn">
         <span className="title">{title}</span>
         {fieldNames.map((fieldName) => (
           <Field
@@ -124,8 +124,8 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
   }, [changeEditingStatus, submitForm]);
 
   return (
-    <div className="flexRow">
-      <div className="flexColumn">
+    <div className="userFlexRow">
+      <div className="userFlexColumn">
         <span className="title">Nykyinen salasana</span>
         <Field
           autoComplete="current-password"

@@ -1,4 +1,5 @@
 body {
+  background: #F4F4F4;
   margin: 0;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -46,6 +47,14 @@ code {
 }
 
 h1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 37.5px;
+}
+
+h2 {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;

@@ -37,11 +37,10 @@ body {
   text-decoration: none;
   display: flex;
   align-items: center;
-  padding: 0.25rem;
 }
 
 .nav li.active {
-  background-color: #FFFFFF;
+  background-color: #F4F4F4;
   color: #000000;
 }
 
