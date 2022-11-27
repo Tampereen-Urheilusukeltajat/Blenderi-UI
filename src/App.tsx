@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/Home';
 import SignUp from './views/SignUp';
-import { BlenderLogBook } from './views/BlenderLogBook';
+import { BlenderLogbook } from './views/BlenderLogBook';
 import { Navbar } from './views/Navbar';
 import {
   QueryClient,
@@ -17,7 +17,7 @@ import getCookie from './components/common/GetCookie';
 import { getUser, User } from './lib/apiRequests/userRequests';
 import { AXIOS_CONFIG } from './lib/apiRequests/api';
 import { UserSettings } from './components/User/User';
-import { LogBook } from './views/LogBook';
+import { Logbook } from './views/LogBook';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -36,8 +36,8 @@ const Content = (): JSX.Element => {
           />
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
-          <Route path="logbook" element={<LogBook />} />
-          <Route path="blender-logbook" element={<BlenderLogBook />} />
+          <Route path="logbook" element={<Logbook />} />
+          <Route path="blender-logbook" element={<BlenderLogbook />} />
           <Route path="user" element={<UserSettings />} />
         </Routes>
       </Container>

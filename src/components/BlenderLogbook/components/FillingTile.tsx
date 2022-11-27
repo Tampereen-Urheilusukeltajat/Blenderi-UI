@@ -37,18 +37,6 @@ type FillingEventRowProps = CommonTileProps & {
   prices: GasPrice[];
 };
 
-type LogBookFillingEventRowProps = CommonTileProps & {
-  index: number;
-  replace: (index: number, newValue: unknown) => void;
-  remove: (index: number) => void;
-  push: (value: unknown) => void;
-  setFieldValue: (
-    field: string,
-    value: unknown,
-    shouldValidate?: boolean
-  ) => void;
-};
-
 const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   index,
   errors,
@@ -183,52 +171,6 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   );
 };
 
-const LogBookFillingEventRowComponent: React.FC<
-  LogBookFillingEventRowProps
-> = ({ index, errors, values, replace, remove, push }) => {
-  return (
-    <div>
-      <div className="fillingEventGridRow">
-        <DropdownMenu
-          name={`fillingEventRows.${index}.storageCylinderId`}
-          errorText={errors.fillingEventRows?.at(index)?.storageCylinderId}
-        ></DropdownMenu>
-        <IconButton
-          className="deleteRowButton"
-          icon={<BsTrash />}
-          onClick={() =>
-            index === 0
-              ? replace(index, {
-                  ...EMPTY_FILLING_EVENT_ROW,
-                })
-              : remove(index)
-          }
-        />
-      </div>
-      {values.fillingEventRows.length === index + 1 ? (
-        <PrimaryButton
-          className="addNewRow"
-          onClick={() =>
-            push({
-              ...EMPTY_FILLING_EVENT_ROW,
-            })
-          }
-          type={ButtonType.button}
-          text="Lisää uusi rivi"
-        />
-      ) : null}
-    </div>
-  );
-};
-
-type LogBookFillingTileProps = CommonTileProps & {
-  setFieldValue: (
-    field: string,
-    value: unknown,
-    shouldValidate?: boolean
-  ) => void;
-};
-
 type FillingTileProps = CommonTileProps & {
   setFieldValue: (
     field: string,
@@ -271,40 +213,6 @@ export const FillingTile: React.FC<FillingTileProps> = ({
                 replace={replace}
                 setFieldValue={setFieldValue}
                 storageCylinders={storageCylinders}
-                values={values}
-              />
-            ))}
-          </>
-        )}
-      </FieldArray>
-    </div>
-  );
-};
-
-export const LogBookFillingTile: React.FC<LogBookFillingTileProps> = ({
-  errors,
-  setFieldValue,
-  values,
-}) => {
-  return (
-    <div className="tileWrapper">
-      <h2>Täytöt</h2>
-      <div className="fillingEventGridRow titleBar">
-        <span>Pullosetti</span>
-        <span>Poista</span>
-      </div>
-      <FieldArray name="fillingEventRows">
-        {({ replace, remove, push }) => (
-          <>
-            {values.fillingEventRows.map((row, index) => (
-              <LogBookFillingEventRowComponent
-                key={index}
-                errors={errors}
-                index={index}
-                push={push}
-                remove={remove}
-                replace={replace}
-                setFieldValue={setFieldValue}
                 values={values}
               />
             ))}

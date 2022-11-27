@@ -1,9 +1,9 @@
-import { CommonTileProps } from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookCommonTileProps } from '../BlenderLogbook/NewBlenderFillingEvent';
 import { TextInput } from '../common/Inputs';
 
-type LogBookBasicInfoTileProps = CommonTileProps;
+type LogbookBasicInfoTileProps = LogbookCommonTileProps;
 
-export const LogBookBasicInfoTile: React.FC<LogBookBasicInfoTileProps> = ({
+export const LogbookBasicInfoTile: React.FC<LogbookBasicInfoTileProps> = ({
   errors,
   values,
 }): JSX.Element => {
@@ -12,7 +12,7 @@ export const LogBookBasicInfoTile: React.FC<LogBookBasicInfoTileProps> = ({
       <h2>Esitiedot</h2>
       <div className="basicInfoGridRow">
         <TextInput
-          name={'gas'}
+          name="gasMixture"
           label="Kaasu"
           disabled
           placeholder="Paineilma"

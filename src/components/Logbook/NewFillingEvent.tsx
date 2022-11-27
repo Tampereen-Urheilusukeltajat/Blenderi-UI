@@ -1,52 +1,21 @@
 import { Formik } from 'formik';
 import { useCallback } from 'react';
 import { Form } from 'react-bootstrap';
-import { LogBookFillingTile } from '../BlenderLogbook/components/FillingTile';
-import { LogBookSavingTile } from '../BlenderLogbook/components/SavingTile';
-import { LogBookBasicInfoTile } from './LogBookBasicInfoTile';
+import { AirLogbookSavingTile } from '../BlenderLogbook/components/SavingTile';
+import { EMPTY_LOGBOOK_FILLING_EVENT_ROW } from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookFillingTile } from './FillingTile';
+import { LogbookBasicInfoTile } from './LogBookBasicInfoTile';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
-  divingCylinderSetId: string;
   gasMixture: string;
   userConfirm: boolean;
 };
 
-// TODO find a better way to initialize divingCylinderSetId
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
-  divingCylinderSetId: '',
-  gasMixture: '',
+  gasMixture: 'Paineilma',
   userConfirm: false,
-};
-
-type FillingEventRow = {
-  consumption: number;
-  endPressure: number;
-  priceEurCents: number;
-  startPressure: number;
-  storageCylinderId: string;
-};
-
-// TODO find a better way to initialize storageCylinderId
-export const EMPTY_FILLING_EVENT_ROW: FillingEventRow = {
-  consumption: 0,
-  endPressure: 0,
-  priceEurCents: 0,
-  startPressure: 0,
-  storageCylinderId: '',
-};
-
-const EMPTY_GUEST_DIVING_CYLINDER: GuestDivingCylinder = {
-  inspectionYear: new Date().getFullYear(),
-  maxPressure: 232,
-  volume: 12,
-};
-
-type GuestDivingCylinder = {
-  inspectionYear: number;
-  maxPressure: number;
-  volume: number;
 };
 
 export const NewFillingEvent = (): JSX.Element => {
@@ -63,22 +32,20 @@ export const NewFillingEvent = (): JSX.Element => {
           ...EMPTY_FILLING_EVENT_BASIC_INFO,
           fillingEventRows: [
             {
-              ...EMPTY_FILLING_EVENT_ROW,
-              storageCylinderId: '1',
+              ...EMPTY_LOGBOOK_FILLING_EVENT_ROW,
             },
           ],
-          guestDivingCylinder: EMPTY_GUEST_DIVING_CYLINDER,
         }}
         onSubmit={handleSubmit}
       >
         {({ errors, values, setFieldValue }) => (
           <Form>
             <div className="fillingEventFlexRow">
-              <LogBookBasicInfoTile errors={errors} values={values} />
-              <LogBookSavingTile errors={errors} values={values} />
+              <LogbookBasicInfoTile errors={errors} values={values} />
+              <AirLogbookSavingTile errors={errors} values={values} />
             </div>
             <div className="fillingEventFlexRow">
-              <LogBookFillingTile
+              <LogbookFillingTile
                 setFieldValue={setFieldValue}
                 errors={errors}
                 values={values}

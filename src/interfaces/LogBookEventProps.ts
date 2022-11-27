@@ -1,13 +1,13 @@
 import EventRow from './EventRow';
-import LogBookHistoryRowI from './LogBookHistoryRowI';
+import LogbookHistoryRowI from './LogBookHistoryRowI';
 
-type LogBookNewEventProps = {
+type LogbookNewEventProps = {
   events: EventRow[];
   handleAdd: () => void;
   handleDelete: (rowId: number) => void;
   handleReset: () => void;
-  historyRows: LogBookHistoryRowI[];
-  setHistoryRows: React.Dispatch<React.SetStateAction<LogBookHistoryRowI[]>>;
+  historyRows: LogbookHistoryRowI[];
+  setHistoryRows: React.Dispatch<React.SetStateAction<LogbookHistoryRowI[]>>;
 };
 
-export default LogBookNewEventProps;
+export default LogbookNewEventProps;

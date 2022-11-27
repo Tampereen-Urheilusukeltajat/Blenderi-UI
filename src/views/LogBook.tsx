@@ -1,7 +1,7 @@
 import { NewFillingEvent } from '../components/Logbook/NewFillingEvent';
 import '../styles/blenderLogbook/blenderLogBook.css';
 
-export const LogBook = (): JSX.Element => {
+export const Logbook = (): JSX.Element => {
   return (
     <div>
       <NewFillingEvent />
