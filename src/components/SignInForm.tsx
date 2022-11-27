@@ -4,14 +4,22 @@ import '../index.css';
 import '../styles/user/user.css';
 import { Field, Formik } from 'formik';
 import { postAsync } from '../lib/apiRequests/api';
-import LoginResponse from './common/LoginResponse';
-import LoginRequest from './common/LoginRequest';
 import { ButtonType, PrimaryButton } from './common/Buttons';
 import { useNavigate } from 'react-router-dom';
 
 type SignInFormFiels = {
   email: string;
   password: string;
+};
+
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  refreshToken: string;
+  accessToken: string;
 };
 
 const SignInFormHeader = (): JSX.Element => {

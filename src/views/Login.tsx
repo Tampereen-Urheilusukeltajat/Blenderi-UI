@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SignInForm from '../components/SignInForm';
 
-const Home = (): JSX.Element => {
+export const Login = (): JSX.Element => {
   return (
     <div>
       <div
@@ -17,5 +17,3 @@ const Home = (): JSX.Element => {
     </div>
   );
 };
-
-export default Home;
