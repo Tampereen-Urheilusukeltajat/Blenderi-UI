@@ -32,4 +32,27 @@ export const calculateGasConsumption = (
 ): number => (startPressure - endPressure) * cylinderVolume;
 
 export const tokenExpired = (exp: number): boolean =>
-  new Date().getTime() > exp;
+  // Date now gives timestamp in ms, token has seconds
+  Math.floor(Date.now() / 1000) > exp;
+
+type TokenPayload<Payload> = {
+  token: string;
+  payload: Payload;
+};
+
+export const getTokenFromLocalStorage = <Payload>(
+  tokenName: string
+): TokenPayload<Payload> | undefined => {
+  const token = localStorage.getItem(tokenName) ?? '';
+  const splittedToken = token.split('.');
+
+  // Valid tokens always have three parts
+  if (splittedToken.length !== 3) return undefined;
+
+  const payload: Payload = JSON.parse(window.atob(splittedToken[1]));
+
+  return {
+    token,
+    payload,
+  };
+};

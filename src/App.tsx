@@ -12,9 +12,9 @@ import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
 import { UserSettings } from './components/User/User';
-import { ProtectedRoute } from './lib/auth';
 import { BlenderLogbook } from './views/BlenderLogbook';
 import { Logbook } from './views/Logbook';
+import { ProtectedRoute } from './components/common/Auth';
 
 const QUERY_CLIENT = new QueryClient();
 
