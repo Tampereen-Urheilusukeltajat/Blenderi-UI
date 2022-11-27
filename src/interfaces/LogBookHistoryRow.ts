@@ -1,7 +1,7 @@
-import LogBookHistoryRowI from './LogBookHistoryRowI';
+import LogbookHistoryRowI from './LogBookHistoryRowI';
 
-type LogBookHistoryRow = {
-  historyRow: LogBookHistoryRowI;
+type LogbookHistoryRow = {
+  historyRow: LogbookHistoryRowI;
 };
 
-export default LogBookHistoryRow;
+export default LogbookHistoryRow;
