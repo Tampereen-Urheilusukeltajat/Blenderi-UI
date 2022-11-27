@@ -17,6 +17,7 @@ import getCookie from './components/common/GetCookie';
 import { getUser, User } from './lib/apiRequests/userRequests';
 import { AXIOS_CONFIG } from './lib/apiRequests/api';
 import { UserSettings } from './components/User/User';
+import { LogBook } from './views/LogBook';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -35,6 +36,7 @@ const Content = (): JSX.Element => {
           />
           <Route path="management" element={<UserManagement />} />
           <Route path="register" element={<SignUp />} />
+          <Route path="logbook" element={<LogBook />} />
           <Route path="blender-logbook" element={<BlenderLogBook />} />
           <Route path="user" element={<UserSettings />} />
         </Routes>
