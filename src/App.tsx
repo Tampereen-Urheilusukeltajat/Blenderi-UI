@@ -13,8 +13,8 @@ import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
 import { UserSettings } from './components/User/User';
 import { BlenderLogbook } from './views/BlenderLogbook';
-import { Logbook } from './views/Logbook';
 import { ProtectedRoute } from './components/common/Auth';
+import { Logbook } from './views/Logbook';
 
 const QUERY_CLIENT = new QueryClient();
 

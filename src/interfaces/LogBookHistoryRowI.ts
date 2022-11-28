@@ -1,4 +1,4 @@
-type LogBookHistoryRowI = {
+type LogbookHistoryRowI = {
   divingCylinder: string;
   compressedAir?: number;
   oxygen?: number;
@@ -9,4 +9,4 @@ type LogBookHistoryRowI = {
   date: Date;
 };
 
-export default LogBookHistoryRowI;
+export default LogbookHistoryRowI;

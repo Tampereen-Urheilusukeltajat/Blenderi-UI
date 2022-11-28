@@ -14,12 +14,22 @@ type FillingEventBasicInfo = {
   userConfirm: boolean;
 };
 
+type LogbookFillingEventBasicInfo = {
+  additionalInformation: string;
+  gasMixture: string;
+  userConfirm: boolean;
+};
+
 type FillingEventRow = {
   consumption: number;
   endPressure: number;
   priceEurCents: number;
   startPressure: number;
   storageCylinderId: string;
+};
+
+type LogbookFillingEventRow = {
+  cylinderSet: string;
 };
 
 type GuestDivingCylinder = {
@@ -31,6 +41,10 @@ type GuestDivingCylinder = {
 type FormFields = FillingEventBasicInfo & {
   fillingEventRows: FillingEventRow[];
   guestDivingCylinder: GuestDivingCylinder;
+};
+
+type LogbookFormFields = LogbookFillingEventBasicInfo & {
+  fillingEventRows: LogbookFillingEventRow[];
 };
 
 // TODO find a better way to initialize divingCylinderSetId
@@ -50,6 +64,10 @@ export const EMPTY_FILLING_EVENT_ROW: FillingEventRow = {
   storageCylinderId: '',
 };
 
+export const EMPTY_LOGBOOK_FILLING_EVENT_ROW: LogbookFillingEventRow = {
+  cylinderSet: '',
+};
+
 const EMPTY_GUEST_DIVING_CYLINDER: GuestDivingCylinder = {
   inspectionYear: new Date().getFullYear(),
   maxPressure: 232,
@@ -65,6 +83,15 @@ export type CommonTileProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: any;
   values: FormFields;
+};
+
+export type LogbookCommonTileProps = {
+  // TODO FIX THIS
+  // Casting as any because array errors wouldn't be otherwise correctly typed
+  // It might be possible to fix this in the future with bit more time
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any;
+  values: LogbookFormFields;
 };
 
 export type DivingCylinderSet = {
