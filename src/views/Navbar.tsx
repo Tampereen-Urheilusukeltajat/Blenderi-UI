@@ -1,18 +1,19 @@
+import { useCallback } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '../components/common/Buttons';
 import { CustomLink } from '../components/NavbarLink';
 import '../styles/navbar/navbar.css';
 
-const onLogoutClick = (): void => {
-  // TODO Send logout call to the backend.
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-};
-
 export const Navbar = (): JSX.Element | null => {
-  // TODO refactor to to see if user is logged in.
-  // Don't show navbar on register and login view.
+  const navigate = useNavigate();
+
+  const handleLogoutButtonClick = useCallback(() => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate('/');
+  }, [navigate]);
+
   const path = useLocation().pathname;
   if (path === '/' || path === '/register') {
     return null;
@@ -37,7 +38,10 @@ export const Navbar = (): JSX.Element | null => {
               <span>Seppo Sukeltaja</span>
             </div>
           </CustomLink>
-          <TertiaryButton onClick={onLogoutClick} text="Kirjaudu ulos" />
+          <TertiaryButton
+            onClick={handleLogoutButtonClick}
+            text="Kirjaudu ulos"
+          />
         </div>
       </ul>
     </nav>

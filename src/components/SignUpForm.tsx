@@ -1,18 +1,34 @@
 import Form from 'react-bootstrap/Form';
 import { Field, Formik } from 'formik';
 import { postAsync } from '../lib/apiRequests/api';
-import LoginResponse from './common/LoginResponse';
-import LoginRequest from './common/LoginRequest';
-import SignUpResponse from './common/SignUpResponse';
-import SignUpRequest from './common/SignUpRequest';
 import { useCallback } from 'react';
 
 import '../styles/user/user.css';
 import { ButtonType, PrimaryButton } from './common/Buttons';
 import { useNavigate } from 'react-router-dom';
+import { LoginRequest, LoginResponse } from './SignInForm';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
+};
+
+type SignUpRequest = {
+  forename: string;
+  surname: string;
+  email: string;
+  phone: string;
+  password: string;
+};
+
+type SignUpResponse = {
+  id: string;
+  email: string;
+  phone: string;
+  forename: string;
+  surname: string;
+  isAdmin: boolean;
+  isBlender: boolean;
+  archivedAt: string;
 };
 
 type SignUpFormFields = {

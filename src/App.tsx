@@ -1,8 +1,7 @@
 import Container from 'react-bootstrap/Container';
-import { Routes, Route } from 'react-router-dom';
-import Home from './views/Home';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Login } from './views/Login';
 import SignUp from './views/SignUp';
-import { BlenderLogbook } from './views/BlenderLogBook';
 import { Navbar } from './views/Navbar';
 import {
   QueryClient,
@@ -12,12 +11,10 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
-import { useEffect, useState } from 'react';
-import getCookie from './components/common/GetCookie';
-import { getUser, User } from './lib/apiRequests/userRequests';
-import { AXIOS_CONFIG } from './lib/apiRequests/api';
 import { UserSettings } from './components/User/User';
-import { Logbook } from './views/LogBook';
+import { BlenderLogbook } from './views/BlenderLogbook';
+import { ProtectedRoute } from './components/common/Auth';
+import { Logbook } from './views/Logbook';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -29,16 +26,54 @@ const Content = (): JSX.Element => {
       {isFetching > 0 ? <PageLoadingSpinner /> : null}
       <Container className="pt-4">
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* Public routes */}
+          <Route index element={<Login />} />
+          <Route path="register" element={<SignUp />} />
+
+          {/* Private routes */}
           <Route
             path="diving-cylinder-set"
-            element={<DivingCylinderSetManagement />}
+            element={
+              <ProtectedRoute>
+                <DivingCylinderSetManagement />
+              </ProtectedRoute>
+            }
           />
-          <Route path="management" element={<UserManagement />} />
-          <Route path="register" element={<SignUp />} />
-          <Route path="logbook" element={<Logbook />} />
-          <Route path="blender-logbook" element={<BlenderLogbook />} />
-          <Route path="user" element={<UserSettings />} />
+          <Route
+            path="management"
+            element={
+              <ProtectedRoute>
+                <UserManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="logbook"
+            element={
+              <ProtectedRoute>
+                <Logbook />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="blender-logbook"
+            element={
+              <ProtectedRoute>
+                <BlenderLogbook />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="user"
+            element={
+              <ProtectedRoute>
+                <UserSettings />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Container>
     </main>
@@ -46,22 +81,6 @@ const Content = (): JSX.Element => {
 };
 
 const App = (): JSX.Element => {
-  const [userId, setUserId] = useState<string>('');
-  const [currentUser, setCurrentUser] = useState<User>();
-
-  useEffect(() => {
-    if (currentUser === undefined) {
-      const accessToken = getCookie('accessToken');
-      const id = getCookie('userId');
-      AXIOS_CONFIG.headers = { Authorization: `Bearer ${accessToken}` };
-      setUserId(id);
-      getUser(userId, accessToken)
-        .then((userResponse) => {
-          setCurrentUser(userResponse.data);
-        })
-        .catch((err) => alert(err));
-    }
-  }, [userId, currentUser]);
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
       <Navbar />
