@@ -68,14 +68,14 @@ export const getValidToken = async (): Promise<string> => {
  */
 export const isAuthenticated = async (): Promise<boolean> => {
   const accessToken = getTokenFromLocalStorage<AccessToken>('accessToken');
-  const refreshToken = getTokenFromLocalStorage<RefreshToken>('refreshToken');
 
   if (!accessToken || tokenExpired(accessToken.payload.exp)) {
+    const refreshToken = getTokenFromLocalStorage<RefreshToken>('refreshToken');
+
     if (!refreshToken || tokenExpired(refreshToken.payload.exp)) {
       return false;
     }
 
-    // Rotate tokens
     await rotateTokens(refreshToken.token);
   }
 
