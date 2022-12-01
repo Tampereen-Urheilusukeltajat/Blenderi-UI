@@ -11,19 +11,38 @@ import {
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import UserManagement from './views/UserManagement';
-import { UserSettings } from './components/User/User';
+import { UserSettings } from './components/UserSettings/UserSettings';
 import { BlenderLogbook } from './views/BlenderLogbook';
 import { ProtectedRoute } from './components/common/Auth';
 import { Logbook } from './views/Logbook';
+import { useEffect, useState } from 'react';
+import { getTokenFromLocalStorage } from './lib/utils';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const QUERY_CLIENT = new QueryClient();
 
 const Content = (): JSX.Element => {
+  const [showSpinner, setShowSpinner] = useState(false);
   const isFetching = useIsFetching();
+
+  // Show spinner for 150ms even though loading has already finished
+  // Why? If the request is fullfilled from the cache, the loader flashes on
+  // screen for a really small time and it creates this annoying flashing
+  // With 150ms user is able to perceive that there was a loading icon,
+  // but it is still so fast that it doesn't bother the user
+  useEffect(() => {
+    if (isFetching > 0) {
+      setShowSpinner(true);
+      return;
+    }
+
+    setTimeout(() => setShowSpinner(false), 150);
+  }, [isFetching]);
 
   return (
     <main>
-      {isFetching > 0 ? <PageLoadingSpinner /> : null}
+      {showSpinner ? <PageLoadingSpinner /> : null}
       <Container className="pt-4">
         <Routes>
           {/* Public routes */}
@@ -81,10 +100,14 @@ const Content = (): JSX.Element => {
 };
 
 const App = (): JSX.Element => {
+  // If access token exist, user has authenticated
+  const authenticated = getTokenFromLocalStorage('accessToken');
+
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
-      <Navbar />
+      {authenticated ? <Navbar /> : null}
       <Content />
+      <ToastContainer className="toast-position" position={'top-right'} />
     </QueryClientProvider>
   );
 };

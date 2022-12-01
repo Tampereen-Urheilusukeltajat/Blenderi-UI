@@ -9,7 +9,7 @@
 
 .userSettings {
   padding: 1rem;
-  width: 660px;
+  width: 720px;
 }
 
 .userFlexRow {
@@ -22,10 +22,6 @@
 .userFlexColumn {
   display: flex;
   flex-direction: column;
-}
-
-.title {
-  font-weight: bold;
 }
 
 .editButtons {

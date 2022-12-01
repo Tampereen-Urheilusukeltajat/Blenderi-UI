@@ -145,7 +145,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           className="deleteRowButton"
           icon={<BsTrash />}
           onClick={() =>
-            index === 0
+            index === 0 && values.fillingEventRows.length === 1
               ? replace(index, {
                   ...EMPTY_FILLING_EVENT_ROW,
                   storageCylinderId: storageCylinders[0].id,

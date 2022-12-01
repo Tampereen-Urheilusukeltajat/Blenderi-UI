@@ -1,3 +1,5 @@
+import { AccessToken } from './auth';
+
 export enum AvailableGasses {
   air = 'air',
   argon = 'argon',
@@ -55,4 +57,36 @@ export const getTokenFromLocalStorage = <Payload>(
     token,
     payload,
   };
+};
+
+/**
+ * @returns UserId
+ * @throws If accessToken is not found (shouldn't happen)
+ */
+export const getUserIdFromAccessToken = (): string => {
+  const token = getTokenFromLocalStorage<AccessToken>('accessToken');
+  if (!token) throw new Error('accessToken not found');
+
+  return token.payload.id;
+};
+
+/**
+ * Gets changed values from two similar objects
+ * @returns changed values
+ */
+export const getChangedFieldValues = (
+  initialValues: Record<string, unknown>,
+  changedFields: Record<string, unknown>
+): Record<string, unknown> => {
+  const changedKeys = Object.keys(initialValues).filter((key) => {
+    return initialValues[key] !== changedFields[key];
+  });
+
+  return changedKeys.reduce(
+    (previousValue, currentValue) => ({
+      ...previousValue,
+      [currentValue]: changedFields[currentValue],
+    }),
+    {}
+  );
 };

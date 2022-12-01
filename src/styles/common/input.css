@@ -1,3 +1,7 @@
 .fieldTitle {
   font-weight: bold;
 }
+
+.form-control {
+  max-width: 220px;
+}

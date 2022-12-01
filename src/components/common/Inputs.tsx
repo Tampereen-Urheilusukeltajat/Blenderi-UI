@@ -3,6 +3,7 @@ import { InputGroup } from 'react-bootstrap';
 import '../../styles/common/input.css';
 
 export type CommonInputProps = {
+  autoComplete?: string;
   disabled?: boolean;
   errorText?: string;
   label?: string;
@@ -10,12 +11,14 @@ export type CommonInputProps = {
   name: string;
   key?: string;
   unit?: string;
+  validate?: (fieldValue: never) => void;
   type?: string;
 };
 
 export type SelectInputProps = CommonInputProps & React.PropsWithChildren;
 
 export const TextInput: React.FC<CommonInputProps> = ({
+  autoComplete,
   disabled,
   errorText,
   label,
@@ -23,6 +26,7 @@ export const TextInput: React.FC<CommonInputProps> = ({
   placeholder,
   key,
   unit,
+  validate,
   type,
 }) => {
   return (
@@ -41,6 +45,7 @@ export const TextInput: React.FC<CommonInputProps> = ({
           disabled={disabled}
           name={name}
           placeholder={placeholder}
+          validate={validate}
           type={type}
         />
         {unit !== undefined ? <InputGroup.Text>{unit}</InputGroup.Text> : null}

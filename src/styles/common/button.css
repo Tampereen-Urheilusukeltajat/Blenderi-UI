@@ -1,4 +1,4 @@
-button {
+#commonButton {
   align-items: center;
   border-radius: 8px;
   border: none;
@@ -11,13 +11,13 @@ button {
   justify-content: center;
   padding: 0.5rem 1rem;
 }
-button:hover {
+#commonButton:hover {
   transition-duration: 0.25s;
 }
-button:disabled {
+#commonButton:disabled {
   background-color: #C7C7CD;
 }
-button:disabled:hover {
+#commonButton:disabled:hover {
   background-color: #C7C7CD;
 }
 
@@ -48,7 +48,7 @@ button:disabled:hover {
 
 .iconButton {
   padding: 0.5rem 1rem;
-  min-width: 100%;
+  min-width: 100% !important;
 }
 .iconButton:hover {
   background-color: #C7C7CD;

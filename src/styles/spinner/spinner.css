@@ -14,3 +14,12 @@
   top: 25%;
   left: 50%;
 }
+
+.pageSpinnerOverlay-exit {
+  opacity: 1;
+}
+
+.pageSpinnerOverlay-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
