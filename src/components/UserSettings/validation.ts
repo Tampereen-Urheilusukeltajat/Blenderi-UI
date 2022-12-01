@@ -10,7 +10,7 @@ export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
   surname: yup.string().required(FIELD_REQUIRED),
   newPassword: yup
     .string()
-    .min(8, 'Uuden salasanan on oltava ainakin 8 merkin mittainen'),
+    .min(8, 'Uuden salasanan on oltava vähintään 8 merkin mittainen'),
   newPasswordAgain: yup
     .string()
     .oneOf([yup.ref('newPassword')], 'Salasanat eivät vastaa toisiaan')
