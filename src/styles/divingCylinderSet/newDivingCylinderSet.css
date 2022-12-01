@@ -36,7 +36,7 @@
   width: 376px;
 }
 .newCylinderSetForm .addNewDivingCylinder {
-  min-width: 100%;
+  width: 100%;
 }
 
 input::-webkit-outer-spin-button,
