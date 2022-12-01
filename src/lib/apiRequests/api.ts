@@ -26,7 +26,7 @@ export const deleteAsync = async <Response>(
 ): Promise<AxiosResponse<Response>> =>
   axios.delete<Response>(url, AXIOS_CONFIG);
 
-export const authGetAsync = async (
+export const authGetAsync = async <Response>(
   url: string
 ): Promise<AxiosResponse<Response>> => {
   const token = await getValidToken();

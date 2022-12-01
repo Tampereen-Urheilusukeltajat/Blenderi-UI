@@ -1,18 +1,40 @@
-import { useCallback } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback, useMemo } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '../components/common/Buttons';
 import { CustomLink } from '../components/NavbarLink';
+import { useUserQuery } from '../lib/queries/userQuery';
+import { getUserIdFromAccessToken } from '../lib/utils';
 import '../styles/navbar/navbar.css';
+
+const UserIconButton: React.FC = () => {
+  const userId = useMemo(() => getUserIdFromAccessToken(), []);
+  const { data: user } = useUserQuery(userId);
+
+  return (
+    <div className="iconLink">
+      <BsPersonCircle size={35} />
+      <span>
+        {user?.forename} {user?.surname}
+      </span>
+    </div>
+  );
+};
 
 export const Navbar = (): JSX.Element | null => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleLogoutButtonClick = useCallback(() => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+
+    // Invalidate React Query cache
+    queryClient.clear();
+
     navigate('/');
-  }, [navigate]);
+  }, [navigate, queryClient]);
 
   const path = useLocation().pathname;
   if (path === '/' || path === '/register') {
@@ -33,10 +55,7 @@ export const Navbar = (): JSX.Element | null => {
         </div>
         <div className="user">
           <CustomLink to="/user">
-            <div className="iconLink">
-              <BsPersonCircle size={35} />
-              <span>Seppo Sukeltaja</span>
-            </div>
+            <UserIconButton />
           </CustomLink>
           <TertiaryButton
             onClick={handleLogoutButtonClick}

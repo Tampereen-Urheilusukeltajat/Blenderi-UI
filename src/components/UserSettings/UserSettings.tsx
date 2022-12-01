@@ -1,19 +1,28 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Field, Form, Formik } from 'formik';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { patchUser } from '../../lib/apiRequests/userRequests';
+import { USER_QUERY_KEY } from '../../lib/queries/queryKeys';
+import { useUserQuery } from '../../lib/queries/userQuery';
+import {
+  getChangedFieldValues,
+  getUserIdFromAccessToken,
+} from '../../lib/utils';
 import '../../styles/user/user.css';
 import { ButtonType, PrimaryButton, SecondaryButton } from '../common/Buttons';
 
 type UserPropertiesFormProps = {
+  dirty: boolean;
   handleSubmit: () => void;
   handleReset: () => void;
   values: FormUser;
 };
 
-type FormUser = {
-  firstName: string;
+export type FormUser = {
+  forename: string;
   surname: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
   password: string;
   newPassword: string;
   newPasswordAgain: string;
@@ -28,6 +37,7 @@ type UserVariableRowProps = {
 type EditableUserVariableRowProps = {
   title: string;
   fieldNames: string[];
+  disableSaving: boolean;
   changeEditingStatus: () => void;
   resetFields: () => void;
   submitForm: () => void;
@@ -36,6 +46,7 @@ type EditableUserVariableRowProps = {
 };
 
 type NewPasswordRowProps = {
+  disableSaving: boolean;
   changeEditingStatus: () => void;
   resetFields: () => void;
   submitForm: () => void;
@@ -58,6 +69,7 @@ const UserVariableRow: React.FC<UserVariableRowProps> = ({
 };
 
 const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
+  disableSaving,
   fieldNames,
   title,
   changeEditingStatus,
@@ -71,9 +83,8 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
   }, [changeEditingStatus, resetFields]);
 
   const handleSubmitButtonClick = useCallback(() => {
-    changeEditingStatus();
     submitForm();
-  }, [changeEditingStatus, submitForm]);
+  }, [submitForm]);
 
   return (
     <div className="userFlexRow">
@@ -101,7 +112,11 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
         ) : null}
       </div>
       <div className="editButtons">
-        <PrimaryButton onClick={handleSubmitButtonClick} text="Tallenna" />
+        <PrimaryButton
+          onClick={handleSubmitButtonClick}
+          text="Tallenna"
+          disabled={disableSaving}
+        />
         <SecondaryButton onClick={handleCancelButtonClick} text="Peruuta" />
       </div>
     </div>
@@ -109,6 +124,7 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
 };
 
 const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
+  disableSaving,
   changeEditingStatus,
   resetFields,
   submitForm,
@@ -119,9 +135,8 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
   }, [changeEditingStatus, resetFields]);
 
   const handleSubmitButtonClick = useCallback(() => {
-    changeEditingStatus();
     submitForm();
-  }, [changeEditingStatus, submitForm]);
+  }, [submitForm]);
 
   return (
     <div className="userFlexRow">
@@ -150,6 +165,7 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
       </div>
       <div className="editButtons">
         <PrimaryButton
+          disabled={disableSaving}
           className="primaryButton"
           onClick={handleSubmitButtonClick}
           text="Tallenna"
@@ -166,13 +182,14 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
 };
 
 const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
+  dirty,
   handleReset,
   handleSubmit,
   values,
 }) => {
   const [editingName, setEditingName] = useState(false);
   const [editingEmail, setEditingEmail] = useState(false);
-  const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
+  const [editingPhone, setEditingPhone] = useState(false);
   const [editingNewPassword, setEditingNewPassword] = useState(false);
 
   const changeNameEditingStatus = useCallback(() => {
@@ -181,7 +198,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     // Set all other fields to false and reset form
     handleReset();
     setEditingEmail(false);
-    setEditingPhoneNumber(false);
+    setEditingPhone(false);
     setEditingNewPassword(false);
   }, [editingName, handleReset]);
 
@@ -191,19 +208,19 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     // Set all other fields to false and reset form
     handleReset();
     setEditingName(false);
-    setEditingPhoneNumber(false);
+    setEditingPhone(false);
     setEditingNewPassword(false);
   }, [editingEmail, handleReset]);
 
   const changePhoneEditingStatus = useCallback(() => {
-    setEditingPhoneNumber(!editingPhoneNumber);
+    setEditingPhone(!editingPhone);
 
     // Set all other fields to false and reset form
     handleReset();
     setEditingName(false);
     setEditingEmail(false);
     setEditingNewPassword(false);
-  }, [editingPhoneNumber, handleReset]);
+  }, [editingPhone, handleReset]);
 
   const changeNewPasswordEditingStatus = useCallback(() => {
     setEditingNewPassword(!editingNewPassword);
@@ -212,7 +229,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     handleReset();
     setEditingName(false);
     setEditingEmail(false);
-    setEditingPhoneNumber(false);
+    setEditingPhone(false);
   }, [editingNewPassword, handleReset]);
 
   return (
@@ -220,12 +237,13 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
       {!editingName ? (
         <UserVariableRow
           title="Nimi"
-          content={`${values.firstName} ${values.surname}`}
+          content={`${values.forename} ${values.surname}`}
           handleEditButtonClick={changeNameEditingStatus}
         />
       ) : (
         <EditableUserVariableRow
-          fieldNames={['firstName', 'surname']}
+          disableSaving={!dirty}
+          fieldNames={['forename', 'surname']}
           title="Etu- ja sukunimi"
           changeEditingStatus={changeNameEditingStatus}
           resetFields={handleReset}
@@ -240,6 +258,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
         />
       ) : (
         <EditableUserVariableRow
+          disableSaving={!dirty}
           fieldNames={['email']}
           title="Sähköposti"
           changeEditingStatus={changeEmailEditingStatus}
@@ -248,15 +267,16 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
           submitForm={handleSubmit}
         />
       )}
-      {!editingPhoneNumber ? (
+      {!editingPhone ? (
         <UserVariableRow
           title="Puhelinnumero"
-          content={values.phoneNumber}
+          content={values.phone}
           handleEditButtonClick={changePhoneEditingStatus}
         />
       ) : (
         <EditableUserVariableRow
-          fieldNames={['phoneNumber']}
+          disableSaving={!dirty}
+          fieldNames={['phone']}
           title="Puhelinnumero"
           changeEditingStatus={changePhoneEditingStatus}
           resetFields={handleReset}
@@ -271,6 +291,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
         />
       ) : (
         <NewPasswordRow
+          disableSaving={!dirty}
           changeEditingStatus={changeNewPasswordEditingStatus}
           resetFields={handleReset}
           submitForm={handleSubmit}
@@ -281,34 +302,67 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
 };
 
 export const UserSettings: React.FC = () => {
-  const handleFormSubmit = useCallback(() => {
-    // TODO send updates to backend
-    // TODO make sure new password fields are matching
-  }, []);
+  const queryClient = useQueryClient();
+
+  const userId = useMemo(() => getUserIdFromAccessToken(), []);
+  const { data: user } = useUserQuery(userId);
+
+  const userMutation = useMutation({
+    mutationFn: async (payload: Partial<FormUser>) =>
+      patchUser(userId, payload),
+    mutationKey: USER_QUERY_KEY(userId),
+    onSuccess: (user) => {
+      queryClient.setQueryData(USER_QUERY_KEY(userId), user);
+    },
+  });
+
+  const handleFormSubmit = useCallback(
+    (fields: Partial<FormUser>) => {
+      if (!user) throw new Error('User not defined when updating');
+      const changedValues: Partial<FormUser> = getChangedFieldValues(
+        {
+          email: user.email,
+          forename: user.forename,
+          phone: user.phone,
+          surname: user.surname,
+          password: '',
+          newPassword: '',
+          newPasswordAgain: '',
+        },
+        fields
+      );
+
+      userMutation.mutate(changedValues);
+    },
+    [userMutation, user]
+  );
 
   return (
     <div className="wrapper">
       <div className="blueBackground userSettings">
-        <Formik
-          initialValues={{
-            firstName: 'Seppo',
-            surname: 'Sukeltaja',
-            email: 'seppo.sukeltaja@taursu.fi',
-            phoneNumber: '+358501112233',
-            password: '',
-            newPassword: '',
-            newPasswordAgain: '',
-          }}
-          onSubmit={handleFormSubmit}
-        >
-          {({ values, handleReset, handleSubmit }) => (
-            <UserPropertiesForm
-              handleReset={handleReset}
-              handleSubmit={handleSubmit}
-              values={values}
-            />
-          )}
-        </Formik>
+        {user ? (
+          <Formik
+            initialValues={{
+              forename: user.forename,
+              surname: user.surname,
+              email: user.email,
+              phone: user.phone,
+              password: '',
+              newPassword: '',
+              newPasswordAgain: '',
+            }}
+            onSubmit={handleFormSubmit}
+          >
+            {({ values, handleReset, handleSubmit, dirty }) => (
+              <UserPropertiesForm
+                dirty={dirty}
+                handleReset={handleReset}
+                handleSubmit={handleSubmit}
+                values={values}
+              />
+            )}
+          </Formik>
+        ) : null}
       </div>
     </div>
   );

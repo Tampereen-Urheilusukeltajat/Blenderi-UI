@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/auth';
 
 import { PageLoadingSpinner } from '../Spinner';
@@ -9,6 +9,7 @@ type PrivateRouteProps = {
 };
 
 export const ProtectedRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -23,14 +24,18 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({ children }) => {
       setLoading(false);
     };
 
-    validateAuth().catch(() => <Navigate to="/" />);
-  }, []);
+    validateAuth().catch(() => navigate('/'));
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!loading && !authenticated) {
+      navigate('/');
+    }
+  }, [authenticated, loading, navigate]);
 
   return (
     <div className="protectedRoute">
-      {loading ? <PageLoadingSpinner /> : null}
-      {!loading && !authenticated ? <Navigate to="/" /> : null}
-      {children}
+      {loading || !authenticated ? <PageLoadingSpinner /> : <>{children}</>}
     </div>
   );
 };
