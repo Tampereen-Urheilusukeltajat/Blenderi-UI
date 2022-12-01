@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const FIELD_REQUIRED = 'Kenttä on pakollinen';
+export const FIELD_REQUIRED = 'Kenttä on pakollinen';
 const FIELD_EMAIL = 'Sähköpostin muoto on virheellinen';
 
 export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
