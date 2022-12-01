@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React, { useCallback, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { patchUser } from '../../lib/apiRequests/userRequests';
@@ -11,6 +11,8 @@ import {
 } from '../../lib/utils';
 import '../../styles/user/user.css';
 import { ButtonType, PrimaryButton, SecondaryButton } from '../common/Buttons';
+import { TextInput } from '../common/Inputs';
+import { USER_SETTINGS_VALIDATION_SCHEMA } from './validation';
 
 type UserPropertiesFormProps = {
   dirty: boolean;
@@ -18,6 +20,8 @@ type UserPropertiesFormProps = {
   editingEmail: boolean;
   editingPhone: boolean;
   editingNewPassword: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any;
   handleSubmit: () => void;
   handleReset: () => void;
   setEditingName: (b: boolean) => void;
@@ -43,9 +47,15 @@ type UserVariableRowProps = {
   handleEditButtonClick: () => void;
 };
 
+type InputField = {
+  label: string;
+  fieldName: string;
+};
+
 type EditableUserVariableRowProps = {
-  title: string;
-  fieldNames: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any;
+  fields: InputField[];
   disableSaving: boolean;
   changeEditingStatus: () => void;
   resetFields: () => void;
@@ -56,6 +66,8 @@ type EditableUserVariableRowProps = {
 
 type NewPasswordRowProps = {
   disableSaving: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any;
   changeEditingStatus: () => void;
   resetFields: () => void;
   submitForm: () => void;
@@ -79,11 +91,11 @@ const UserVariableRow: React.FC<UserVariableRowProps> = ({
 
 const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
   disableSaving,
-  fieldNames,
-  title,
+  errors,
+  fields,
   changeEditingStatus,
   resetFields,
-  requirePassword,
+  requirePassword = false,
   submitForm,
 }) => {
   const handleCancelButtonClick = useCallback(() => {
@@ -98,26 +110,26 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
   return (
     <div className="userFlexRow">
       <div className="userFlexColumn">
-        <span className="title">{title}</span>
-        {fieldNames.map((fieldName) => (
-          <Field
+        {fields.map(({ label, fieldName }) => (
+          <TextInput
+            errorText={errors[fieldName]}
+            label={label}
             key={fieldName}
-            className="form-control"
             name={fieldName}
-            type="text"
           />
         ))}
 
-        {requirePassword ?? false ? (
-          <>
-            <span className="title">Nykyinen salasana</span>
-            <Field
-              autoComplete="current-password"
-              type="password"
-              className="form-control"
-              name="password"
-            />
-          </>
+        {requirePassword ? (
+          <TextInput
+            autoComplete="current-password"
+            errorText={errors.password}
+            name="password"
+            label="Nykyinen salasana"
+            type="password"
+            validate={(value: string) =>
+              value.length === 0 ? 'Kenttä on pakollinen' : null
+            }
+          />
         ) : null}
       </div>
       <div className="editButtons">
@@ -134,6 +146,7 @@ const EditableUserVariableRow: React.FC<EditableUserVariableRowProps> = ({
 
 const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
   disableSaving,
+  errors,
   changeEditingStatus,
   resetFields,
   submitForm,
@@ -150,25 +163,28 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
   return (
     <div className="userFlexRow">
       <div className="userFlexColumn">
-        <span className="title">Nykyinen salasana</span>
-        <Field
+        <TextInput
           autoComplete="current-password"
-          className="form-control"
+          errorText={errors.password}
           name="password"
+          label="Nykyinen salasana"
           type="password"
+          validate={(value: string) =>
+            value.length === 0 ? 'Kenttä on pakollinen' : null
+          }
         />
-        <span className="title">Uusi salasana</span>
-        <Field
+        <TextInput
           autoComplete="new-password"
-          className="form-control"
+          errorText={errors.newPassword}
           name="newPassword"
+          label="Uusi salasana"
           type="password"
         />
-        <span className="title">Uusi salasana uudestaan</span>
-        <Field
+        <TextInput
           autoComplete="new-password"
-          className="form-control"
+          errorText={errors.newPasswordAgain}
           name="newPasswordAgain"
+          label="Uusi salasana uudestaan"
           type="password"
         />
       </div>
@@ -196,6 +212,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
   editingName,
   editingNewPassword,
   editingPhone,
+  errors,
   handleReset,
   handleSubmit,
   setEditingEmail,
@@ -286,8 +303,11 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
       ) : (
         <EditableUserVariableRow
           disableSaving={!dirty}
-          fieldNames={['forename', 'surname']}
-          title="Etu- ja sukunimi"
+          errors={errors}
+          fields={[
+            { fieldName: 'forename', label: 'Etunimi' },
+            { fieldName: 'surname', label: 'Sukunimi' },
+          ]}
           changeEditingStatus={changeNameEditingStatus}
           resetFields={handleReset}
           submitForm={handleSubmit}
@@ -302,8 +322,8 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
       ) : (
         <EditableUserVariableRow
           disableSaving={!dirty}
-          fieldNames={['email']}
-          title="Sähköposti"
+          errors={errors}
+          fields={[{ fieldName: 'email', label: 'Sähköposti' }]}
           changeEditingStatus={changeEmailEditingStatus}
           resetFields={handleReset}
           requirePassword
@@ -319,8 +339,8 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
       ) : (
         <EditableUserVariableRow
           disableSaving={!dirty}
-          fieldNames={['phone']}
-          title="Puhelinnumero"
+          errors={errors}
+          fields={[{ fieldName: 'phone', label: 'Puhelinnumero' }]}
           changeEditingStatus={changePhoneEditingStatus}
           resetFields={handleReset}
           submitForm={handleSubmit}
@@ -335,6 +355,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
       ) : (
         <NewPasswordRow
           disableSaving={!dirty}
+          errors={errors}
           changeEditingStatus={changeNewPasswordEditingStatus}
           resetFields={handleReset}
           submitForm={handleSubmit}
@@ -412,16 +433,18 @@ export const UserSettings: React.FC = () => {
               newPassword: '',
               newPasswordAgain: '',
             }}
+            validationSchema={USER_SETTINGS_VALIDATION_SCHEMA}
             enableReinitialize={true}
             onSubmit={handleFormSubmit}
           >
-            {({ values, handleReset, handleSubmit, dirty }) => (
+            {({ values, errors, handleReset, handleSubmit, dirty }) => (
               <UserPropertiesForm
                 dirty={dirty}
                 editingEmail={editingEmail}
                 editingName={editingName}
                 editingNewPassword={editingNewPassword}
                 editingPhone={editingPhone}
+                errors={errors}
                 handleReset={handleReset}
                 handleSubmit={handleSubmit}
                 setEditingEmail={setEditingEmail}
