@@ -31,6 +31,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
+    id="commonButton"
     className={`iconButton ${className}`}
     onClick={onClick}
     key={key}
@@ -50,6 +51,7 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
+    id="commonButton"
     className={`primaryButton ${className}`}
     disabled={disabled}
     key={key}
@@ -69,6 +71,7 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
+    id="commonButton"
     className={`secondaryButton ${className}`}
     disabled={disabled}
     key={key}
@@ -88,6 +91,7 @@ export const TertiaryButton: React.FC<TextButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
+    id="commonButton"
     className={`tertiaryButton ${className}`}
     disabled={disabled}
     key={key}

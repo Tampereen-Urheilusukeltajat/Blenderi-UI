@@ -17,6 +17,8 @@ import { ProtectedRoute } from './components/common/Auth';
 import { Logbook } from './views/Logbook';
 import { useEffect, useState } from 'react';
 import { getTokenFromLocalStorage } from './lib/utils';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -105,6 +107,7 @@ const App = (): JSX.Element => {
     <QueryClientProvider client={QUERY_CLIENT}>
       {authenticated ? <Navbar /> : null}
       <Content />
+      <ToastContainer className="toast-position" position={'top-right'} />
     </QueryClientProvider>
   );
 };

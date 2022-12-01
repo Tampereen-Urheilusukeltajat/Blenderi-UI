@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Field, Form, Formik } from 'formik';
 import React, { useCallback, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import { patchUser } from '../../lib/apiRequests/userRequests';
 import { USER_QUERY_KEY } from '../../lib/queries/queryKeys';
 import { useUserQuery } from '../../lib/queries/userQuery';
@@ -13,8 +14,16 @@ import { ButtonType, PrimaryButton, SecondaryButton } from '../common/Buttons';
 
 type UserPropertiesFormProps = {
   dirty: boolean;
+  editingName: boolean;
+  editingEmail: boolean;
+  editingPhone: boolean;
+  editingNewPassword: boolean;
   handleSubmit: () => void;
   handleReset: () => void;
+  setEditingName: (b: boolean) => void;
+  setEditingEmail: (b: boolean) => void;
+  setEditingPhone: (b: boolean) => void;
+  setEditingNewPassword: (b: boolean) => void;
   values: FormUser;
 };
 
@@ -183,15 +192,21 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
 
 const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
   dirty,
+  editingEmail,
+  editingName,
+  editingNewPassword,
+  editingPhone,
   handleReset,
   handleSubmit,
+  setEditingEmail,
+  setEditingName,
+  setEditingNewPassword,
+  setEditingPhone,
   values,
 }) => {
-  const [editingName, setEditingName] = useState(false);
-  const [editingEmail, setEditingEmail] = useState(false);
-  const [editingPhone, setEditingPhone] = useState(false);
-  const [editingNewPassword, setEditingNewPassword] = useState(false);
-
+  /**
+   * TODO refactor this form state handling
+   */
   const changeNameEditingStatus = useCallback(() => {
     setEditingName(!editingName);
 
@@ -200,7 +215,14 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     setEditingEmail(false);
     setEditingPhone(false);
     setEditingNewPassword(false);
-  }, [editingName, handleReset]);
+  }, [
+    editingName,
+    setEditingEmail,
+    setEditingName,
+    setEditingNewPassword,
+    setEditingPhone,
+    handleReset,
+  ]);
 
   const changeEmailEditingStatus = useCallback(() => {
     setEditingEmail(!editingEmail);
@@ -210,7 +232,14 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     setEditingName(false);
     setEditingPhone(false);
     setEditingNewPassword(false);
-  }, [editingEmail, handleReset]);
+  }, [
+    editingEmail,
+    setEditingEmail,
+    setEditingName,
+    setEditingNewPassword,
+    setEditingPhone,
+    handleReset,
+  ]);
 
   const changePhoneEditingStatus = useCallback(() => {
     setEditingPhone(!editingPhone);
@@ -220,7 +249,14 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     setEditingName(false);
     setEditingEmail(false);
     setEditingNewPassword(false);
-  }, [editingPhone, handleReset]);
+  }, [
+    editingPhone,
+    setEditingEmail,
+    setEditingName,
+    setEditingNewPassword,
+    setEditingPhone,
+    handleReset,
+  ]);
 
   const changeNewPasswordEditingStatus = useCallback(() => {
     setEditingNewPassword(!editingNewPassword);
@@ -230,7 +266,14 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
     setEditingName(false);
     setEditingEmail(false);
     setEditingPhone(false);
-  }, [editingNewPassword, handleReset]);
+  }, [
+    editingNewPassword,
+    setEditingEmail,
+    setEditingName,
+    setEditingNewPassword,
+    setEditingPhone,
+    handleReset,
+  ]);
 
   return (
     <Form>
@@ -307,13 +350,31 @@ export const UserSettings: React.FC = () => {
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
   const { data: user } = useUserQuery(userId);
 
+  // Used to open and close editing panel for field
+  // Only one can be open at the same time
+  // TODO Refactor to something smarter
+  const [editingName, setEditingName] = useState(false);
+  const [editingEmail, setEditingEmail] = useState(false);
+  const [editingPhone, setEditingPhone] = useState(false);
+  const [editingNewPassword, setEditingNewPassword] = useState(false);
+
   const userMutation = useMutation({
     mutationFn: async (payload: Partial<FormUser>) =>
       patchUser(userId, payload),
     mutationKey: USER_QUERY_KEY(userId),
     onSuccess: (user) => {
       queryClient.setQueryData(USER_QUERY_KEY(userId), user);
+      toast.success('Tiedot päivitetty!');
+
+      setEditingName(false);
+      setEditingEmail(false);
+      setEditingPhone(false);
+      setEditingNewPassword(false);
     },
+    onError: () => {
+      toast.error('Tietojen päivitys epäonnistui. Yritä uudelleen.');
+    },
+    retry: 0,
   });
 
   const handleFormSubmit = useCallback(
@@ -351,13 +412,22 @@ export const UserSettings: React.FC = () => {
               newPassword: '',
               newPasswordAgain: '',
             }}
+            enableReinitialize={true}
             onSubmit={handleFormSubmit}
           >
             {({ values, handleReset, handleSubmit, dirty }) => (
               <UserPropertiesForm
                 dirty={dirty}
+                editingEmail={editingEmail}
+                editingName={editingName}
+                editingNewPassword={editingNewPassword}
+                editingPhone={editingPhone}
                 handleReset={handleReset}
                 handleSubmit={handleSubmit}
+                setEditingEmail={setEditingEmail}
+                setEditingName={setEditingName}
+                setEditingNewPassword={setEditingNewPassword}
+                setEditingPhone={setEditingPhone}
                 values={values}
               />
             )}
