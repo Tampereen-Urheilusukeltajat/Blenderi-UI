@@ -5,6 +5,8 @@ import { BsTrash } from 'react-icons/bs';
 
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
+import { postAsync } from '../../lib/apiRequests/api';
+import { getUserIdFromAccessToken } from '../../lib/utils';
 
 type DivingCylinder = {
   volume: string;
@@ -104,12 +106,51 @@ const NewDivingCylinderRow = (
   );
 };
 
-export const NewDivingCylinderSet = (): JSX.Element => {
-  const handleFormSubmit = useCallback((values: DivingCylinderSet) => {
+type CylinderSetRequest = {
+  owner: string;
+  name: string;
+  cylinders: Array<{
+    volume: string;
+    material: string;
+    pressure: string;
+    serialNumber: string;
+    inspection: string;
+  }>;
+};
+
+type CylinderSetResponse = {
+  id: string;
+  owner: string;
+  name: string;
+  cylinders: Array<
+    DivingCylinder & {
+      id: string;
+    }
+  >;
+};
+
+export const NewDivingCylinderSet = async (): Promise<JSX.Element> => {
+  const handleFormSubmit = useCallback(async (values: DivingCylinderSet) => {
     // TODO send request to backend
     // eslint-disable-next-line no-console
     console.log(values);
+    const cylinderSetResponse = await postAsync<
+      CylinderSetResponse,
+      CylinderSetRequest
+    >('/api/cylinder-set/', {
+      owner: getUserIdFromAccessToken(),
+      name: values.divingCylinderSetName,
+      cylinders: values.divingCylinders,
+    });
+    // eslint-disable-next-line no-console
+    console.log(cylinderSetResponse);
   }, []);
+
+  /*
+  const validateForm = (values: FormData) => {
+    const errors: FormikErrors = {};
+
+  } */
 
   return (
     <div className="mt-5">
@@ -119,6 +160,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
           divingCylinderSetName: '',
           divingCylinders: [EmptyDivingCylinder],
         }}
+        // validationSchema={CylinderSetSchema}
         onSubmit={handleFormSubmit}
       >
         {({ values }) => (
