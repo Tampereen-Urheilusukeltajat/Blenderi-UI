@@ -9,6 +9,7 @@ import { postAsync } from '../../lib/apiRequests/api';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
+import { TextInput } from '../common/Inputs';
 
 type DivingCylinder = {
   volume: string;
@@ -168,16 +169,12 @@ export const NewDivingCylinderSet = (): JSX.Element => {
           <Form className="newCylinderSetForm">
             <div className="divingCylinderFlexRow">
               <div className="labelAndInput">
-                <span className="pb-2">Pullosetin nimi</span>
-                <Field
-                  name="divingCylinderSetName"
-                  className="form-control"
+                <TextInput
+                  name="divingcylinderSetName"
                   placeholder="Esim. D12"
+                  label="Pullosetin nimi"
+                  errorText={errors.divingCylinderSetName}
                 />
-                {(touched.divingCylinderSetName ?? false) &&
-                  errors.divingCylinderSetName && (
-                    <div className="error">{errors.divingCylinderSetName}</div>
-                  )}
               </div>
               <PrimaryButton
                 text="Tallenna pullosetti"
