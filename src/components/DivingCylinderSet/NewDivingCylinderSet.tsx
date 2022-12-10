@@ -7,13 +7,15 @@ import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
 import { postAsync } from '../../lib/apiRequests/api';
 import { getUserIdFromAccessToken } from '../../lib/utils';
+import { toast } from 'react-toastify';
+import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 
 type DivingCylinder = {
   volume: string;
   material: string;
-  maximumFillingPressure: string;
+  pressure: string;
   serialNumber: string;
-  inspectionYear: string;
+  inspection: string;
 };
 
 type DivingCylinderSet = {
@@ -24,9 +26,9 @@ type DivingCylinderSet = {
 const EmptyDivingCylinder: DivingCylinder = {
   volume: '',
   material: 'steel',
-  maximumFillingPressure: '',
+  pressure: '',
   serialNumber: '',
-  inspectionYear: '',
+  inspection: '',
 };
 
 const NewDivingCylinderRow = (
@@ -65,9 +67,9 @@ const NewDivingCylinderRow = (
           <InputGroup as={Col}>
             <Field
               type="number"
-              list={`divingCylinders.${index}.maximumFillingPressures`}
+              list={`divingCylinders.${index}.pressure`}
               className="form-control"
-              name={`divingCylinders.${index}.maximumFillingPressure`}
+              name={`divingCylinders.${index}.pressure`}
             />
             <InputGroup.Text>bar</InputGroup.Text>
           </InputGroup>
@@ -81,7 +83,7 @@ const NewDivingCylinderRow = (
         <div className="labelAndInput">
           <Field
             className="form-control"
-            name={`divingCylinders.${index}.inspectionYear`}
+            name={`divingCylinders.${index}.inspection`}
             type="number"
           />
         </div>
@@ -109,13 +111,7 @@ const NewDivingCylinderRow = (
 type CylinderSetRequest = {
   owner: string;
   name: string;
-  cylinders: Array<{
-    volume: string;
-    material: string;
-    pressure: string;
-    serialNumber: string;
-    inspection: string;
-  }>;
+  cylinders: DivingCylinder[];
 };
 
 type CylinderSetResponse = {
@@ -129,28 +125,31 @@ type CylinderSetResponse = {
   >;
 };
 
-export const NewDivingCylinderSet = async (): Promise<JSX.Element> => {
+export const NewDivingCylinderSet = (): JSX.Element => {
   const handleFormSubmit = useCallback(async (values: DivingCylinderSet) => {
-    // TODO send request to backend
-    // eslint-disable-next-line no-console
-    console.log(values);
-    const cylinderSetResponse = await postAsync<
-      CylinderSetResponse,
-      CylinderSetRequest
-    >('/api/cylinder-set/', {
-      owner: getUserIdFromAccessToken(),
-      name: values.divingCylinderSetName,
-      cylinders: values.divingCylinders,
-    });
-    // eslint-disable-next-line no-console
-    console.log(cylinderSetResponse);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const cylinderSetResponse = await postAsync<
+        CylinderSetResponse,
+        CylinderSetRequest
+      >('/api/cylinder-set/', {
+        owner: getUserIdFromAccessToken(),
+        name: values.divingCylinderSetName,
+        cylinders: values.divingCylinders,
+      });
+      resetForm(values);
+      toast.success('Uusi pullosetti lisätty!');
+    } catch (error) {
+      toast.error(
+        'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+      );
+    }
   }, []);
 
-  /*
-  const validateForm = (values: FormData) => {
-    const errors: FormikErrors = {};
-
-  } */
+  const resetForm = (values: DivingCylinderSet): void => {
+    values.divingCylinderSetName = '';
+    values.divingCylinders = [EmptyDivingCylinder];
+  };
 
   return (
     <div className="mt-5">
@@ -160,10 +159,12 @@ export const NewDivingCylinderSet = async (): Promise<JSX.Element> => {
           divingCylinderSetName: '',
           divingCylinders: [EmptyDivingCylinder],
         }}
-        // validationSchema={CylinderSetSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+        validationSchema={NEW_CYLINDER_SET_VALIDATION_SCHEMA}
         onSubmit={handleFormSubmit}
       >
-        {({ values }) => (
+        {({ values, errors, touched, isSubmitting }) => (
           <Form className="newCylinderSetForm">
             <div className="divingCylinderFlexRow">
               <div className="labelAndInput">
@@ -173,10 +174,15 @@ export const NewDivingCylinderSet = async (): Promise<JSX.Element> => {
                   className="form-control"
                   placeholder="Esim. D12"
                 />
+                {(touched.divingCylinderSetName ?? false) &&
+                  errors.divingCylinderSetName && (
+                    <div className="error">{errors.divingCylinderSetName}</div>
+                  )}
               </div>
               <PrimaryButton
                 text="Tallenna pullosetti"
                 type={ButtonType.submit}
+                disabled={isSubmitting}
               />
             </div>
             <div className="divingCylinderGridRow titleBar">
