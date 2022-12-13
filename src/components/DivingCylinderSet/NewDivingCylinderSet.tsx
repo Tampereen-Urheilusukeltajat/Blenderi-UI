@@ -1,16 +1,15 @@
 import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback } from 'react';
 import { BsTrash } from 'react-icons/bs';
-
+import { postCylinderSet } from '../../lib/apiRequests/divingCylinderSetRequests';
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
-import { postAsync } from '../../lib/apiRequests/api';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
 
-type DivingCylinder = {
+export type DivingCylinder = {
   volume: string;
   material: string;
   pressure: string;
@@ -92,23 +91,6 @@ const NewDivingCylinderRow = (
   );
 };
 
-type CylinderSetRequest = {
-  owner: string;
-  name: string;
-  cylinders: DivingCylinder[];
-};
-
-type CylinderSetResponse = {
-  id: string;
-  owner: string;
-  name: string;
-  cylinders: Array<
-    DivingCylinder & {
-      id: string;
-    }
-  >;
-};
-
 export const NewDivingCylinderSet = (): JSX.Element => {
   const resetForm = useCallback((values: DivingCylinderSet): void => {
     values.divingCylinderSetName = '';
@@ -120,10 +102,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
       try {
         // TODO: useMutation
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const cylinderSetResponse = await postAsync<
-          CylinderSetResponse,
-          CylinderSetRequest
-        >('/api/cylinder-set/', {
+        const cylinderSetResponse = await postCylinderSet({
           owner: getUserIdFromAccessToken(),
           name: values.divingCylinderSetName,
           cylinders: values.divingCylinders,
