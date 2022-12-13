@@ -1,13 +1,25 @@
 import { postAsync } from '../../lib/apiRequests/api';
-import { DivingCylinder } from '../../components/DivingCylinderSet/NewDivingCylinderSet';
 
-type CylinderSetRequest = {
+export type DivingCylinder = {
+  volume: string;
+  material: string;
+  pressure: string;
+  serialNumber: string;
+  inspection: string;
+};
+
+export type DivingCylinderSet = {
+  divingCylinderSetName: string;
+  divingCylinders: DivingCylinder[];
+};
+
+export type CylinderSetRequest = {
   owner: string;
   name: string;
   cylinders: DivingCylinder[];
 };
 
-type CylinderSetResponse = {
+export type CylinderSetResponse = {
   id: string;
   owner: string;
   name: string;

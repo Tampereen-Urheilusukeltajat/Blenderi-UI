@@ -1,26 +1,20 @@
 import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback } from 'react';
 import { BsTrash } from 'react-icons/bs';
-import { postCylinderSet } from '../../lib/apiRequests/divingCylinderSetRequests';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CYLINDER_SET_QUERY_KEY } from '../../lib/queries/queryKeys';
+import {
+  DivingCylinder,
+  DivingCylinderSet,
+  postCylinderSet,
+  CylinderSetRequest,
+} from '../../lib/apiRequests/divingCylinderSetRequests';
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
-
-export type DivingCylinder = {
-  volume: string;
-  material: string;
-  pressure: string;
-  serialNumber: string;
-  inspection: string;
-};
-
-type DivingCylinderSet = {
-  divingCylinderSetName: string;
-  divingCylinders: DivingCylinder[];
-};
 
 const EmptyDivingCylinder: DivingCylinder = {
   volume: '',
@@ -92,6 +86,24 @@ const NewDivingCylinderRow = (
 };
 
 export const NewDivingCylinderSet = (): JSX.Element => {
+  const queryClient = useQueryClient();
+
+  const cylinderSetMutation = useMutation({
+    mutationFn: async (payload: CylinderSetRequest) => postCylinderSet(payload),
+    onSuccess: (cylinderSet) => {
+      queryClient.setQueryData(
+        CYLINDER_SET_QUERY_KEY(cylinderSet.id),
+        cylinderSet
+      );
+      toast.success('Uusi pullosetti lisätty!');
+    },
+    onError: () => {
+      toast.error(
+        'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+      );
+    },
+  });
+
   const resetForm = useCallback((values: DivingCylinderSet): void => {
     values.divingCylinderSetName = '';
     values.divingCylinders = [EmptyDivingCylinder];
@@ -99,23 +111,16 @@ export const NewDivingCylinderSet = (): JSX.Element => {
 
   const handleFormSubmit = useCallback(
     async (values: DivingCylinderSet) => {
-      try {
-        // TODO: useMutation
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const cylinderSetResponse = await postCylinderSet({
-          owner: getUserIdFromAccessToken(),
-          name: values.divingCylinderSetName,
-          cylinders: values.divingCylinders,
-        });
+      await cylinderSetMutation.mutateAsync({
+        owner: getUserIdFromAccessToken(),
+        name: values.divingCylinderSetName,
+        cylinders: values.divingCylinders,
+      });
+      if (!cylinderSetMutation.isError) {
         resetForm(values);
-        toast.success('Uusi pullosetti lisätty!');
-      } catch (error) {
-        toast.error(
-          'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
-        );
       }
     },
-    [resetForm]
+    [cylinderSetMutation, resetForm]
   );
 
   return (
@@ -130,6 +135,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
         validateOnBlur={false}
         validationSchema={NEW_CYLINDER_SET_VALIDATION_SCHEMA}
         onSubmit={handleFormSubmit}
+        handleReset={resetForm}
       >
         {({ values, errors, touched, isSubmitting }) => (
           <Form className="newCylinderSetForm">
