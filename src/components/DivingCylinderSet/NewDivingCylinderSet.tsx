@@ -1,6 +1,5 @@
-import { Field, FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
+import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback } from 'react';
-import { Col, InputGroup } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
 
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
@@ -9,7 +8,7 @@ import { postAsync } from '../../lib/apiRequests/api';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
-import { TextInput } from '../common/Inputs';
+import { TextInput, DropdownMenu } from '../common/Inputs';
 
 type DivingCylinder = {
   volume: string;
@@ -35,59 +34,43 @@ const EmptyDivingCylinder: DivingCylinder = {
 const NewDivingCylinderRow = (
   { remove, push, replace }: FieldArrayRenderProps,
   index: number,
-  lastItem: boolean
+  lastItem: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any
 ): JSX.Element => {
   return (
     <div key={index}>
       <div className="divingCylinderGridRow">
-        <div className="labelAndInput">
-          <InputGroup as={Col}>
-            <Field
-              className="form-control"
-              name={`divingCylinders.${index}.volume`}
-              type="number"
-            />
-            <InputGroup.Text>l</InputGroup.Text>
-          </InputGroup>
-        </div>
-        <div className="labelAndInput">
-          <InputGroup as={Col}>
-            <Field
-              as="select"
-              list={`divingCylinders.${index}.material`}
-              className="form-select"
-              name={`divingCylinders.${index}.material`}
-            >
-              <option value="steel">Teräs</option>
-              <option value="aluminium">Alumiini</option>
-              <option value="carbonFiber">Hiilikuitu</option>
-            </Field>
-          </InputGroup>
-        </div>
-        <div className="labelAndInput">
-          <InputGroup as={Col}>
-            <Field
-              type="number"
-              list={`divingCylinders.${index}.pressure`}
-              className="form-control"
-              name={`divingCylinders.${index}.pressure`}
-            />
-            <InputGroup.Text>bar</InputGroup.Text>
-          </InputGroup>
-        </div>
-        <div className="labelAndInput">
-          <Field
-            className="form-control"
-            name={`divingCylinders.${index}.serialNumber`}
-          />
-        </div>
-        <div className="labelAndInput">
-          <Field
-            className="form-control"
-            name={`divingCylinders.${index}.inspection`}
-            type="number"
-          />
-        </div>
+        <TextInput
+          name={`divingCylinders.${index}.volume`}
+          type="number"
+          errorText={errors.divingCylinders?.at(index)?.volume}
+          unit="l"
+        />
+        <DropdownMenu
+          name={`divingCylinders.${index}.material`}
+          errorText={errors.divingCylinders?.at(index)?.material}
+        >
+          <option value="steel">Teräs</option>
+          <option value="aluminium">Alumiini</option>
+          <option value="carbonFiber">Hiilikuitu</option>
+        </DropdownMenu>
+        <TextInput
+          name={`divingCylinders.${index}.pressure`}
+          type="number"
+          errorText={errors.divingCylinders?.at(index)?.pressure}
+          unit="bar"
+        />
+        <TextInput
+          name={`divingCylinders.${index}.serialNumber`}
+          type="string"
+          errorText={errors.divingCylinders?.at(index)?.serialNumber}
+        />
+        <TextInput
+          name={`divingCylinders.${index}.inspection`}
+          type="number"
+          errorText={errors.divingCylinders?.at(index)?.inspection}
+        />
         <IconButton
           icon={<BsTrash />}
           onClick={() =>
@@ -127,30 +110,34 @@ type CylinderSetResponse = {
 };
 
 export const NewDivingCylinderSet = (): JSX.Element => {
-  const handleFormSubmit = useCallback(async (values: DivingCylinderSet) => {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const cylinderSetResponse = await postAsync<
-        CylinderSetResponse,
-        CylinderSetRequest
-      >('/api/cylinder-set/', {
-        owner: getUserIdFromAccessToken(),
-        name: values.divingCylinderSetName,
-        cylinders: values.divingCylinders,
-      });
-      resetForm(values);
-      toast.success('Uusi pullosetti lisätty!');
-    } catch (error) {
-      toast.error(
-        'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
-      );
-    }
-  }, []);
-
-  const resetForm = (values: DivingCylinderSet): void => {
+  const resetForm = useCallback((values: DivingCylinderSet): void => {
     values.divingCylinderSetName = '';
     values.divingCylinders = [EmptyDivingCylinder];
-  };
+  }, []);
+
+  const handleFormSubmit = useCallback(
+    async (values: DivingCylinderSet) => {
+      try {
+        // TODO: useMutation
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const cylinderSetResponse = await postAsync<
+          CylinderSetResponse,
+          CylinderSetRequest
+        >('/api/cylinder-set/', {
+          owner: getUserIdFromAccessToken(),
+          name: values.divingCylinderSetName,
+          cylinders: values.divingCylinders,
+        });
+        resetForm(values);
+        toast.success('Uusi pullosetti lisätty!');
+      } catch (error) {
+        toast.error(
+          'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+        );
+      }
+    },
+    [resetForm]
+  );
 
   return (
     <div className="mt-5">
@@ -168,14 +155,12 @@ export const NewDivingCylinderSet = (): JSX.Element => {
         {({ values, errors, touched, isSubmitting }) => (
           <Form className="newCylinderSetForm">
             <div className="divingCylinderFlexRow">
-              <div className="labelAndInput">
-                <TextInput
-                  name="divingcylinderSetName"
-                  placeholder="Esim. D12"
-                  label="Pullosetin nimi"
-                  errorText={errors.divingCylinderSetName}
-                />
-              </div>
+              <TextInput
+                name="divingCylinderSetName"
+                placeholder="Esim. D12"
+                label="Pullosetin nimi"
+                errorText={errors.divingCylinderSetName}
+              />
               <PrimaryButton
                 text="Tallenna pullosetti"
                 type={ButtonType.submit}
@@ -197,7 +182,8 @@ export const NewDivingCylinderSet = (): JSX.Element => {
                     NewDivingCylinderRow(
                       arrayHelpers,
                       index,
-                      values.divingCylinders.length === index + 1
+                      values.divingCylinders.length === index + 1,
+                      errors
                     )
                   )}
                 </>
