@@ -36,5 +36,6 @@ module.exports = {
       { allowNullableObject: true, allowNumber: true, allowString: true },
     ],
     '@typescript-eslint/indent': 'off',
+    'no-trailing-spaces': 'warn',
   },
 };

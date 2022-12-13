@@ -111,6 +111,8 @@ export const NewDivingCylinderSet = (): JSX.Element => {
 
   const handleFormSubmit = useCallback(
     async (values: DivingCylinderSet) => {
+      // Set isError to false because it does not reset between submits
+      cylinderSetMutation.isError = false;
       await cylinderSetMutation.mutateAsync({
         owner: getUserIdFromAccessToken(),
         name: values.divingCylinderSetName,
