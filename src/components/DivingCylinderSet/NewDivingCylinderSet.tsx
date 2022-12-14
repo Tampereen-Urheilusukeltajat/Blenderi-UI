@@ -139,7 +139,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
         onSubmit={handleFormSubmit}
         handleReset={resetForm}
       >
-        {({ values, errors, touched, isSubmitting }) => (
+        {({ values, errors, isSubmitting }) => (
           <Form className="newCylinderSetForm">
             <div className="divingCylinderFlexRow">
               <TextInput
