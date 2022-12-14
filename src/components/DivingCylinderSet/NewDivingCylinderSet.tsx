@@ -1,88 +1,69 @@
-import { Field, FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
+import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback } from 'react';
-import { Col, InputGroup } from 'react-bootstrap';
 import { BsTrash } from 'react-icons/bs';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CYLINDER_SET_QUERY_KEY } from '../../lib/queries/queryKeys';
+import {
+  DivingCylinder,
+  DivingCylinderSet,
+  postCylinderSet,
+  CylinderSetRequest,
+} from '../../lib/apiRequests/divingCylinderSetRequests';
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
-
-type DivingCylinder = {
-  volume: string;
-  material: string;
-  maximumFillingPressure: string;
-  serialNumber: string;
-  inspectionYear: string;
-};
-
-type DivingCylinderSet = {
-  divingCylinderSetName: string;
-  divingCylinders: DivingCylinder[];
-};
+import { getUserIdFromAccessToken } from '../../lib/utils';
+import { toast } from 'react-toastify';
+import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
+import { TextInput, DropdownMenu } from '../common/Inputs';
 
 const EmptyDivingCylinder: DivingCylinder = {
   volume: '',
   material: 'steel',
-  maximumFillingPressure: '',
+  pressure: '',
   serialNumber: '',
-  inspectionYear: '',
+  inspection: '',
 };
 
 const NewDivingCylinderRow = (
   { remove, push, replace }: FieldArrayRenderProps,
   index: number,
-  lastItem: boolean
+  lastItem: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any
 ): JSX.Element => {
   return (
     <div key={index}>
       <div className="divingCylinderGridRow">
-        <div className="labelAndInput">
-          <InputGroup as={Col}>
-            <Field
-              className="form-control"
-              name={`divingCylinders.${index}.volume`}
-              type="number"
-            />
-            <InputGroup.Text>l</InputGroup.Text>
-          </InputGroup>
-        </div>
-        <div className="labelAndInput">
-          <InputGroup as={Col}>
-            <Field
-              as="select"
-              list={`divingCylinders.${index}.material`}
-              className="form-select"
-              name={`divingCylinders.${index}.material`}
-            >
-              <option value="steel">Teräs</option>
-              <option value="aluminium">Alumiini</option>
-              <option value="carbonFiber">Hiilikuitu</option>
-            </Field>
-          </InputGroup>
-        </div>
-        <div className="labelAndInput">
-          <InputGroup as={Col}>
-            <Field
-              type="number"
-              list={`divingCylinders.${index}.maximumFillingPressures`}
-              className="form-control"
-              name={`divingCylinders.${index}.maximumFillingPressure`}
-            />
-            <InputGroup.Text>bar</InputGroup.Text>
-          </InputGroup>
-        </div>
-        <div className="labelAndInput">
-          <Field
-            className="form-control"
-            name={`divingCylinders.${index}.serialNumber`}
-          />
-        </div>
-        <div className="labelAndInput">
-          <Field
-            className="form-control"
-            name={`divingCylinders.${index}.inspectionYear`}
-            type="number"
-          />
-        </div>
+        <TextInput
+          name={`divingCylinders.${index}.volume`}
+          type="number"
+          errorText={errors.divingCylinders?.at(index)?.volume}
+          unit="l"
+        />
+        <DropdownMenu
+          name={`divingCylinders.${index}.material`}
+          errorText={errors.divingCylinders?.at(index)?.material}
+        >
+          <option value="steel">Teräs</option>
+          <option value="aluminium">Alumiini</option>
+          <option value="carbonFiber">Hiilikuitu</option>
+        </DropdownMenu>
+        <TextInput
+          name={`divingCylinders.${index}.pressure`}
+          type="number"
+          errorText={errors.divingCylinders?.at(index)?.pressure}
+          unit="bar"
+        />
+        <TextInput
+          name={`divingCylinders.${index}.serialNumber`}
+          type="string"
+          errorText={errors.divingCylinders?.at(index)?.serialNumber}
+        />
+        <TextInput
+          name={`divingCylinders.${index}.inspection`}
+          type="number"
+          errorText={errors.divingCylinders?.at(index)?.inspection}
+        />
         <IconButton
           icon={<BsTrash />}
           onClick={() =>
@@ -105,11 +86,44 @@ const NewDivingCylinderRow = (
 };
 
 export const NewDivingCylinderSet = (): JSX.Element => {
-  const handleFormSubmit = useCallback((values: DivingCylinderSet) => {
-    // TODO send request to backend
-    // eslint-disable-next-line no-console
-    console.log(values);
+  const queryClient = useQueryClient();
+
+  const cylinderSetMutation = useMutation({
+    mutationFn: async (payload: CylinderSetRequest) => postCylinderSet(payload),
+    onSuccess: (cylinderSet) => {
+      queryClient.setQueryData(
+        CYLINDER_SET_QUERY_KEY(cylinderSet.id),
+        cylinderSet
+      );
+      toast.success('Uusi pullosetti lisätty!');
+    },
+    onError: () => {
+      toast.error(
+        'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+      );
+    },
+  });
+
+  const resetForm = useCallback((values: DivingCylinderSet): void => {
+    values.divingCylinderSetName = '';
+    values.divingCylinders = [EmptyDivingCylinder];
   }, []);
+
+  const handleFormSubmit = useCallback(
+    async (values: DivingCylinderSet) => {
+      // Set isError to false because it does not reset between submits
+      cylinderSetMutation.isError = false;
+      await cylinderSetMutation.mutateAsync({
+        owner: getUserIdFromAccessToken(),
+        name: values.divingCylinderSetName,
+        cylinders: values.divingCylinders,
+      });
+      if (!cylinderSetMutation.isError) {
+        resetForm(values);
+      }
+    },
+    [cylinderSetMutation, resetForm]
+  );
 
   return (
     <div className="mt-5">
@@ -119,22 +133,25 @@ export const NewDivingCylinderSet = (): JSX.Element => {
           divingCylinderSetName: '',
           divingCylinders: [EmptyDivingCylinder],
         }}
+        validateOnChange={false}
+        validateOnBlur={false}
+        validationSchema={NEW_CYLINDER_SET_VALIDATION_SCHEMA}
         onSubmit={handleFormSubmit}
+        handleReset={resetForm}
       >
-        {({ values }) => (
+        {({ values, errors, isSubmitting }) => (
           <Form className="newCylinderSetForm">
             <div className="divingCylinderFlexRow">
-              <div className="labelAndInput">
-                <span className="pb-2">Pullosetin nimi</span>
-                <Field
-                  name="divingCylinderSetName"
-                  className="form-control"
-                  placeholder="Esim. D12"
-                />
-              </div>
+              <TextInput
+                name="divingCylinderSetName"
+                placeholder="Esim. D12"
+                label="Pullosetin nimi"
+                errorText={errors.divingCylinderSetName}
+              />
               <PrimaryButton
                 text="Tallenna pullosetti"
                 type={ButtonType.submit}
+                disabled={isSubmitting}
               />
             </div>
             <div className="divingCylinderGridRow titleBar">
@@ -152,7 +169,8 @@ export const NewDivingCylinderSet = (): JSX.Element => {
                     NewDivingCylinderRow(
                       arrayHelpers,
                       index,
-                      values.divingCylinders.length === index + 1
+                      values.divingCylinders.length === index + 1,
+                      errors
                     )
                   )}
                 </>
