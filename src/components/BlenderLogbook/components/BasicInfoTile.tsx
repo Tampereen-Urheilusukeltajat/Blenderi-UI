@@ -1,8 +1,9 @@
+import { DivingCylinderSet } from '../../../lib/apiRequests/divingCylinderSetRequests';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
-import { CommonTileProps, DivingCylinderSet } from '../NewBlenderFillingEvent';
+import { CommonTileProps } from '../NewBlenderFillingEvent';
 
 type BasicInfoTileProps = CommonTileProps & {
-  divingCylinderSets: DivingCylinderSet[];
+  divingCylinderSets: Array<Pick<DivingCylinderSet, 'name' | 'id'>>;
 };
 
 export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({

@@ -3,8 +3,9 @@ export const USER_QUERY_KEY = (userId: string): string[] => ['user', userId];
 export const USERS_QUERY_KEY = 'users';
 
 // Diving cylinder set related query keys
-export const CYLINDER_SET_QUERY_KEY = (setId: string): string[] => [
-  'divingCylinderSet',
-  setId,
+export const CYLINDER_SETS_QUERY_KEY = (userId: string): string[] => [
+  'divingCylinderSets',
+  userId,
 ];
+
 // ...

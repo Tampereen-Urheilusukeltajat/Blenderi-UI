@@ -1,13 +1,14 @@
 import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CYLINDER_SET_QUERY_KEY } from '../../lib/queries/queryKeys';
+import { CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import {
   DivingCylinder,
   DivingCylinderSet,
-  postCylinderSet,
-  CylinderSetRequest,
+  DivingCylinderSetPostRequest,
+  DivingCylinderSetTable,
+  postDivingCylinderSet,
 } from '../../lib/apiRequests/divingCylinderSetRequests';
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
@@ -16,7 +17,7 @@ import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
 
-const EmptyDivingCylinder: DivingCylinder = {
+const EmptyDivingCylinder: Omit<DivingCylinder, 'id'> = {
   volume: '',
   material: 'steel',
   pressure: '',
@@ -86,15 +87,21 @@ const NewDivingCylinderRow = (
 };
 
 export const NewDivingCylinderSet = (): JSX.Element => {
-  const queryClient = useQueryClient();
+  const userId = useMemo(() => getUserIdFromAccessToken(), []);
 
+  const queryClient = useQueryClient();
   const cylinderSetMutation = useMutation({
-    mutationFn: async (payload: CylinderSetRequest) => postCylinderSet(payload),
+    mutationFn: async (payload: DivingCylinderSetPostRequest) =>
+      postDivingCylinderSet(payload),
     onSuccess: (cylinderSet) => {
-      queryClient.setQueryData(
-        CYLINDER_SET_QUERY_KEY(cylinderSet.id),
-        cylinderSet
+      const cylinderSets = queryClient.getQueryData<DivingCylinderSet[]>(
+        CYLINDER_SETS_QUERY_KEY(userId)
       );
+
+      queryClient.setQueryData(CYLINDER_SETS_QUERY_KEY(userId), [
+        ...(cylinderSets ?? []),
+        cylinderSet,
+      ]);
       toast.success('Uusi pullosetti lisätty!');
     },
     onError: () => {
@@ -104,13 +111,13 @@ export const NewDivingCylinderSet = (): JSX.Element => {
     },
   });
 
-  const resetForm = useCallback((values: DivingCylinderSet): void => {
+  const resetForm = useCallback((values: DivingCylinderSetTable): void => {
     values.divingCylinderSetName = '';
     values.divingCylinders = [EmptyDivingCylinder];
   }, []);
 
   const handleFormSubmit = useCallback(
-    async (values: DivingCylinderSet) => {
+    async (values: DivingCylinderSetTable) => {
       // Set isError to false because it does not reset between submits
       cylinderSetMutation.isError = false;
       await cylinderSetMutation.mutateAsync({
