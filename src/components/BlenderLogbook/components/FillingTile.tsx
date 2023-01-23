@@ -1,11 +1,10 @@
 import { FieldArray } from 'formik';
 import { useEffect } from 'react';
 import { BsTrash } from 'react-icons/bs';
+import { StorageCylinder } from '../../../lib/queries/storageCylinderQuery';
 import {
-  AvailableGasses,
   calculateGasConsumption,
   formatEurCentsToEur,
-  mapGasToName,
 } from '../../../lib/utils';
 import { ButtonType, IconButton, PrimaryButton } from '../../common/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
@@ -14,14 +13,6 @@ import {
   EMPTY_FILLING_EVENT_ROW,
   GasPrice,
 } from '../NewBlenderFillingEvent';
-
-type StorageCylinder = {
-  id: string;
-  volume: number;
-  maxPressure: number;
-  name: string;
-  gas: AvailableGasses;
-};
 
 type FillingEventRowProps = CommonTileProps & {
   index: number;
@@ -65,7 +56,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   }
 
   const gasPriceEurCents = prices.find(
-    (price) => price.gas === storageCylinder.gas
+    (price) => price.gasId === storageCylinder.gasId
   )?.priceEurCents;
   const storageCylinderVolume = storageCylinder.volume;
 
@@ -117,7 +108,11 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
         >
           {storageCylinders.map((sc) => (
             <option key={sc.id} value={sc.id}>
-              {sc.name} ({mapGasToName(sc.gas)})
+              {sc.name}
+              {/*
+                TODO: return the gasName to this field once gases and prices are queried too
+                {sc.name} ({mapGasToName(sc.gasId)})
+                */}
             </option>
           ))}
         </DropdownMenu>
