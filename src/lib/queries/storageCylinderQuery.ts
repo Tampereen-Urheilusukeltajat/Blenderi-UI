@@ -19,7 +19,7 @@ export const useStorageCylinderQuery = (): UseQuery<StorageCylinder[]> => {
     onError: () => {
       toast.error('Varastopullojen hakeminen epäonnistui. Yritä uudelleen.');
     },
-    // staleTime: 1000 * 60 * 60, // One hour
+    staleTime: 1000 * 60 * 60, // One hour
     retry: 1,
   });
 
