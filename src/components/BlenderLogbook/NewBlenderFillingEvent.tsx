@@ -95,11 +95,6 @@ export type LogbookCommonTileProps = {
   values: LogbookFormFields;
 };
 
-export type DivingCylinderSet = {
-  id: string;
-  name: string;
-};
-
 export type GasPrice = {
   gasId: string;
   gas: AvailableGasses;
