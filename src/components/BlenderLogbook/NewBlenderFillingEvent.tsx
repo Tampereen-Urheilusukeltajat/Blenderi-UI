@@ -6,6 +6,7 @@ import { SavingTile } from './components/SavingTile';
 import { PricingTile } from './components/PricingTile';
 import { BasicInfoTile } from './components/BasicInfoTile';
 import { BLENDER_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
+import { useStorageCylinderQuery } from '../../lib/queries/storageCylinderQuery';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -95,6 +96,7 @@ export type LogbookCommonTileProps = {
 };
 
 export type GasPrice = {
+  gasId: string;
   gas: AvailableGasses;
   name: string;
   priceEurCents: number;
@@ -110,41 +112,23 @@ export const NewBlenderFillingEvent: React.FC<
 
   // TODO Query these from the backend
   const divingCylinders = [{ id: 'd12_id', name: 'D12' }];
-  const storageCylinders = [
-    {
-      gas: AvailableGasses.oxygen,
-      id: '1',
-      maxPressure: 200,
-      name: '1',
-      volume: 50,
-    },
-    {
-      gas: AvailableGasses.helium,
-      id: '2',
-      maxPressure: 200,
-      name: '2',
-      volume: 50,
-    },
-    {
-      gas: AvailableGasses.argon,
-      id: '3',
-      maxPressure: 200,
-      name: '3',
-      volume: 50,
-    },
-  ];
+  const { data: storageCylinders } = useStorageCylinderQuery();
+
   const prices = [
     {
+      gasId: '1',
       gas: AvailableGasses.oxygen,
       name: mapGasToName(AvailableGasses.oxygen),
       priceEurCents: 1,
     },
     {
+      gasId: '2',
       gas: AvailableGasses.helium,
       name: mapGasToName(AvailableGasses.helium),
       priceEurCents: 5,
     },
     {
+      gasId: '3',
       gas: AvailableGasses.argon,
       name: mapGasToName(AvailableGasses.argon),
       priceEurCents: 2,
@@ -154,52 +138,54 @@ export const NewBlenderFillingEvent: React.FC<
   return (
     <div>
       <h1 className="pb-4">Luo uusi täyttötapahtuma</h1>
-      <Formik
-        initialValues={{
-          ...EMPTY_FILLING_EVENT_BASIC_INFO,
-          divingCylinderSetId: divingCylinders[0].id,
-          fillingEventRows: [
-            {
-              ...EMPTY_FILLING_EVENT_ROW,
-              storageCylinderId: storageCylinders[0].id,
-            },
-          ],
-          guestDivingCylinder: EMPTY_GUEST_DIVING_CYLINDER,
-        }}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validationSchema={BLENDER_FILLING_EVENT_VALIDATION_SCHEMA}
-        onSubmit={handleFormSubmit}
-      >
-        {({ errors, values, setFieldValue }) => (
-          <Form>
-            <div className="fillingEventFlexRow">
-              <BasicInfoTile
-                divingCylinderSets={divingCylinders}
-                errors={errors}
-                values={values}
-              />
-              <SavingTile
-                totalPrice={values.fillingEventRows
-                  .map((row) => row.priceEurCents)
-                  .reduce((partialSum, price) => partialSum + price, 0)}
-                errors={errors}
-                values={values}
-              />
-              <PricingTile errors={errors} prices={prices} values={values} />
-            </div>
-            <div className="fillingEventFlexRow">
-              <FillingTile
-                setFieldValue={setFieldValue}
-                errors={errors}
-                values={values}
-                storageCylinders={storageCylinders}
-                prices={prices}
-              />
-            </div>
-          </Form>
-        )}
-      </Formik>
+      {storageCylinders ? (
+        <Formik
+          initialValues={{
+            ...EMPTY_FILLING_EVENT_BASIC_INFO,
+            divingCylinderSetId: divingCylinders[0].id,
+            fillingEventRows: [
+              {
+                ...EMPTY_FILLING_EVENT_ROW,
+                storageCylinderId: storageCylinders[0].id,
+              },
+            ],
+            guestDivingCylinder: EMPTY_GUEST_DIVING_CYLINDER,
+          }}
+          validateOnBlur={false}
+          validateOnChange={false}
+          validationSchema={BLENDER_FILLING_EVENT_VALIDATION_SCHEMA}
+          onSubmit={handleFormSubmit}
+        >
+          {({ errors, values, setFieldValue }) => (
+            <Form>
+              <div className="fillingEventFlexRow">
+                <BasicInfoTile
+                  divingCylinderSets={divingCylinders}
+                  errors={errors}
+                  values={values}
+                />
+                <SavingTile
+                  totalPrice={values.fillingEventRows
+                    .map((row) => row.priceEurCents)
+                    .reduce((partialSum, price) => partialSum + price, 0)}
+                  errors={errors}
+                  values={values}
+                />
+                <PricingTile errors={errors} prices={prices} values={values} />
+              </div>
+              <div className="fillingEventFlexRow">
+                <FillingTile
+                  setFieldValue={setFieldValue}
+                  errors={errors}
+                  values={values}
+                  storageCylinders={storageCylinders}
+                  prices={prices}
+                />
+              </div>
+            </Form>
+          )}
+        </Formik>
+      ) : null}
     </div>
   );
 };
