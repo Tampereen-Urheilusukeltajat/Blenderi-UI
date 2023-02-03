@@ -15,6 +15,7 @@ import { UserSettings } from './components/UserSettings/UserSettings';
 import { BlenderLogbook } from './views/BlenderLogbook';
 import { ProtectedRoute } from './components/common/Auth';
 import { Logbook } from './views/Logbook';
+import { FillEvents } from './views/FillEvents';
 import { useEffect, useState } from 'react';
 import { getTokenFromLocalStorage } from './lib/utils';
 import { ToastContainer } from 'react-toastify';
@@ -79,6 +80,14 @@ const Content = (): JSX.Element => {
             element={
               <ProtectedRoute>
                 <BlenderLogbook />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="fill-events"
+            element={
+              <ProtectedRoute>
+                <FillEvents />
               </ProtectedRoute>
             }
           />
