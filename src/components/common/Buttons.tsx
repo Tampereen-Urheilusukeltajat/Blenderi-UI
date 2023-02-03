@@ -1,4 +1,5 @@
 import '../../styles/common/button.css';
+import React from 'react';
 
 export enum ButtonType {
   button = 'button',

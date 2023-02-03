@@ -1,6 +1,7 @@
 import { DivingCylinderSet } from '../../../lib/apiRequests/divingCylinderSetRequests';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import { CommonTileProps } from '../NewBlenderFillingEvent';
+import React from 'react';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: Array<Pick<DivingCylinderSet, 'name' | 'id'>>;

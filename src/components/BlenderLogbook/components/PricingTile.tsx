@@ -1,5 +1,6 @@
 import { formatEurCentsToEur } from '../../../lib/utils';
 import { CommonTileProps, GasPrice } from '../NewBlenderFillingEvent';
+import React from 'react';
 
 type PricingTileProps = CommonTileProps & {
   prices: GasPrice[];

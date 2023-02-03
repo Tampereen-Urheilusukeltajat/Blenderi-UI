@@ -1,5 +1,6 @@
 import { LogbookCommonTileProps } from '../BlenderLogbook/NewBlenderFillingEvent';
 import { TextInput } from '../common/Inputs';
+import React from 'react';
 
 type LogbookBasicInfoTileProps = LogbookCommonTileProps;
 
