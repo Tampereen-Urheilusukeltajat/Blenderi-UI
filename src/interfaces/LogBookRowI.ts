@@ -1,9 +1,7 @@
-import EventRow from './EventRow';
+import { EventRow } from './EventRow';
 
-type LogbookRowI = {
+export type LogbookRowI = {
   id: number;
   eventRow: EventRow;
   onDelete: (id: number) => void;
 };
-
-export default LogbookRowI;

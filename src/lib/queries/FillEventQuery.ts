@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { getFillEvents } from '../apiRequests/fillEventRequests';
-import FillEvent from '../../interfaces/FillEvent';
+import { FillEvent } from '../../interfaces/FillEvent';
 import { UseQuery } from './common';
 import { FILL_EVENT_QUERY_KEY } from './queryKeys';
 

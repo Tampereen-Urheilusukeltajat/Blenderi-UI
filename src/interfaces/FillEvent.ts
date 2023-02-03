@@ -8,5 +8,3 @@ export type FillEvent = {
   price: number;
   createdAt: string;
 };
-
-export default FillEvent;
