@@ -84,12 +84,12 @@ const Content = (): JSX.Element => {
             }
           />
           <Route
-              path="fill-events"
-              element={
-                <ProtectedRoute>
-                  <FillEvents />
-                </ProtectedRoute>
-              }
+            path="fill-events"
+            element={
+              <ProtectedRoute>
+                <FillEvents />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="user"
