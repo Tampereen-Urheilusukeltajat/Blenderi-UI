@@ -1,13 +1,13 @@
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import FillEvent from '../../interfaces/FillEvent';
 
-function FillEventRow({
+const FillEventRow = ({
   data,
   index,
 }: {
   data: FillEvent;
   index: number;
-}): JSX.Element {
+}): JSX.Element => {
   return (
     <tr className={index % 2 === 0 ? 'evenRow' : 'oddRow'}>
       <td>{data.createdAt}</td>
@@ -17,7 +17,7 @@ function FillEventRow({
       <td>{data.price}</td>
     </tr>
   );
-}
+};
 
 export const ListFillEvents = (): JSX.Element => {
   const fillEvents: FillEvent[] = useFillEventQuery().data ?? [];
