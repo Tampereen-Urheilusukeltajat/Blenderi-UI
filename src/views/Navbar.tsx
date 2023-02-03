@@ -33,6 +33,7 @@ export const Navbar = (): JSX.Element | null => {
           <CustomLink to="/logbook">Paineilmatäyttö</CustomLink>
           <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
           <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
+          <CustomLink to="/fill-events">Täyttötapahtumat</CustomLink>
 
           {/* Not part of the MVP
           <CustomLink to="/management">Käyttäjän hallinta</CustomLink>

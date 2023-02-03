@@ -11,4 +11,7 @@ export const CYLINDER_SETS_QUERY_KEY = (userId: string): string[] => [
 // Storage cylinder query keys
 export const STORAGE_CYLINDERS_QUERY_KEY = ['storageCylinder'];
 
+// Fill event related query keys
+export const FILL_EVENT_QUERY_KEY = ['fillEvents'];
+
 // ...
