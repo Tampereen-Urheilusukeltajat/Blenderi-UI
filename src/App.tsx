@@ -28,10 +28,10 @@ const Content = (): JSX.Element => {
   const isFetching = useIsFetching();
 
   // Show spinner for 150ms even though loading has already finished
-  // Why? If the request is fullfilled from the cache, the loader flashes on
-  // screen for a really small time and it creates this annoying flashing
+  // Why? If the request is fulfilled from the cache, the loader flashes on
+  // screen for a really short time, and it creates this annoying flashing.
   // With 150ms user is able to perceive that there was a loading icon,
-  // but it is still so fast that it doesn't bother the user
+  // but it is still so fast that it doesn't bother the user.
   useEffect(() => {
     if (isFetching > 0) {
       setShowSpinner(true);

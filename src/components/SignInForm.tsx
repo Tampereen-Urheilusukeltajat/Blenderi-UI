@@ -7,7 +7,7 @@ import { postAsync } from '../lib/apiRequests/api';
 import { ButtonType, PrimaryButton } from './common/Buttons';
 import { useNavigate } from 'react-router-dom';
 
-type SignInFormFiels = {
+type SignInFormFields = {
   email: string;
   password: string;
 };
@@ -30,7 +30,7 @@ const SignInForm = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
-    async (formFields: SignInFormFiels) => {
+    async (formFields: SignInFormFields) => {
       const loginResponse = await postAsync<LoginResponse, LoginRequest>(
         '/api/login/',
         {

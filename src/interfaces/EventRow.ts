@@ -1,5 +1,5 @@
 export type EventRow = {
-  _id: number; // Tarvitaan rivien poistoa ja lisäämistä varten
+  _id: number;
   divingCylinder: string;
   gas: string;
   pressure: number;
