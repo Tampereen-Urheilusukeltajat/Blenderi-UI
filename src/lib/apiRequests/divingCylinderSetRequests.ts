@@ -1,4 +1,4 @@
-import { authPostAsync, authGetAsync } from '../../lib/apiRequests/api';
+import { authPostAsync, authGetAsync } from './api';
 
 export type DivingCylinder = {
   id: string;

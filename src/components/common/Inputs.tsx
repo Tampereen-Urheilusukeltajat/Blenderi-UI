@@ -1,6 +1,7 @@
 import { Field } from 'formik';
 import { InputGroup } from 'react-bootstrap';
 import '../../styles/common/input.css';
+import React from 'react';
 
 export type CommonInputProps = {
   autoComplete?: string;

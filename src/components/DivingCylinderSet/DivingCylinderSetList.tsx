@@ -47,7 +47,7 @@ const DCMaterialFiTranslation = (enMaterial: string): string => {
 const divingCylinderSetsToCommonTableRows = (
   divingCylinderSets: DivingCylinderSet[]
 ): TableRow[] => {
-  const rows = divingCylinderSets.map((dcs) => {
+  return divingCylinderSets.map((dcs) => {
     // Single cylinder so only return mainRow
     if (dcs.cylinders.length === 1) {
       const dc = dcs.cylinders[0];
@@ -80,8 +80,6 @@ const divingCylinderSetsToCommonTableRows = (
       ],
     };
   });
-
-  return rows;
 };
 
 export const DivingCylinderSetList = (): JSX.Element => {

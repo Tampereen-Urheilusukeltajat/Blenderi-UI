@@ -4,6 +4,7 @@ import {
   CommonTileProps,
   LogbookCommonTileProps,
 } from '../NewBlenderFillingEvent';
+import React from 'react';
 
 type SavingTileProps = CommonTileProps & {
   totalPrice: number;

@@ -6,6 +6,7 @@ import {
 } from '../BlenderLogbook/NewBlenderFillingEvent';
 import { IconButton, PrimaryButton, ButtonType } from '../common/Buttons';
 import { DropdownMenu } from '../common/Inputs';
+import React from 'react';
 
 type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   index: number;

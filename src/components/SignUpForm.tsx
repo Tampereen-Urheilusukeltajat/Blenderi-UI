@@ -81,8 +81,7 @@ const SignUpForm = (): JSX.Element => {
         }}
         validate={() => {
           // TODO: Add validation checks
-          const errors = {};
-          return errors;
+          return {};
         }}
         onSubmit={async (values) => handleSubmit(values)}
       >

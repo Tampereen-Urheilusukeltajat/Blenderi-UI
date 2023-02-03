@@ -1,5 +1,5 @@
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
-import FillEvent from '../../interfaces/FillEvent';
+import { FillEvent } from '../../interfaces/FillEvent';
 
 const FillEventRow = ({
   data,
