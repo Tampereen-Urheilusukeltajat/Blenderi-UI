@@ -1,5 +1,5 @@
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
-import { FillEvent } from '../../lib/apiRequests/fillEventRequests';
+import FillEvent from '../../interfaces/FillEvent';
 
 function FillEventRow ({ data, index }: { data: FillEvent, index: number }): JSX.Element {
   return <tr
