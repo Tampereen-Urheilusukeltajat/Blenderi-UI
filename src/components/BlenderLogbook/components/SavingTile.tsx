@@ -39,28 +39,6 @@ export const SavingTile: React.FC<SavingTileProps> = ({
   </div>
 );
 
-export const LogbookSavingTile: React.FC<CommonTileProps> = ({
-  values,
-}): JSX.Element => (
-  <div className="tileWrapper savingTile">
-    <h2>Tallenna</h2>
-    <div>
-      <div className="savingFlexRow">
-        <Field id="id-userConfirm" type="checkbox" name="userConfirm" />
-        <label htmlFor="id-userConfirm">
-          Olen tarkistanut täyttämäni arvot
-        </label>
-      </div>
-      <PrimaryButton
-        className="saveFillEventButton"
-        disabled={!values.userConfirm}
-        type={ButtonType.submit}
-        text="Tallenna täyttö"
-      />
-    </div>
-  </div>
-);
-
 export const AirLogbookSavingTile: React.FC<LogbookCommonTileProps> = ({
   values,
 }): JSX.Element => (
