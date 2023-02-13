@@ -1,5 +1,8 @@
 import { authPostAsync, authGetAsync } from './api';
-import { DivingCylinder, DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
+import {
+  DivingCylinder,
+  DivingCylinderSet,
+} from '../../interfaces/DivingCylinderSet';
 
 export type DivingCylinderSetTable = {
   divingCylinderSetName: string;

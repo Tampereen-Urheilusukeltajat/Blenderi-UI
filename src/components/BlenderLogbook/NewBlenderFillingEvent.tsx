@@ -1,6 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
 import { Form, Formik } from 'formik';
-import { AvailableGasses, getUserIdFromAccessToken, mapGasToName } from '../../lib/utils';
+import {
+  AvailableGasses,
+  getUserIdFromAccessToken,
+  mapGasToName,
+} from '../../lib/utils';
 import { FillingTile } from './components/FillingTile';
 import { SavingTile } from './components/SavingTile';
 import { PricingTile } from './components/PricingTile';
@@ -113,7 +117,8 @@ export const NewBlenderFillingEvent: React.FC<
   }, []);
 
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
-  const cylinderSets: DivingCylinderSet[] = useDivingCylinderQuery(userId).data ?? [];
+  const cylinderSets: DivingCylinderSet[] =
+    useDivingCylinderQuery(userId).data ?? [];
   const { data: storageCylinders } = useStorageCylinderQuery();
 
   const prices = [

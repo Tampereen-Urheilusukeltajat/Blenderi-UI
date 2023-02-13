@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import {
-  getDivingCylinderSets,
-} from '../apiRequests/divingCylinderSetRequests';
+import { getDivingCylinderSets } from '../apiRequests/divingCylinderSetRequests';
 import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import { UseQuery } from './common';
 import { CYLINDER_SETS_QUERY_KEY } from './queryKeys';
