@@ -19,7 +19,6 @@ code {
 }
 
 #signInContainer {
-  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,4 +63,8 @@ h2 {
 
 .toast-position {
   top: 5rem !important;
+}
+
+main {
+  padding-bottom: 120px;
 }
