@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react';
 import { getTokenFromLocalStorage } from './lib/utils';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Footer } from './components/Footer/Footer';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -44,7 +45,7 @@ const Content = (): JSX.Element => {
   return (
     <main>
       {showSpinner ? <PageLoadingSpinner /> : null}
-      <Container className="pt-4">
+      <Container className="pt-4 content">
         <Routes>
           {/* Public routes */}
           <Route index element={<Login />} />
@@ -117,6 +118,7 @@ const App = (): JSX.Element => {
       {authenticated ? <Navbar /> : null}
       <Content />
       <ToastContainer className="toast-position" position={'top-right'} />
+      <Footer />
     </QueryClientProvider>
   );
 };
