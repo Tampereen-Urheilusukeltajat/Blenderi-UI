@@ -14,8 +14,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
-  widht: 100%;
+}
+.footer .row .logo {
+  fill: #F2F2F2;
+  padding: 0 0 1rem 0;
+}
+.footer .row .logo svg {
+  width: 220px;
 }
 .footer .row .item {
   align-self: center;

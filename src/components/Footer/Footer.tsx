@@ -1,10 +1,15 @@
 import React from 'react';
 import '../../styles/footer/footer.css';
+import { ReactComponent as Tayttopaikka } from './tayttopaikka.svg';
 
 export const Footer: React.FC = () => {
   return (
     <div className="footer">
-      <div className="row"></div>
+      <div className="row">
+        <div className="logo">
+          <Tayttopaikka />
+        </div>
+      </div>
       <div className="row">
         <a href="https://taursu.fi" className="item">
           Tampereen Urheilusukeltajat ry
