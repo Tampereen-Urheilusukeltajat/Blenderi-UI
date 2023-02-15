@@ -36,7 +36,7 @@ type FillingEventRow = {
 };
 
 export type LogbookFillingEventRow = {
-  cylinderSet: string;
+  divingCylinderSet: string;
 };
 
 type GuestDivingCylinder = {

@@ -41,8 +41,8 @@ export const LogbookFillingEventRowComponent: React.FC<
     <div>
       <div className="fillingEventGridRow">
         <DropdownMenu
-          name={`fillingEventRows.${index}.cylinderSet`}
-          errorText={errors.fillingEventRows?.at(index).cylinderSet}
+          name={`fillingEventRows.${index}.divingCylinderSet`}
+          errorText={errors.fillingEventRows?.at(index).divingCylinderSet}
         >
           {divingCylinderSets.map((dcs: DivingCylinderSet) => (
             <option key={dcs.id} value={dcs.id}>

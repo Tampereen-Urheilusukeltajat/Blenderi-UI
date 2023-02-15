@@ -13,7 +13,7 @@ type FillingEventBasicInfo = {
 };
 
 export const EMPTY_LOGBOOK_FILLING_EVENT_ROW: LogbookFillingEventRow = {
-  cylinderSet: '',
+  divingCylinderSet: '',
 };
 
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
