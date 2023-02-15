@@ -35,7 +35,7 @@ type FillingEventRow = {
   storageCylinderId: string;
 };
 
-type LogbookFillingEventRow = {
+export type LogbookFillingEventRow = {
   cylinderSet: string;
 };
 
@@ -69,10 +69,6 @@ export const EMPTY_FILLING_EVENT_ROW: FillingEventRow = {
   priceEurCents: 0,
   startPressure: 0,
   storageCylinderId: '',
-};
-
-export const EMPTY_LOGBOOK_FILLING_EVENT_ROW: LogbookFillingEventRow = {
-  cylinderSet: '',
 };
 
 const EMPTY_GUEST_DIVING_CYLINDER: GuestDivingCylinder = {
