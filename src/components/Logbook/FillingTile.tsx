@@ -1,8 +1,6 @@
 import { FieldArray } from 'formik';
 import { BsTrash } from 'react-icons/bs';
-import {
-  LogbookCommonTileProps,
-} from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookCommonTileProps } from '../BlenderLogbook/NewBlenderFillingEvent';
 import { EMPTY_LOGBOOK_FILLING_EVENT_ROW } from './NewFillingEvent';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
@@ -36,7 +34,7 @@ export const LogbookFillingEventRowComponent: React.FC<
 > = ({ index, errors, values, replace, remove, push }) => {
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
 
-  const cylinderSets: DivingCylinderSet[] =
+  const divingCylinderSets: DivingCylinderSet[] =
     useDivingCylinderQuery(userId).data ?? [];
 
   return (
@@ -46,7 +44,7 @@ export const LogbookFillingEventRowComponent: React.FC<
           name={`fillingEventRows.${index}.cylinderSet`}
           errorText={errors.fillingEventRows?.at(index).cylinderSet}
         >
-          {cylinderSets.map((dcs: DivingCylinderSet) => (
+          {divingCylinderSets.map((dcs: DivingCylinderSet) => (
             <option key={dcs.id} value={dcs.id}>
               {dcs.name}
             </option>
