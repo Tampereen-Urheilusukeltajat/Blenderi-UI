@@ -149,7 +149,7 @@ export const NewBlenderFillingEvent: React.FC<
         <Formik
           initialValues={{
             ...EMPTY_FILLING_EVENT_BASIC_INFO,
-            divingCylinderSetId: divingCylinderSets[0].id,
+            divingCylinderSetId: divingCylinderSets[0].id ?? '',
             fillingEventRows: [
               {
                 ...EMPTY_FILLING_EVENT_ROW,
