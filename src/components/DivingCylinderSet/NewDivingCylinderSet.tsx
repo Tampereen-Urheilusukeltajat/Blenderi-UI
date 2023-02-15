@@ -4,12 +4,14 @@ import { BsTrash } from 'react-icons/bs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import {
-  DivingCylinder,
-  DivingCylinderSet,
   DivingCylinderSetPostRequest,
   DivingCylinderSetTable,
   postDivingCylinderSet,
 } from '../../lib/apiRequests/divingCylinderSetRequests';
+import {
+  DivingCylinder,
+  DivingCylinderSet,
+} from '../../interfaces/DivingCylinderSet';
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
 import { getUserIdFromAccessToken } from '../../lib/utils';

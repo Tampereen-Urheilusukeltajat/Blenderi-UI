@@ -1,13 +1,8 @@
 import { authPostAsync, authGetAsync } from './api';
-
-export type DivingCylinder = {
-  id: string;
-  volume: string;
-  material: string;
-  pressure: string;
-  serialNumber: string;
-  inspection: string;
-};
+import {
+  DivingCylinder,
+  DivingCylinderSet,
+} from '../../interfaces/DivingCylinderSet';
 
 export type DivingCylinderSetTable = {
   divingCylinderSetName: string;
@@ -18,13 +13,6 @@ export type DivingCylinderSetPostRequest = {
   owner: string;
   name: string;
   cylinders: Array<Omit<DivingCylinder, 'id'>>;
-};
-
-export type DivingCylinderSet = {
-  id: string;
-  owner: string;
-  name: string;
-  cylinders: DivingCylinder[];
 };
 
 export const postDivingCylinderSet = async (

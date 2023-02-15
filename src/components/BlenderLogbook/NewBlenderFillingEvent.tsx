@@ -1,12 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Form, Formik } from 'formik';
-import { AvailableGasses, mapGasToName } from '../../lib/utils';
+import {
+  AvailableGasses,
+  getUserIdFromAccessToken,
+  mapGasToName,
+} from '../../lib/utils';
 import { FillingTile } from './components/FillingTile';
 import { SavingTile } from './components/SavingTile';
 import { PricingTile } from './components/PricingTile';
 import { BasicInfoTile } from './components/BasicInfoTile';
 import { BLENDER_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useStorageCylinderQuery } from '../../lib/queries/storageCylinderQuery';
+import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
+import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -110,8 +116,9 @@ export const NewBlenderFillingEvent: React.FC<
     console.log('Moro');
   }, []);
 
-  // TODO Query these from the backend
-  const divingCylinders = [{ id: 'd12_id', name: 'D12' }];
+  const userId = useMemo(() => getUserIdFromAccessToken(), []);
+  const divingCylinderSets: DivingCylinderSet[] =
+    useDivingCylinderQuery(userId).data ?? [];
   const { data: storageCylinders } = useStorageCylinderQuery();
 
   const prices = [
@@ -142,7 +149,7 @@ export const NewBlenderFillingEvent: React.FC<
         <Formik
           initialValues={{
             ...EMPTY_FILLING_EVENT_BASIC_INFO,
-            divingCylinderSetId: divingCylinders[0].id,
+            divingCylinderSetId: divingCylinderSets[0].id ?? '',
             fillingEventRows: [
               {
                 ...EMPTY_FILLING_EVENT_ROW,
@@ -160,7 +167,7 @@ export const NewBlenderFillingEvent: React.FC<
             <Form>
               <div className="fillingEventFlexRow">
                 <BasicInfoTile
-                  divingCylinderSets={divingCylinders}
+                  divingCylinderSets={divingCylinderSets}
                   errors={errors}
                   values={values}
                 />

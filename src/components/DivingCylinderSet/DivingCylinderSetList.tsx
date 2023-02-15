@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { DivingCylinderSet } from '../../lib/apiRequests/divingCylinderSetRequests';
+import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { CommonTable, TableColumn, TableRow } from '../common/Table';
