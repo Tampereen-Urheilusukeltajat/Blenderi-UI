@@ -117,7 +117,7 @@ export const NewBlenderFillingEvent: React.FC<
   }, []);
 
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
-  const cylinderSets: DivingCylinderSet[] =
+  const divingCylinderSets: DivingCylinderSet[] =
     useDivingCylinderQuery(userId).data ?? [];
   const { data: storageCylinders } = useStorageCylinderQuery();
 
@@ -149,7 +149,7 @@ export const NewBlenderFillingEvent: React.FC<
         <Formik
           initialValues={{
             ...EMPTY_FILLING_EVENT_BASIC_INFO,
-            divingCylinderSetId: cylinderSets[0].id,
+            divingCylinderSetId: divingCylinderSets[0].id,
             fillingEventRows: [
               {
                 ...EMPTY_FILLING_EVENT_ROW,
@@ -167,7 +167,7 @@ export const NewBlenderFillingEvent: React.FC<
             <Form>
               <div className="fillingEventFlexRow">
                 <BasicInfoTile
-                  divingCylinderSets={cylinderSets}
+                  divingCylinderSets={divingCylinderSets}
                   errors={errors}
                   values={values}
                 />
