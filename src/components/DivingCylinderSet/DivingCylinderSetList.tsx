@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
-import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
+import {
+  DivingCylinder,
+  DivingCylinderSet,
+} from '../../interfaces/DivingCylinderSet';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { CommonTable, TableColumn, TableRow } from '../common/Table';
@@ -47,7 +50,7 @@ const DCMaterialFiTranslation = (enMaterial: string): string => {
 const divingCylinderSetsToCommonTableRows = (
   divingCylinderSets: DivingCylinderSet[]
 ): TableRow[] => {
-  return divingCylinderSets.map((dcs) => {
+  return divingCylinderSets.map((dcs: DivingCylinderSet) => {
     // Single cylinder so only return mainRow
     if (dcs.cylinders.length === 1) {
       const dc = dcs.cylinders[0];
@@ -64,12 +67,12 @@ const divingCylinderSetsToCommonTableRows = (
     }
 
     const totalSetVolume = dcs.cylinders
-      .map((dc) => dc.volume)
-      .reduce((pv, cv) => (pv += cv));
+      .map((dc: DivingCylinder) => dc.volume)
+      .reduce((acc, cv) => acc + cv);
     return {
       mainRow: [dcs.name, totalSetVolume, null, null, null, null],
       childRows: [
-        ...dcs.cylinders.map((dc) => [
+        ...dcs.cylinders.map((dc: DivingCylinder) => [
           null,
           dc.volume,
           DCMaterialFiTranslation(dc.material),

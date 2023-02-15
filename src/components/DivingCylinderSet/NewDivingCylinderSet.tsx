@@ -20,9 +20,9 @@ import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
 
 const EmptyDivingCylinder: Omit<DivingCylinder, 'id'> = {
-  volume: '',
+  volume: 0,
   material: 'steel',
-  pressure: '',
+  pressure: 0,
   serialNumber: '',
   inspection: '',
 };
