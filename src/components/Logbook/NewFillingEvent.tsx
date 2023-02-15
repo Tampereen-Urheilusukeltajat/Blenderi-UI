@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { useCallback } from 'react';
 import { AirLogbookSavingTile } from '../BlenderLogbook/components/SavingTile';
-import { EMPTY_LOGBOOK_FILLING_EVENT_ROW } from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookFillingEventRow } from '../BlenderLogbook/NewBlenderFillingEvent';
 import { LogbookFillingTile } from './FillingTile';
 import { LogbookBasicInfoTile } from './LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
@@ -10,6 +10,10 @@ type FillingEventBasicInfo = {
   additionalInformation: string;
   gasMixture: string;
   userConfirm: boolean;
+};
+
+export const EMPTY_LOGBOOK_FILLING_EVENT_ROW: LogbookFillingEventRow = {
+  divingCylinderSet: '',
 };
 
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {

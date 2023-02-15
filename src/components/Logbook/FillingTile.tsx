@@ -1,12 +1,13 @@
 import { FieldArray } from 'formik';
 import { BsTrash } from 'react-icons/bs';
-import {
-  EMPTY_LOGBOOK_FILLING_EVENT_ROW,
-  LogbookCommonTileProps,
-} from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookCommonTileProps } from '../BlenderLogbook/NewBlenderFillingEvent';
+import { EMPTY_LOGBOOK_FILLING_EVENT_ROW } from './NewFillingEvent';
+import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
+import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import { IconButton, PrimaryButton, ButtonType } from '../common/Buttons';
 import { DropdownMenu } from '../common/Inputs';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { getUserIdFromAccessToken } from '../../lib/utils';
 
 type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   index: number;
@@ -31,13 +32,24 @@ type AirLogbookFillingTileProps = LogbookCommonTileProps & {
 export const LogbookFillingEventRowComponent: React.FC<
   LogbookFillingEventRowProps
 > = ({ index, errors, values, replace, remove, push }) => {
+  const userId = useMemo(() => getUserIdFromAccessToken(), []);
+
+  const divingCylinderSets: DivingCylinderSet[] =
+    useDivingCylinderQuery(userId).data ?? [];
+
   return (
     <div>
       <div className="fillingEventGridRow">
         <DropdownMenu
-          name="fillingEventRows.storageCylinderId"
-          errorText={errors.fillingEventRows?.at(index)?.storageCylinderId}
-        ></DropdownMenu>
+          name={`fillingEventRows.${index}.divingCylinderSet`}
+          errorText={errors.fillingEventRows?.at(index).divingCylinderSet}
+        >
+          {divingCylinderSets.map((dcs: DivingCylinderSet) => (
+            <option key={dcs.id} value={dcs.id}>
+              {dcs.name}
+            </option>
+          ))}
+        </DropdownMenu>
         <IconButton
           className="deleteRowButton"
           icon={<BsTrash />}

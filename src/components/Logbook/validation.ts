@@ -7,7 +7,7 @@ export const AIR_FILLING_EVENT_VALIDATION_SCHEMA = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        cylinderSet: yup.string().required(),
+        divingCylinderSet: yup.string().required(),
       })
     )
     .required()
