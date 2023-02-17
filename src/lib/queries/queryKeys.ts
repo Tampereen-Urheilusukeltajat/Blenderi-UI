@@ -13,5 +13,6 @@ export const STORAGE_CYLINDERS_QUERY_KEY = ['storageCylinder'];
 
 // Fill event related query keys
 export const FILL_EVENT_QUERY_KEY = ['fillEvents'];
+export const BARE_FILL_EVENT_QUERY_KEY = ['bareFillEvents'];
 
 // ...

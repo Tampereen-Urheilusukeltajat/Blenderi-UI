@@ -85,7 +85,9 @@ export const DropdownMenu: React.FC<SelectInputProps> = ({
           name={name}
           placeholder={placeholder}
           type={type}
+          defaultValue={undefined}
         >
+          <option hidden value={undefined}></option>
           {children}
         </Field>
         {unit !== undefined ? <InputGroup.Text>{unit}</InputGroup.Text> : null}

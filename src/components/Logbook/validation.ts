@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { FIELD_REQUIRED } from '../UserSettings/validation';
 
 export const AIR_FILLING_EVENT_VALIDATION_SCHEMA = yup.object().shape({
   additionalInformation: yup.string().optional(),
@@ -7,7 +8,7 @@ export const AIR_FILLING_EVENT_VALIDATION_SCHEMA = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        divingCylinderSet: yup.string().required(),
+        divingCylinderSet: yup.string().required(FIELD_REQUIRED),
       })
     )
     .required()

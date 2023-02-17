@@ -1,8 +1,8 @@
 export type DivingCylinder = {
   id: string;
-  volume: string;
+  volume: number;
   material: string;
-  pressure: string;
+  pressure: number;
   serialNumber: string;
   inspection: string;
 };

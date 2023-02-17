@@ -11,9 +11,7 @@ import { getUserIdFromAccessToken } from '../../lib/utils';
 
 type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   index: number;
-  replace: (index: number, newValue: unknown) => void;
   remove: (index: number) => void;
-  push: (value: unknown) => void;
   setFieldValue: (
     field: string,
     value: unknown,
@@ -31,7 +29,7 @@ type AirLogbookFillingTileProps = LogbookCommonTileProps & {
 
 export const LogbookFillingEventRowComponent: React.FC<
   LogbookFillingEventRowProps
-> = ({ index, errors, values, replace, remove, push }) => {
+> = ({ index, errors, values, remove }) => {
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
 
   const divingCylinderSets: DivingCylinderSet[] =
@@ -53,27 +51,9 @@ export const LogbookFillingEventRowComponent: React.FC<
         <IconButton
           className="deleteRowButton"
           icon={<BsTrash />}
-          onClick={() =>
-            index === 0
-              ? replace(index, {
-                  ...EMPTY_LOGBOOK_FILLING_EVENT_ROW,
-                })
-              : remove(index)
-          }
+          onClick={() => remove(index)}
         />
       </div>
-      {values.fillingEventRows.length === index + 1 ? (
-        <PrimaryButton
-          className="addNewRow"
-          onClick={() =>
-            push({
-              ...EMPTY_LOGBOOK_FILLING_EVENT_ROW,
-            })
-          }
-          type={ButtonType.button}
-          text="Lisää uusi rivi"
-        />
-      ) : null}
     </div>
   );
 };
@@ -98,13 +78,21 @@ export const LogbookFillingTile: React.FC<AirLogbookFillingTileProps> = ({
                 key={index}
                 errors={errors}
                 index={index}
-                push={push}
                 remove={remove}
-                replace={replace}
                 setFieldValue={setFieldValue}
                 values={values}
               />
             ))}
+            <PrimaryButton
+              className="addNewRow"
+              onClick={() =>
+                push({
+                  ...EMPTY_LOGBOOK_FILLING_EVENT_ROW,
+                })
+              }
+              type={ButtonType.button}
+              text="Lisää uusi rivi"
+            />
           </>
         )}
       </FieldArray>
