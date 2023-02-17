@@ -43,7 +43,7 @@ export const NewFillingEvent = (): JSX.Element => {
       await fillEventMutation.mutate(
         {
           cylinderSetId: divingCylinderSet,
-          gasMixture: 'Paineilma',
+          gasMixture: 'EAN21',
           filledAir: true,
           description: values.additionalInformation,
           price: 0,
