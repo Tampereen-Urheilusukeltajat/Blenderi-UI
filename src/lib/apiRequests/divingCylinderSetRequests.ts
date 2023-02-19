@@ -1,8 +1,9 @@
-import { authPostAsync, authGetAsync } from './api';
+import { authPostAsync, authGetAsync, authPatchAsync } from './api';
 import {
   DivingCylinder,
   DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
+import { AxiosResponse } from 'axios';
 
 export type DivingCylinderSetTable = {
   divingCylinderSetName: string;
@@ -34,3 +35,8 @@ export const getDivingCylinderSets = async (
 
   return response.data;
 };
+
+export const archiveDivingCylinderSet = async (
+  divingCylinderSetId: string
+): Promise<AxiosResponse> =>
+  authPatchAsync(`/api/cylinder-set/${divingCylinderSetId}/archive`);

@@ -55,7 +55,7 @@ export const authPostAsync = async <Response, Payload>(
 
 export const authPatchAsync = async <Response, Payload>(
   url: string,
-  payload: Payload
+  payload?: Payload
 ): Promise<AxiosResponse<Response>> => {
   const token = await getValidToken();
 

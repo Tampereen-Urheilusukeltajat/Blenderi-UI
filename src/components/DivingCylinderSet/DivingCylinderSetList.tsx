@@ -1,9 +1,13 @@
-import { useMemo } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useMemo } from 'react';
+import { toast } from 'react-toastify';
 import {
   DivingCylinder,
   DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
+import { archiveDivingCylinderSet } from '../../lib/apiRequests/divingCylinderSetRequests';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
+import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { CommonTable, TableColumn, TableRow } from '../common/Table';
 
@@ -55,6 +59,7 @@ const divingCylinderSetsToCommonTableRows = (
     if (dcs.cylinders.length === 1) {
       const dc = dcs.cylinders[0];
       return {
+        id: dcs.id,
         mainRow: [
           dcs.name,
           dc.volume,
@@ -70,6 +75,7 @@ const divingCylinderSetsToCommonTableRows = (
       .map((dc: DivingCylinder) => dc.volume)
       .reduce((acc, cv) => acc + cv);
     return {
+      id: dcs.id,
       mainRow: [dcs.name, totalSetVolume, null, null, null, null],
       childRows: [
         ...dcs.cylinders.map((dc: DivingCylinder) => [
@@ -87,18 +93,50 @@ const divingCylinderSetsToCommonTableRows = (
 
 export const DivingCylinderSetList = (): JSX.Element => {
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
+  const queryClient = useQueryClient();
 
-  const divingCylinderSets = useDivingCylinderQuery(userId);
+  const { data: divingCylinderSets } = useDivingCylinderQuery(userId);
   const rows = useMemo(
-    () => divingCylinderSetsToCommonTableRows(divingCylinderSets.data ?? []),
+    () => divingCylinderSetsToCommonTableRows(divingCylinderSets ?? []),
     [divingCylinderSets]
+  );
+
+  const divingCylinderSetMutation = useMutation<
+    unknown,
+    undefined,
+    { divingCylinderSetId: string }
+  >({
+    mutationKey: DIVING_CYLINDER_SETS_QUERY_KEY(userId),
+    mutationFn: async ({ divingCylinderSetId }) =>
+      archiveDivingCylinderSet(divingCylinderSetId),
+    onSuccess: (_, { divingCylinderSetId }) => {
+      queryClient.setQueryData(DIVING_CYLINDER_SETS_QUERY_KEY(userId), [
+        ...(divingCylinderSets?.filter((v) => v.id !== divingCylinderSetId) ??
+          []),
+      ]);
+    },
+    onError: () => {
+      toast.error('Pullosetin poistaminen epäonnistui. Yritä uudelleen.');
+    },
+  });
+
+  const handleDivingCylinderSetDelete = useCallback(
+    (divingCylinderSetId: string) => {
+      divingCylinderSetMutation.mutate({ divingCylinderSetId });
+    },
+    [divingCylinderSetMutation]
   );
 
   return (
     <div>
       <h1>Omat pullot</h1>
       <div>
-        <CommonTable columns={DIVING_CYLINDER_SET_COLUMNS} rows={rows} />
+        <CommonTable
+          columns={DIVING_CYLINDER_SET_COLUMNS}
+          rows={rows}
+          includeDeleteButton
+          onRowDelete={handleDivingCylinderSetDelete}
+        />
       </div>
     </div>
   );
