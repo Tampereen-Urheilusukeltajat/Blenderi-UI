@@ -114,6 +114,8 @@ export const DivingCylinderSetList = (): JSX.Element => {
         ...(divingCylinderSets?.filter((v) => v.id !== divingCylinderSetId) ??
           []),
       ]);
+
+      toast.success('Pullosetti poistettu näkyvistä.');
     },
     onError: () => {
       toast.error('Pullosetin poistaminen epäonnistui. Yritä uudelleen.');
