@@ -111,13 +111,18 @@ const Content = (): JSX.Element => {
 
 const App = (): JSX.Element => {
   // If access token exist, user has authenticated
-  const authenticated = getTokenFromLocalStorage('accessToken');
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const authenticated = getTokenFromLocalStorage('accessToken');
+    setAuthenticated(!!authenticated);
+  }, []);
 
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
+      <ToastContainer className="toast-position" position={'top-right'} />
       {authenticated ? <Navbar /> : null}
       <Content />
-      <ToastContainer className="toast-position" position={'top-right'} />
       <Footer />
     </QueryClientProvider>
   );

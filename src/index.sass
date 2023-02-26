@@ -1,9 +1,10 @@
 $greyLight: #E7E7E7
 $culturedWhite: #F4F4F4
+$blueCharcoal: #1B2631
 
 
 body
-  background: $culturedWhite
+  background: $blueCharcoal
   margin: 0
   font-family: 'Roboto', sans-serif
   -webkit-font-smoothing: antialiased
@@ -32,7 +33,7 @@ code
   background-color: $greyLight
   border-radius: 12px
   margin-bottom: 3em
-  padding: 2em 3em
+  padding: 3em 3em
 
 #signUpForm
   background-color: $greyLight
@@ -59,4 +60,8 @@ h2
   top: 5rem !important
 
 main
-  padding-bottom: 120px
+  background: $culturedWhite
+  display: flex
+  flex: 1
+  padding-bottom: 2rem
+  min-height: calc(100vh - 64px - 120px)
