@@ -141,7 +141,7 @@ export const NewBlenderFillingEvent: React.FC<
   return (
     <div>
       <h1 className="pb-4">Luo uusi täyttötapahtuma</h1>
-      {storageCylinders ? (
+      {storageCylinders && storageCylinders.length > 0 ? (
         <Formik
           initialValues={{
             ...EMPTY_FILLING_EVENT_BASIC_INFO,

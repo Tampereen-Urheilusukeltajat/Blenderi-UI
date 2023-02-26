@@ -4,11 +4,11 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '../components/common/Buttons';
 import { CustomLink } from '../components/NavbarLink';
+import { getUserRoles } from '../lib/utils';
 import '../styles/navbar/navbar.css';
 
 export const Navbar = (): JSX.Element | null => {
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
 
   const handleLogoutButtonClick = useCallback(() => {
@@ -26,18 +26,18 @@ export const Navbar = (): JSX.Element | null => {
     return null;
   }
 
+  const { isAdmin, isBlender } = getUserRoles();
+
   return (
     <nav className="nav">
       <ul className="container">
         <div className="leftPart">
           <CustomLink to="/logbook">Paineilmatäyttö</CustomLink>
-          <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
+          {isBlender || isAdmin ? (
+            <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
+          ) : null}
           <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
           <CustomLink to="/fill-events">Täyttötapahtumat</CustomLink>
-
-          {/* Not part of the MVP
-          <CustomLink to="/management">Käyttäjän hallinta</CustomLink>
-          <CustomLink to="/billing">Laskutus</CustomLink> */}
         </div>
         <div className="user">
           <CustomLink to="/user">

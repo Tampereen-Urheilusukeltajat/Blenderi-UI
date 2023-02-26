@@ -6,6 +6,8 @@ export type AccessToken = {
   exp: number;
   iat: number;
   id: string;
+  isAdmin: boolean;
+  isBlender: boolean;
 };
 
 export type RefreshToken = AccessToken & {

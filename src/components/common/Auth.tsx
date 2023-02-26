@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { isAuthenticated } from '../../lib/auth';
+import { getUserRoles } from '../../lib/utils';
 
 import { PageLoadingSpinner } from '../Spinner';
 
 type PrivateRouteProps = {
   children: React.ReactNode;
+  blenderOnly?: boolean;
+  adminOnly?: boolean;
 };
 
-export const ProtectedRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
+  children,
+  blenderOnly = false,
+  adminOnly = false,
+}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
@@ -24,8 +32,19 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({ children }) => {
       setLoading(false);
     };
 
-    validateAuth().catch(() => navigate('/'));
-  }, [navigate]);
+    validateAuth()
+      .then(() => {
+        const { isAdmin, isBlender } = getUserRoles();
+        if (
+          (blenderOnly && !(isBlender || isAdmin)) ||
+          (adminOnly && !isAdmin)
+        ) {
+          toast.error('Ei oikeutta näkymään');
+          return navigate('/logbook');
+        }
+      })
+      .catch(() => navigate('/'));
+  }, [navigate, blenderOnly, adminOnly]);
 
   useEffect(() => {
     if (!loading && !authenticated) {
