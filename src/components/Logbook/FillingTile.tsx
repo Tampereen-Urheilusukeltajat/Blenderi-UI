@@ -44,7 +44,7 @@ export const LogbookFillingEventRowComponent: React.FC<
         >
           {divingCylinderSets.map((dcs: DivingCylinderSet) => (
             <option key={dcs.id} value={dcs.id}>
-              {dcs.name}
+              {dcs.name} ({dcs.cylinders[0].serialNumber})
             </option>
           ))}
         </DropdownMenu>
