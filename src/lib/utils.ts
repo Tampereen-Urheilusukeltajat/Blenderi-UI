@@ -1,5 +1,10 @@
 import { AccessToken } from './auth';
 
+type UserRoles = {
+  isAdmin: boolean;
+  isBlender: boolean;
+};
+
 export enum AvailableGasses {
   air = 'air',
   argon = 'argon',
@@ -89,4 +94,20 @@ export const getChangedFieldValues = (
     }),
     {}
   );
+};
+
+/**
+ * @returns User roles
+ * @throws If accessToken is not found (shouldn't happen)
+ */
+export const getUserRoles = (): UserRoles => {
+  const token = getTokenFromLocalStorage<AccessToken>('accessToken');
+  if (!token) throw new Error('accessToken not found');
+
+  const { isAdmin, isBlender } = token.payload;
+
+  return {
+    isAdmin,
+    isBlender,
+  };
 };

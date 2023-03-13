@@ -79,7 +79,7 @@ const Content = (): JSX.Element => {
           <Route
             path="blender-logbook"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute blenderOnly>
                 <BlenderLogbook />
               </ProtectedRoute>
             }
