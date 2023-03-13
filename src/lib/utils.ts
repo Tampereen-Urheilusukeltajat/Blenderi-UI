@@ -98,6 +98,7 @@ export const getChangedFieldValues = (
 
 /**
  * @returns User roles
+ * @throws If accessToken is not found (shouldn't happen)
  */
 export const getUserRoles = (): UserRoles => {
   const token = getTokenFromLocalStorage<AccessToken>('accessToken');
