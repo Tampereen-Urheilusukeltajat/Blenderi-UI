@@ -2,7 +2,7 @@ import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback, useMemo } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
+import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import {
   DivingCylinderSetPostRequest,
   DivingCylinderSetTable,
@@ -18,6 +18,7 @@ import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
+import { AxiosError } from 'axios';
 
 const EmptyDivingCylinder: Omit<DivingCylinder, 'id'> = {
   volume: 0,
@@ -97,16 +98,16 @@ export const NewDivingCylinderSet = (): JSX.Element => {
       postDivingCylinderSet(payload),
     onSuccess: (cylinderSet) => {
       const cylinderSets = queryClient.getQueryData<DivingCylinderSet[]>(
-        CYLINDER_SETS_QUERY_KEY(userId)
+        DIVING_CYLINDER_SETS_QUERY_KEY(userId)
       );
 
-      queryClient.setQueryData(CYLINDER_SETS_QUERY_KEY(userId), [
+      queryClient.setQueryData(DIVING_CYLINDER_SETS_QUERY_KEY(userId), [
         ...(cylinderSets ?? []),
         cylinderSet,
       ]);
       toast.success('Uusi pullosetti lisätty!');
     },
-    onError: () => {
+    onError: (res: AxiosError) => {
       toast.error(
         'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
       );

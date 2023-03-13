@@ -24,7 +24,11 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
         <optgroup label="Omat pullot">
           {divingCylinderSets.map((dcs) => (
             <option key={dcs.id} value={dcs.id}>
-              {dcs.name}
+              {/* If multiple cylinders with the same name are found, also add serial number to the name */}
+              {dcs.name}{' '}
+              {divingCylinderSets.filter((e) => e.name === dcs.name).length > 1
+                ? `(${dcs.cylinders[0].serialNumber})`
+                : ''}
             </option>
           ))}
         </optgroup>

@@ -10,6 +10,7 @@ export type TableColumn = {
 };
 
 export type TableRow = {
+  id: string;
   mainRow: Row;
   childRows?: Row[];
 };
@@ -20,6 +21,7 @@ type CommonTableProps = {
   includeRowNumber?: boolean;
   includeEditButton?: boolean;
   includeDeleteButton?: boolean;
+  onRowDelete?: (id: string) => void;
 };
 
 const IconButtonCell: React.FC<IconButtonProps> = ({
@@ -44,14 +46,18 @@ export const CommonTable: React.FC<CommonTableProps> = ({
   includeDeleteButton = false,
   includeEditButton = false,
   includeRowNumber = false,
+  onRowDelete,
 }): JSX.Element => {
   const handleEditButtonClick = useCallback(() => {
     // TODO
   }, []);
 
-  const handleDeleteButtonClick = useCallback(() => {
-    // TODO
-  }, []);
+  const handleDeleteButtonClick = useCallback(
+    (id: string) => {
+      onRowDelete?.(id);
+    },
+    [onRowDelete]
+  );
 
   return (
     <table className="table" data-testid="common-table">
@@ -113,7 +119,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
                 <IconButtonCell
                   key={`row-${index + 1}-delete`}
                   icon={<BsTrash />}
-                  onClick={handleDeleteButtonClick}
+                  onClick={() => handleDeleteButtonClick(row.id)}
                 />
               ) : null}
             </tr>
