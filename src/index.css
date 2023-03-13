@@ -1,5 +1,5 @@
 body {
-  background: #F4F4F4;
+  background: #1B2631;
   margin: 0;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,7 +34,7 @@ code {
   background-color: #E7E7E7;
   border-radius: 12px;
   margin-bottom: 3em;
-  padding: 2em 3em;
+  padding: 3em 3em;
 }
 
 #signUpForm {
@@ -66,5 +66,9 @@ h2 {
 }
 
 main {
-  padding-bottom: 120px;
+  background: #F4F4F4;
+  display: flex;
+  flex: 1;
+  padding-bottom: 2rem;
+  min-height: calc(100vh - 64px - 120px);
 }
