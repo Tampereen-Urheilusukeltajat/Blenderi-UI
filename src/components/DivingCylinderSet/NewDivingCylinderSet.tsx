@@ -108,14 +108,6 @@ export const NewDivingCylinderSet = (): JSX.Element => {
       toast.success('Uusi pullosetti lisätty!');
     },
     onError: (res: AxiosError) => {
-      // TODO: Figure out if this can be checked in validation
-      if (res.response?.status === 409) {
-        toast.error(
-          'Pullosetin nimi on jo käytössä. Valitse toinen nimi ja yritä uudelleen.'
-        );
-        return;
-      }
-
       toast.error(
         'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
       );

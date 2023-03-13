@@ -44,7 +44,10 @@ export const LogbookFillingEventRowComponent: React.FC<
         >
           {divingCylinderSets.map((dcs: DivingCylinderSet) => (
             <option key={dcs.id} value={dcs.id}>
-              {dcs.name} ({dcs.cylinders[0].serialNumber})
+              {dcs.name}
+              {divingCylinderSets.filter((e) => e.name === dcs.name).length > 1
+                ? `(${dcs.cylinders[0].serialNumber})`
+                : ''}
             </option>
           ))}
         </DropdownMenu>
@@ -71,7 +74,7 @@ export const LogbookFillingTile: React.FC<AirLogbookFillingTileProps> = ({
         <span>Poista</span>
       </div>
       <FieldArray name="fillingEventRows">
-        {({ replace, remove, push }) => (
+        {({ remove, push }) => (
           <>
             {values.fillingEventRows.map((row, index) => (
               <LogbookFillingEventRowComponent
