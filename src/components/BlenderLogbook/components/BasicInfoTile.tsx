@@ -2,10 +2,34 @@ import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import { CommonTileProps } from '../NewBlenderFillingEvent';
 import React from 'react';
+import { AvailableGasses } from '../../../lib/utils';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: DivingCylinderSet[];
 };
+
+export const availableMixtures = [
+  {
+    id: 'Nitrox',
+    name: 'Nitrox',
+    components: [AvailableGasses.oxygen],
+  },
+  {
+    id: 'Trimix',
+    name: 'Trimix',
+    components: [AvailableGasses.oxygen, AvailableGasses.helium],
+  },
+  {
+    id: 'Heliox',
+    name: 'Heliox',
+    components: [AvailableGasses.oxygen, AvailableGasses.helium],
+  },
+  {
+    id: 'Argon',
+    name: 'Argon',
+    components: [AvailableGasses.argon],
+  },
+];
 
 export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
   divingCylinderSets,
@@ -36,16 +60,35 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
           <option value="guestDivingCylinder">Lisää tilapäinen pullo...</option>
         </optgroup>
       </DropdownMenu>
+      <DropdownMenu name="gasMixture" label="Kaasuseos">
+        {availableMixtures.map((mix) => (
+          <option key={mix.id} value={mix.name}>
+            {mix.name}
+          </option>
+        ))}
+      </DropdownMenu>
+
       <TextInput
-        errorText={errors.gasMixture}
-        label="Kaasuseos"
-        placeholder="Esim. EAN32"
-        name="gasMixture"
+        disabled={
+          availableMixtures
+            .find((m) => m.id === values.gasMixture)
+            ?.components.includes(AvailableGasses.oxygen) === false
+        }
+        errorText={errors.oxygenPercentage}
+        label="Happi %"
+        name="oxygenPercentage"
+        unit="%"
       />
       <TextInput
-        errorText={errors.additionalInformation}
-        label="Lisätiedot"
-        name="additionalInformation"
+        disabled={
+          availableMixtures
+            .find((m) => m.id === values.gasMixture)
+            ?.components.includes(AvailableGasses.helium) === false
+        }
+        errorText={errors.heliumPercentage}
+        label="Helium %"
+        name="heliumPercentage"
+        unit="%"
       />
     </div>
     {values.divingCylinderSetId === 'guestDivingCylinder' ? (
@@ -57,17 +100,24 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
         />
         <TextInput
           errorText={errors.guestDivingCylinder?.volume}
-          label="Pullon koko"
+          label="Koko"
           name="guestDivingCylinder.volume"
           unit="l"
         />
         <TextInput
           errorText={errors.guestDivingCylinder?.maxPressure}
-          label="Pullon maksimipaine"
+          label="Maksimipaine"
           name="guestDivingCylinder.maxPressure"
           unit="bar"
         />
       </div>
     ) : null}
+    <div>
+      <TextInput
+        errorText={errors.additionalInformation}
+        label="Lisätiedot"
+        name="additionalInformation"
+      />
+    </div>
   </div>
 );

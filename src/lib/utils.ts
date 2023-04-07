@@ -6,14 +6,14 @@ type UserRoles = {
 };
 
 export enum AvailableGasses {
-  air = 'air',
-  argon = 'argon',
-  diluent = 'diluent',
-  helium = 'helium',
-  oxygen = 'oxygen',
+  air = 'Air',
+  argon = 'Argon',
+  diluent = 'Diluent',
+  helium = 'Helium',
+  oxygen = 'Oxygen',
 }
 
-export const mapGasToName = (gas: AvailableGasses): string => {
+export const mapGasToName = (gas?: AvailableGasses): string => {
   switch (gas) {
     case AvailableGasses.air:
       return 'Ilma';

@@ -40,7 +40,7 @@ export const NewFillingEvent = (): JSX.Element => {
 
   const handleSubmit = async (values: FormikValues): Promise<void> => {
     for (const { divingCylinderSet } of values.fillingEventRows) {
-      await fillEventMutation.mutate(
+      fillEventMutation.mutate(
         {
           cylinderSetId: divingCylinderSet,
           gasMixture: 'EAN21',

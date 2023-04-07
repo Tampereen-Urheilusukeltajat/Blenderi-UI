@@ -1,17 +1,18 @@
 import { FieldArray } from 'formik';
 import React, { useEffect } from 'react';
 import { BsTrash } from 'react-icons/bs';
+import { GasWithPricing } from '../../../lib/queries/gasQuery';
 import { StorageCylinder } from '../../../lib/queries/storageCylinderQuery';
 import {
   calculateGasConsumption,
   formatEurCentsToEur,
+  mapGasToName,
 } from '../../../lib/utils';
 import { ButtonType, IconButton, PrimaryButton } from '../../common/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import {
   CommonTileProps,
   EMPTY_FILLING_EVENT_ROW,
-  GasPrice,
 } from '../NewBlenderFillingEvent';
 
 type FillingEventRowProps = CommonTileProps & {
@@ -25,7 +26,7 @@ type FillingEventRowProps = CommonTileProps & {
     shouldValidate?: boolean
   ) => void;
   storageCylinders: StorageCylinder[];
-  prices: GasPrice[];
+  gases: GasWithPricing[];
 };
 
 const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
@@ -37,14 +38,13 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   push,
   setFieldValue,
   storageCylinders,
-  prices,
+  gases,
 }) => {
   const startPressure = values.fillingEventRows.at(index)?.startPressure;
   const endPressure = values.fillingEventRows.at(index)?.endPressure;
   const storageCylinderId =
     values.fillingEventRows.at(index)?.storageCylinderId;
 
-  // TODO Query these based on given storageCylinderId
   const storageCylinder = storageCylinders.find(
     (sc) => sc.id === storageCylinderId
   );
@@ -55,7 +55,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
     throw new Error('Storage cylinder not found!');
   }
 
-  const gasPriceEurCents = prices.find(
+  const gasPriceEurCents = gases.find(
     (price) => price.gasId === storageCylinder.gasId
   )?.priceEurCents;
   const storageCylinderVolume = storageCylinder.volume;
@@ -108,11 +108,11 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
         >
           {storageCylinders.map((sc) => (
             <option key={sc.id} value={sc.id}>
-              {sc.name}
-              {/*
-                TODO: return the gasName to this field once gases and prices are queried too
-                {sc.name} ({mapGasToName(sc.gasId)})
-                */}
+              {sc.name} (
+              {mapGasToName(
+                gases.find((gas) => gas.gasId === sc.gasId)?.gasName
+              )}
+              )
             </option>
           ))}
         </DropdownMenu>
@@ -173,7 +173,7 @@ type FillingTileProps = CommonTileProps & {
     shouldValidate?: boolean
   ) => void;
   storageCylinders: StorageCylinder[];
-  prices: GasPrice[];
+  gases: GasWithPricing[];
 };
 
 export const FillingTile: React.FC<FillingTileProps> = ({
@@ -181,7 +181,7 @@ export const FillingTile: React.FC<FillingTileProps> = ({
   setFieldValue,
   values,
   storageCylinders,
-  prices,
+  gases,
 }) => {
   return (
     <div className="tileWrapper">
@@ -203,7 +203,7 @@ export const FillingTile: React.FC<FillingTileProps> = ({
                 errors={errors}
                 index={index}
                 push={push}
-                prices={prices}
+                gases={gases}
                 remove={remove}
                 replace={replace}
                 setFieldValue={setFieldValue}
