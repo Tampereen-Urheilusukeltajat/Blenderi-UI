@@ -1,10 +1,14 @@
 import React, { useCallback, useMemo } from 'react';
 import { Form, Formik, FormikValues } from 'formik';
-import { getUserIdFromAccessToken } from '../../lib/utils';
+import {
+  AvailableMixtureCompositions,
+  formalizeGasMixture,
+  getUserIdFromAccessToken,
+} from '../../lib/utils';
 import { FillingTile } from './components/FillingTile';
 import { SavingTile } from './components/SavingTile';
 import { PricingTile } from './components/PricingTile';
-import { BasicInfoTile, availableMixtures } from './components/BasicInfoTile';
+import { BasicInfoTile } from './components/BasicInfoTile';
 import { BLENDER_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useStorageCylinderQuery } from '../../lib/queries/storageCylinderQuery';
 import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
@@ -57,9 +61,9 @@ type LogbookFormFields = LogbookFillingEventBasicInfo & {
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
   divingCylinderSetId: '',
-  heliumPercentage: '',
-  gasMixture: availableMixtures[0].id,
-  oxygenPercentage: '',
+  heliumPercentage: '0',
+  gasMixture: AvailableMixtureCompositions[0].id,
+  oxygenPercentage: '0',
   userConfirm: false,
 };
 
@@ -96,30 +100,6 @@ export type LogbookCommonTileProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: any;
   values: LogbookFormFields;
-};
-
-export enum AvailableMixtures {
-  Nitrox = 'Nitrox',
-  Trimix = 'Trimix',
-  Heliox = 'Heliox',
-  Argon = 'Argon',
-}
-
-const formalizeGasMixture = (
-  gasMixture: AvailableMixtures,
-  oxygenPercentage: string,
-  heliumPercentage: string
-): string => {
-  switch (gasMixture) {
-    case AvailableMixtures.Argon:
-      return 'Argon';
-    case AvailableMixtures.Heliox:
-      return `Heliox ${heliumPercentage}/${oxygenPercentage}`;
-    case AvailableMixtures.Nitrox:
-      return `EAN${oxygenPercentage}`;
-    case AvailableMixtures.Trimix:
-      return `Trimix ${oxygenPercentage}/${heliumPercentage}`;
-  }
 };
 
 export const NewBlenderFillingEvent: React.FC<

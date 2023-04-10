@@ -2,34 +2,14 @@ import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import { CommonTileProps } from '../NewBlenderFillingEvent';
 import React from 'react';
-import { AvailableGasses } from '../../../lib/utils';
+import {
+  AvailableGasses,
+  AvailableMixtureCompositions,
+} from '../../../lib/utils';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: DivingCylinderSet[];
 };
-
-export const availableMixtures = [
-  {
-    id: 'Nitrox',
-    name: 'Nitrox',
-    components: [AvailableGasses.oxygen],
-  },
-  {
-    id: 'Trimix',
-    name: 'Trimix',
-    components: [AvailableGasses.oxygen, AvailableGasses.helium],
-  },
-  {
-    id: 'Heliox',
-    name: 'Heliox',
-    components: [AvailableGasses.oxygen, AvailableGasses.helium],
-  },
-  {
-    id: 'Argon',
-    name: 'Argon',
-    components: [AvailableGasses.argon],
-  },
-];
 
 export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
   divingCylinderSets,
@@ -61,18 +41,18 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
         </optgroup>
       </DropdownMenu>
       <DropdownMenu name="gasMixture" label="Kaasuseos">
-        {availableMixtures.map((mix) => (
-          <option key={mix.id} value={mix.name}>
-            {mix.name}
+        {AvailableMixtureCompositions.map((mix) => (
+          <option key={mix.id} value={mix.id}>
+            {mix.id}
           </option>
         ))}
       </DropdownMenu>
 
       <TextInput
         disabled={
-          availableMixtures
-            .find((m) => m.id === values.gasMixture)
-            ?.components.includes(AvailableGasses.oxygen) === false
+          AvailableMixtureCompositions.find(
+            (m) => m.id === values.gasMixture
+          )?.components.includes(AvailableGasses.oxygen) === false
         }
         errorText={errors.oxygenPercentage}
         label="Happi %"
@@ -81,9 +61,9 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
       />
       <TextInput
         disabled={
-          availableMixtures
-            .find((m) => m.id === values.gasMixture)
-            ?.components.includes(AvailableGasses.helium) === false
+          AvailableMixtureCompositions.find(
+            (m) => m.id === values.gasMixture
+          )?.components.includes(AvailableGasses.helium) === false
         }
         errorText={errors.heliumPercentage}
         label="Helium %"
