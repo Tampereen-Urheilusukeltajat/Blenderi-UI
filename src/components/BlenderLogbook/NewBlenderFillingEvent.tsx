@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikValues } from 'formik';
 import {
-  AvailableGasses,
+  AvailableMixtureCompositions,
+  formalizeGasMixture,
   getUserIdFromAccessToken,
-  mapGasToName,
 } from '../../lib/utils';
 import { FillingTile } from './components/FillingTile';
 import { SavingTile } from './components/SavingTile';
@@ -13,11 +13,14 @@ import { BLENDER_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useStorageCylinderQuery } from '../../lib/queries/storageCylinderQuery';
 import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
+import { useGasesQuery } from '../../lib/queries/gasQuery';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
   divingCylinderSetId: string;
   gasMixture: string;
+  heliumPercentage: string;
+  oxygenPercentage: string;
   userConfirm: boolean;
 };
 
@@ -58,7 +61,9 @@ type LogbookFormFields = LogbookFillingEventBasicInfo & {
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
   divingCylinderSetId: '',
-  gasMixture: '',
+  heliumPercentage: '0',
+  gasMixture: AvailableMixtureCompositions[0].id,
+  oxygenPercentage: '0',
   userConfirm: false,
 };
 
@@ -97,19 +102,17 @@ export type LogbookCommonTileProps = {
   values: LogbookFormFields;
 };
 
-export type GasPrice = {
-  gasId: string;
-  gas: AvailableGasses;
-  name: string;
-  priceEurCents: number;
-};
-
 export const NewBlenderFillingEvent: React.FC<
   NewFillingEventProps
 > = (): JSX.Element => {
-  const handleFormSubmit = useCallback(() => {
+  const handleFormSubmit = useCallback((values: FormikValues) => {
+    const formalizedGasMixture = formalizeGasMixture(
+      values.gasMixture,
+      values.oxygenPercentage,
+      values.heliumPercentage
+    );
     // eslint-disable-next-line no-console
-    console.log('Moro');
+    console.log(formalizedGasMixture);
   }, []);
 
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
@@ -117,31 +120,15 @@ export const NewBlenderFillingEvent: React.FC<
     useDivingCylinderQuery(userId).data ?? [];
   const { data: storageCylinders } = useStorageCylinderQuery();
 
-  const prices = [
-    {
-      gasId: '1',
-      gas: AvailableGasses.oxygen,
-      name: mapGasToName(AvailableGasses.oxygen),
-      priceEurCents: 1,
-    },
-    {
-      gasId: '2',
-      gas: AvailableGasses.helium,
-      name: mapGasToName(AvailableGasses.helium),
-      priceEurCents: 5,
-    },
-    {
-      gasId: '3',
-      gas: AvailableGasses.argon,
-      name: mapGasToName(AvailableGasses.argon),
-      priceEurCents: 2,
-    },
-  ];
+  const { data: gases } = useGasesQuery();
 
   return (
     <div>
       <h1 className="pb-4">Luo uusi täyttötapahtuma</h1>
-      {storageCylinders && storageCylinders.length > 0 ? (
+      {storageCylinders &&
+      storageCylinders.length > 0 &&
+      gases &&
+      gases.length > 0 ? (
         <Formik
           initialValues={{
             ...EMPTY_FILLING_EVENT_BASIC_INFO,
@@ -174,7 +161,7 @@ export const NewBlenderFillingEvent: React.FC<
                   errors={errors}
                   values={values}
                 />
-                <PricingTile errors={errors} prices={prices} values={values} />
+                <PricingTile errors={errors} gases={gases} values={values} />
               </div>
               <div className="fillingEventFlexRow">
                 <FillingTile
@@ -182,7 +169,7 @@ export const NewBlenderFillingEvent: React.FC<
                   errors={errors}
                   values={values}
                   storageCylinders={storageCylinders}
-                  prices={prices}
+                  gases={gases}
                 />
               </div>
             </Form>

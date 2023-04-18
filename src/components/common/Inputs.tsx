@@ -5,9 +5,11 @@ import React from 'react';
 
 export type CommonInputProps = {
   autoComplete?: string;
+  className?: string;
   disabled?: boolean;
   errorText?: string;
   label?: string;
+  prefix?: string;
   placeholder?: string;
   name: string;
   key?: string;
@@ -20,25 +22,31 @@ export type SelectInputProps = CommonInputProps & React.PropsWithChildren;
 
 export const TextInput: React.FC<CommonInputProps> = ({
   autoComplete,
+  className,
   disabled,
   errorText,
   label,
   name,
   placeholder,
+  prefix,
   key,
   unit,
   validate,
   type,
 }) => {
   return (
-    <div key={key} className={'inputField'}>
+    <div key={key} className={`${className ?? ''} inputField`}>
       {label !== undefined ? (
-        <label className="fieldTitle" htmlFor={`id-${name}`}>
+        <label className="field-title" htmlFor={`id-${name}`}>
           {label}
         </label>
       ) : null}
       <InputGroup hasValidation>
+        {prefix !== undefined ? (
+          <InputGroup.Text>{prefix}</InputGroup.Text>
+        ) : null}
         <Field
+          autoComplete={autoComplete}
           id={`id-${name}`}
           className={`form-control ${
             errorText !== undefined ? 'is-invalid' : ''
@@ -57,6 +65,7 @@ export const TextInput: React.FC<CommonInputProps> = ({
 };
 
 export const DropdownMenu: React.FC<SelectInputProps> = ({
+  className,
   children,
   disabled,
   errorText,
@@ -68,9 +77,9 @@ export const DropdownMenu: React.FC<SelectInputProps> = ({
   type,
 }) => {
   return (
-    <div key={key} className={'inputField'}>
+    <div key={key} className={`${className ?? ''} inputField`}>
       {label !== undefined ? (
-        <label className="fieldTitle" htmlFor={`id-${name}`}>
+        <label className="field-title" htmlFor={`id-${name}`}>
           {label}
         </label>
       ) : null}
@@ -78,9 +87,9 @@ export const DropdownMenu: React.FC<SelectInputProps> = ({
         <Field
           id={`id-${name}`}
           as="select"
-          className={`form-select ${
-            errorText !== undefined ? 'is-invalid' : ''
-          }`}
+          className={`
+            form-select 
+            ${errorText !== undefined ? 'is-invalid' : ''}`}
           disabled={disabled}
           name={name}
           placeholder={placeholder}

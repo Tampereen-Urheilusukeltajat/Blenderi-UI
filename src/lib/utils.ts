@@ -6,14 +6,57 @@ type UserRoles = {
 };
 
 export enum AvailableGasses {
-  air = 'air',
-  argon = 'argon',
-  diluent = 'diluent',
-  helium = 'helium',
-  oxygen = 'oxygen',
+  air = 'Air',
+  argon = 'Argon',
+  diluent = 'Diluent',
+  helium = 'Helium',
+  oxygen = 'Oxygen',
 }
 
-export const mapGasToName = (gas: AvailableGasses): string => {
+export enum AvailableMixtures {
+  Nitrox = 'Nitrox',
+  Trimix = 'Trimix',
+  Heliox = 'Heliox',
+  Argon = 'Argon',
+}
+
+export const AvailableMixtureCompositions = [
+  {
+    id: AvailableMixtures.Nitrox,
+    components: [AvailableGasses.oxygen],
+  },
+  {
+    id: AvailableMixtures.Trimix,
+    components: [AvailableGasses.oxygen, AvailableGasses.helium],
+  },
+  {
+    id: AvailableMixtures.Heliox,
+    components: [AvailableGasses.oxygen, AvailableGasses.helium],
+  },
+  {
+    id: AvailableMixtures.Argon,
+    components: [AvailableGasses.argon],
+  },
+];
+
+export const formalizeGasMixture = (
+  gasMixture: AvailableMixtures,
+  oxygenPercentage: string,
+  heliumPercentage: string
+): string => {
+  switch (gasMixture) {
+    case AvailableMixtures.Argon:
+      return 'Argon';
+    case AvailableMixtures.Heliox:
+      return `Heliox ${heliumPercentage}/${oxygenPercentage}`;
+    case AvailableMixtures.Nitrox:
+      return `EAN${oxygenPercentage}`;
+    case AvailableMixtures.Trimix:
+      return `Trimix ${oxygenPercentage}/${heliumPercentage}`;
+  }
+};
+
+export const mapGasToName = (gas?: AvailableGasses): string => {
   switch (gas) {
     case AvailableGasses.air:
       return 'Ilma';
