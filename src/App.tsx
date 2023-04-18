@@ -21,6 +21,7 @@ import { getTokenFromLocalStorage } from './lib/utils';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Footer } from './components/Footer/Footer';
+import { GDPR } from './views/GDPR';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -50,6 +51,7 @@ const Content = (): JSX.Element => {
           {/* Public routes */}
           <Route index element={<Login />} />
           <Route path="register" element={<SignUp />} />
+          <Route path="gdpr" element={<GDPR />} />
 
           {/* Private routes */}
           <Route
@@ -100,7 +102,6 @@ const Content = (): JSX.Element => {
               </ProtectedRoute>
             }
           />
-
           {/* 404 */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
