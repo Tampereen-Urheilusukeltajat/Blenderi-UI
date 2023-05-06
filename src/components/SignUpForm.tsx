@@ -194,6 +194,25 @@ const SignUpForm = (): JSX.Element => {
                 Toista salasana uudelleen.
               </Form.Control.Feedback>
             </Form.Group>
+            <Form.Group className="flex row">
+              <Form.Label>
+                <div className="d-flex flex-row gx-5">
+                  <Form.Check
+                    aria-label="Hyväksyn tietosuojaselosteen"
+                    id="acceptDataProtectionPolicy"
+                    name="acceptDataProtectionPolicy"
+                    onChange={form.handleChange}
+                    required
+                  />
+                  <span>
+                    Hyväksyn{' '}
+                    <a href="/gdpr" target="_blank">
+                      tietosuojaselosteen
+                    </a>
+                  </span>
+                </div>
+              </Form.Label>
+            </Form.Group>
             <div className="d-flex justify-content-center mb-5">
               <PrimaryButton text="Luo käyttäjä" type={ButtonType.submit} />
             </div>
