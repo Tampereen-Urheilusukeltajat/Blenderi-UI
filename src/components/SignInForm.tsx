@@ -6,6 +6,7 @@ import { Field, Formik } from 'formik';
 import { postAsync } from '../lib/apiRequests/api';
 import { ButtonType, PrimaryButton } from './common/Buttons';
 import { useNavigate } from 'react-router-dom';
+import { LoginProps } from '../views/Login';
 
 type SignInFormFields = {
   email: string;
@@ -26,7 +27,7 @@ const SignInFormHeader = (): JSX.Element => {
   return <h3 className="pb-5">Kirjaudu sisään</h3>;
 };
 
-const SignInForm = (): JSX.Element => {
+const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
@@ -42,10 +43,11 @@ const SignInForm = (): JSX.Element => {
       if (loginResponse.data !== undefined) {
         localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
         localStorage.setItem('accessToken', loginResponse.data.accessToken);
+        onLoginSuccess();
         navigate('/logbook');
       }
     },
-    [navigate]
+    [navigate, onLoginSuccess]
   );
 
   return (
