@@ -36,9 +36,10 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
             </option>
           ))}
         </optgroup>
-        <optgroup label="Muut">
+        {/* Disable for now */}
+        {/* <optgroup label="Muut">
           <option value="guestDivingCylinder">Lisää tilapäinen pullo...</option>
-        </optgroup>
+        </optgroup> */}
       </DropdownMenu>
       <DropdownMenu name="gasMixture" label="Kaasuseos">
         {AvailableMixtureCompositions.map((mix) => (
