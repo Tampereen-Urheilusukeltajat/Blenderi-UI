@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
-import { Form, Formik, FormikValues } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 import {
   AvailableMixtureCompositions,
+  AvailableMixtures,
   formalizeGasMixture,
+  formatEurToEurCents,
   getUserIdFromAccessToken,
 } from '../../lib/utils';
 import { FillingTile } from './components/FillingTile';
@@ -14,11 +16,15 @@ import { useStorageCylinderQuery } from '../../lib/queries/storageCylinderQuery'
 import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 import { useGasesQuery } from '../../lib/queries/gasQuery';
+import { useMutation } from '@tanstack/react-query';
+import { NewFillEvent, storageCylinderUsage } from '../../interfaces/FillEvent';
+import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
+import { toast } from 'react-toastify';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
   divingCylinderSetId: string;
-  gasMixture: string;
+  gasMixture: AvailableMixtures;
   heliumPercentage: string;
   oxygenPercentage: string;
   userConfirm: boolean;
@@ -105,15 +111,56 @@ export type LogbookCommonTileProps = {
 export const NewBlenderFillingEvent: React.FC<
   NewFillingEventProps
 > = (): JSX.Element => {
-  const handleFormSubmit = useCallback((values: FormikValues) => {
-    const formalizedGasMixture = formalizeGasMixture(
-      values.gasMixture,
-      values.oxygenPercentage,
-      values.heliumPercentage
-    );
-    // eslint-disable-next-line no-console
-    console.log(formalizedGasMixture);
-  }, []);
+  const fillEventMutation = useMutation({
+    mutationFn: async (payload: NewFillEvent) => postFillEvent(payload),
+    onError: () => {
+      toast.error(
+        'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+      );
+    },
+  });
+
+  const handleFormSubmit = useCallback(
+    (values: FormFields, helpers: FormikHelpers<FormFields>) => {
+      const formalizedGasMixture = formalizeGasMixture(
+        values.gasMixture,
+        values.oxygenPercentage,
+        values.heliumPercentage
+      );
+
+      const totalPriceEurCents = formatEurToEurCents(
+        values.fillingEventRows
+          .map((row) => row.priceEurCents)
+          .reduce((partialSum, price) => partialSum + price, 0)
+      );
+
+      fillEventMutation.mutate(
+        {
+          cylinderSetId: values.divingCylinderSetId,
+          description: values.additionalInformation,
+          filledAir: false,
+          gasMixture: formalizedGasMixture,
+          price: totalPriceEurCents,
+          storageCylinderUsageArr:
+            values.fillingEventRows.map<storageCylinderUsage>((row) => ({
+              storageCylinderId: Number(row.storageCylinderId),
+              endPressure: row.endPressure,
+              startPressure: row.startPressure,
+            })),
+        },
+        {
+          onSuccess: () => {
+            toast.success('Uusi täyttötapahtuma lisätty!');
+            helpers.resetForm();
+          },
+          onSettled: () => {
+            helpers.setSubmitting(false);
+          },
+        }
+      );
+    },
+    [fillEventMutation]
+  );
 
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
   const divingCylinderSets: DivingCylinderSet[] =
@@ -146,7 +193,7 @@ export const NewBlenderFillingEvent: React.FC<
           validationSchema={BLENDER_FILLING_EVENT_VALIDATION_SCHEMA}
           onSubmit={handleFormSubmit}
         >
-          {({ errors, values, setFieldValue }) => (
+          {({ errors, values, setFieldValue, isSubmitting }) => (
             <Form>
               <div className="fillingEventFlexRow">
                 <BasicInfoTile
@@ -160,6 +207,7 @@ export const NewBlenderFillingEvent: React.FC<
                     .reduce((partialSum, price) => partialSum + price, 0)}
                   errors={errors}
                   values={values}
+                  isSubmitting={isSubmitting}
                 />
                 <PricingTile errors={errors} gases={gases} values={values} />
               </div>

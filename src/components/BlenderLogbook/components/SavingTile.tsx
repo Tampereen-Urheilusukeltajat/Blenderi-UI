@@ -8,11 +8,13 @@ import React from 'react';
 
 type SavingTileProps = CommonTileProps & {
   totalPrice: number;
+  isSubmitting: boolean;
 };
 
 export const SavingTile: React.FC<SavingTileProps> = ({
   values,
   totalPrice,
+  isSubmitting,
 }) => (
   <div className="tileWrapper savingTile">
     <h2>Tallenna</h2>
@@ -31,7 +33,7 @@ export const SavingTile: React.FC<SavingTileProps> = ({
       </div>
       <PrimaryButton
         className="saveFillEventButton"
-        disabled={!values.userConfirm}
+        disabled={!values.userConfirm || isSubmitting}
         type={ButtonType.submit}
         text="Tallenna täyttö"
       />

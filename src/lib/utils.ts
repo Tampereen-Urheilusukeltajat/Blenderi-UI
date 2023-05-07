@@ -74,6 +74,7 @@ export const mapGasToName = (gas?: AvailableGasses): string => {
 };
 
 export const formatEurCentsToEur = (eurCents: number): number => eurCents / 100;
+export const formatEurToEurCents = (eur: number): number => eur * 100;
 
 export const calculateGasConsumption = (
   cylinderVolume: number,

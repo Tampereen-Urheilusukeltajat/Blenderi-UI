@@ -1,5 +1,6 @@
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import { FillEvent } from '../../interfaces/FillEvent';
+import { formatEurCentsToEur } from '../../lib/utils';
 
 const FillEventRow = ({
   data,
@@ -14,7 +15,7 @@ const FillEventRow = ({
       <td>{data.cylinderSetName}</td>
       <td>{data.gasMixture}</td>
       <td>{data.description}</td>
-      <td>{data.price}</td>
+      <td>{formatEurCentsToEur(data.price)}</td>
     </tr>
   );
 };
