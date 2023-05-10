@@ -16,15 +16,18 @@ import { BlenderLogbook } from './views/BlenderLogbook';
 import { ProtectedRoute } from './components/common/Auth';
 import { Logbook } from './views/Logbook';
 import { FillEvents } from './views/FillEvents';
-import { useEffect, useState } from 'react';
-import { getTokenFromLocalStorage } from './lib/utils';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Footer } from './components/Footer/Footer';
 
 const QUERY_CLIENT = new QueryClient();
 
-const Content = (): JSX.Element => {
+type ContentProps = {
+  forceShowNavbar: () => void;
+};
+
+const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
   const [showSpinner, setShowSpinner] = useState(false);
   const isFetching = useIsFetching();
 
@@ -48,8 +51,11 @@ const Content = (): JSX.Element => {
       <Container className="pt-4 content">
         <Routes>
           {/* Public routes */}
-          <Route index element={<Login />} />
-          <Route path="register" element={<SignUp />} />
+          <Route index element={<Login onLoginSuccess={forceShowNavbar} />} />
+          <Route
+            path="register"
+            element={<SignUp onRegisterSuccess={forceShowNavbar} />}
+          />
 
           {/* Private routes */}
           <Route
@@ -111,18 +117,23 @@ const Content = (): JSX.Element => {
 
 const App = (): JSX.Element => {
   // If access token exist, user has authenticated
-  const [authenticated, setAuthenticated] = useState(false);
+  const authenticated = useMemo(
+    () => localStorage.getItem('accessToken') !== null,
+    []
+  );
+  const [showNavbar, setShowNavbar] = useState(authenticated);
 
   useEffect(() => {
-    const authenticated = getTokenFromLocalStorage('accessToken');
-    setAuthenticated(!!authenticated);
-  }, []);
+    setShowNavbar(authenticated);
+  }, [authenticated]);
+
+  const setNavbarVisible = useCallback(() => setShowNavbar(true), []);
 
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
       <ToastContainer className="toast-position" position={'top-right'} />
-      {authenticated ? <Navbar /> : null}
-      <Content />
+      {showNavbar && <Navbar />}
+      <Content forceShowNavbar={setNavbarVisible} />
       <Footer />
     </QueryClientProvider>
   );
