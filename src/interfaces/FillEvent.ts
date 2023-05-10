@@ -9,7 +9,7 @@ export type FillEvent = {
   createdAt: string;
 };
 
-type storageCylinderUsage = {
+export type storageCylinderUsage = {
   storageCylinderId: number;
   startPressure: number;
   endPressure: number;
