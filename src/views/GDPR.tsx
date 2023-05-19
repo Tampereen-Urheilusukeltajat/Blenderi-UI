@@ -4,14 +4,14 @@ export const GDPR: React.FC = () => {
   return (
     <div>
       <h1>Rekisteri- ja tietosuojaseloste</h1>
-      <h4>
+      <h2>
         Tämä on Tampereen Urheilusukeltajat ry:n (Taursu) EU:n yleisen
         tietosuoja-asetuksen (GDPR) mukainen rekisteri- ja tietosuojaseloste.
         Laadittu 30.11.2022. Viimeisin muutos 18.04.2023.
-      </h4>
-      <ol>
-        <li>
-          <h6>Rekisterinpitäjä</h6>
+      </h2>
+      <ul style={{ listStyle: 'none', padding: '0' }}>
+        <li style={{ margin: '12px 0' }}>
+          <h3>Rekisterinpitäjä</h3>
           <span>Tampereen Urheilusukeltajat ry</span>
           <br />
           <span>Hyllilänkatu 1 B talli 26</span>
@@ -27,50 +27,42 @@ export const GDPR: React.FC = () => {
             jasenasiat.taursu@gmail.com
           </a>
         </li>
-        <br />
-        <li>
-          <h6>Rekisteristä vastaava yhteyshenkilö</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Rekisteristä vastaava yhteyshenkilö</h3>
           <span>Akseli Kolari</span>
           <br />
           <a href="mailto:gdpr@taytttopaikka.fi">gdpr@tayttopaikka.fi</a>
         </li>
-        <br />
-        <li>
-          <h6>Rekisterin nimi</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Rekisterin nimi</h3>
           <span>Täyttöpaikka -sovelluksen käyttäjärekisteri</span>
         </li>
-        <br />
-        <li>
-          <h6>Oikeusperuste ja henkilötietojen käsittelyn tarkoitus</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Oikeusperuste ja henkilötietojen käsittelyn tarkoitus</h3>
+          <p>
+            EU:n yleisen tietosuoja-asetuksen mukainen oikeusperuste
+            henkilötietojen käsittelylle on henkilön suostumus (dokumentoitu,
+            vapaaehtoinen, yksilöity, tietoinen ja yksiselitteinen).
+          </p>
           <p>
             Henkilötietojen käsittelyn tarkoitus on tallentaa yhdistyksen
             sukelluspullojen täyttöpaikalla tapahtuneet kaasujen täytöt
             Turvallisuus- ja kemikaaliviraston määräysten mukaisesti, sekä
-            myöhempää mahdollista laskutusta varten. Tietoja ei käytetä
-            automatisoituun päätöksentekoon tai profilointiin.
+            myöhempää mahdollista laskutusta varten.
           </p>
-        </li>
-        <br />
-        <li>
-          <h6>Oikeusperuste ja henkilötietojen käsittelyn tarkoitus</h6>
           <p>
-            Henkilötietojen käsittelyn tarkoitus on tallentaa yhdistyksen
-            sukelluspullojen täyttöpaikalla tapahtuneet kaasujen täytöt
-            Turvallisuus- ja kemikaaliviraston määräysten mukaisesti, sekä
-            myöhempää mahdollista laskutusta varten. Tietoja ei käytetä
-            automatisoituun päätöksentekoon tai profilointiin.
+            Tietoja ei käytetä automatisoituun päätöksentekoon tai
+            profilointiin.
           </p>
         </li>
-        <br />
-        <li>
-          <h6>Rekisterin tietosisältö</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Rekisterin tietosisältö</h3>
           <p>
             Rekisteriin tallennettavia tietoja ovat: henkilön nimi, yhteystiedot
             (sähköpostiosoite, puhelinnumero), henkilön palveluun lisäämät
             sukelluspullot, kaasuseoksen täyttöoikeus ja tehtyjen kaasuseoksien
             tiedot (aika, koostumus, hinta).
           </p>
-          <br />
           <p>
             Käyttäjän tietoja säilytetään rekisterissä niin pitkään, kun
             käyttäjä aktiivisesti käyttää palvelua (Täyttöpaikka). Käyttäjän
@@ -87,9 +79,8 @@ export const GDPR: React.FC = () => {
             kaasutäytöistä.
           </p>
         </li>
-        <br />
-        <li>
-          <h6>Säännönmukaiset tietolähteet</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Säännönmukaiset tietolähteet</h3>
           <p>
             Rekisteriin tallennettavat tiedot saadaan asiakkaalta mm.
             www-lomakkeilla lähetetyistä viesteistä, sähköpostitse, puhelimitse,
@@ -97,12 +88,11 @@ export const GDPR: React.FC = () => {
             tietojaan.
           </p>
         </li>
-        <br />
-        <li>
-          <h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>
             Tietojen säännönmukaiset luovutukset ja tietojen siirto EU:n tai
             ETA:n ulkopuolelle
-          </h6>
+          </h3>
           <p>
             Tietoja ei luovuteta säännönmukaisesti muille tahoille. Tietoja
             voidaan kuitenkin luovuttaa viranomaisille onnettomuustapauksissa
@@ -110,9 +100,8 @@ export const GDPR: React.FC = () => {
             siirretä EU:n tai ETA:n ulkopuolelle.
           </p>
         </li>
-        <br />
-        <li>
-          <h6>Rekisterin suojauksen periaatteet</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Rekisterin suojauksen periaatteet</h3>
           <p>
             Rekisterin käsittelyssä noudatetaan huolellisuutta ja
             tietojärjestelmien avulla käsiteltävät tiedot suojataan
@@ -126,9 +115,8 @@ export const GDPR: React.FC = () => {
             kuuluu.
           </p>
         </li>
-        <br />
-        <li>
-          <h6>Tarkastusoikeus ja oikeus vaatia tiedon korjaamista</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Tarkastusoikeus ja oikeus vaatia tiedon korjaamista</h3>
           <p>
             Jokaisella rekisterissä olevalla henkilöllä on oikeus tarkastaa
             rekisteriin tallennetut tietonsa ja vaatia mahdollisen virheellisen
@@ -141,9 +129,8 @@ export const GDPR: React.FC = () => {
             pääsääntöisesti kuukauden kuluessa.
           </p>
         </li>
-        <br />
-        <li>
-          <h6>Muut henkilötietojen käsittelyyn liittyvät oikeudet</h6>
+        <li style={{ padding: '12px 0' }}>
+          <h3>Muut henkilötietojen käsittelyyn liittyvät oikeudet</h3>
           <p>
             Rekisterissä olevalla henkilöllä on oikeus pyytää häntä koskevien
             henkilötietojen poistamiseen rekisteristä ("oikeus tulla
@@ -159,8 +146,7 @@ export const GDPR: React.FC = () => {
             kuukauden kuluessa.
           </p>
         </li>
-      </ol>
-      <p></p>
+      </ul>
     </div>
   );
 };
