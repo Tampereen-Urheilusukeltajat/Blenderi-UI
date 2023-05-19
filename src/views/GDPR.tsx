@@ -35,7 +35,7 @@ export const GDPR: React.FC = () => {
         </li>
         <li style={{ padding: '12px 0' }}>
           <h3>Rekisterin nimi</h3>
-          <span>Täyttöpaikka -sovelluksen käyttäjärekisteri</span>
+          <span>Täyttöpaikka-sovelluksen käyttäjärekisteri</span>
         </li>
         <li style={{ padding: '12px 0' }}>
           <h3>Oikeusperuste ja henkilötietojen käsittelyn tarkoitus</h3>
