@@ -7,6 +7,7 @@ import '../styles/user/user.css';
 import { ButtonType, PrimaryButton } from './common/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { LoginRequest, LoginResponse } from './SignInForm';
+import { SignUpProps } from '../views/SignUp';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
@@ -39,7 +40,7 @@ type SignUpFormFields = {
   password: string;
 };
 
-const SignUpForm = (): JSX.Element => {
+const SignUpForm: React.FC<SignUpProps> = ({ onRegisterSuccess }) => {
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
@@ -60,11 +61,12 @@ const SignUpForm = (): JSX.Element => {
         if (loginResponse.data !== undefined) {
           localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
           localStorage.setItem('accessToken', loginResponse.data.accessToken);
+          onRegisterSuccess();
           navigate('/logbook');
         }
       }
     },
-    [navigate]
+    [navigate, onRegisterSuccess]
   );
 
   return (

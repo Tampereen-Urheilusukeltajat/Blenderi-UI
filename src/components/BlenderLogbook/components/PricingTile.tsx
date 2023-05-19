@@ -1,18 +1,19 @@
-import { formatEurCentsToEur } from '../../../lib/utils';
-import { CommonTileProps, GasPrice } from '../NewBlenderFillingEvent';
+import { formatEurCentsToEur, mapGasToName } from '../../../lib/utils';
+import { CommonTileProps } from '../NewBlenderFillingEvent';
 import React from 'react';
+import { GasWithPricing } from '../../../lib/queries/gasQuery';
 
 type PricingTileProps = CommonTileProps & {
-  prices: GasPrice[];
+  gases: GasWithPricing[];
 };
 
-export const PricingTile: React.FC<PricingTileProps> = ({ prices }) => (
+export const PricingTile: React.FC<PricingTileProps> = ({ gases }) => (
   <div className="tileWrapper pricingTile">
     <h2>Hinnasto</h2>
-    {prices.map((gasPrice) => (
-      <div key={`${gasPrice.gas}`} className="pricingGridRow">
-        <span>{gasPrice.name}</span>
-        <span>{formatEurCentsToEur(gasPrice.priceEurCents)}</span>
+    {gases.map((gas) => (
+      <div key={`${gas.gasId}`} className="pricingGridRow">
+        <span>{mapGasToName(gas.gasName)}</span>
+        <span>{formatEurCentsToEur(gas.priceEurCents)}</span>
         <span>€/l</span>
       </div>
     ))}

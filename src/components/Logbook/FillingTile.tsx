@@ -42,14 +42,17 @@ export const LogbookFillingEventRowComponent: React.FC<
           name={`fillingEventRows.${index}.divingCylinderSet`}
           errorText={errors.fillingEventRows?.at(index).divingCylinderSet}
         >
-          {divingCylinderSets.map((dcs: DivingCylinderSet) => (
-            <option key={dcs.id} value={dcs.id}>
-              {dcs.name}
-              {divingCylinderSets.filter((e) => e.name === dcs.name).length > 1
-                ? `(${dcs.cylinders[0].serialNumber})`
-                : ''}
-            </option>
-          ))}
+          <optgroup label="Omat pullot">
+            {divingCylinderSets.map((dcs: DivingCylinderSet) => (
+              <option key={dcs.id} value={dcs.id}>
+                {dcs.name}
+                {divingCylinderSets.filter((e) => e.name === dcs.name).length >
+                1
+                  ? `(${dcs.cylinders[0].serialNumber})`
+                  : ''}
+              </option>
+            ))}
+          </optgroup>
         </DropdownMenu>
         <IconButton
           className="deleteRowButton"

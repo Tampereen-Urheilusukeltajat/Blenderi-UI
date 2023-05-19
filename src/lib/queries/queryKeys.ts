@@ -15,4 +15,5 @@ export const STORAGE_CYLINDERS_QUERY_KEY = ['storageCylinder'];
 export const FILL_EVENT_QUERY_KEY = ['fillEvents'];
 export const BARE_FILL_EVENT_QUERY_KEY = ['bareFillEvents'];
 
-// ...
+// Gas
+export const GAS_QUERY = ['gas'];

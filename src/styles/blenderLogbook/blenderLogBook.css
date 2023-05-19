@@ -40,7 +40,8 @@
 
 .basicInfoGridRow {
   display: grid;
-  grid-template-columns: 220px 220px 220px;
+  gap: 16px;
+  grid-template-columns: 220px 100px auto auto;
   justify-content: space-between;
   margin: 0 0 1rem 0;
 }
