@@ -20,6 +20,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Footer } from './components/Footer/Footer';
+import { GDPR } from './views/GDPR';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -56,6 +57,7 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
             path="register"
             element={<SignUp onRegisterSuccess={forceShowNavbar} />}
           />
+          <Route path="gdpr" element={<GDPR />} />
 
           {/* Private routes */}
           <Route
@@ -106,7 +108,6 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
               </ProtectedRoute>
             }
           />
-
           {/* 404 */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

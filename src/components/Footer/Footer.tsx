@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
         </a>
       </div>
       <div className="row">
-        <a href="" aria-disabled="true" className="item">
+        <a href="/gdpr" className="item">
           Tietosuojaseloste
         </a>
         <a href="" aria-disabled="true" className="item">
