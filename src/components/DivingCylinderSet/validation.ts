@@ -1,7 +1,6 @@
 import * as yup from 'yup';
-import { FIELD_REQUIRED } from '../UserSettings/validation';
+import { FIELD_NUMBER, FIELD_REQUIRED } from '../../lib/validationUtils';
 
-const FIELD_NUMBER = 'Annetun arvon on oltava numero';
 const MAX_VOLUME = 100;
 const MAX_PRESSURE = 500;
 const MIN_INSPECT_YEAR = 2000;
