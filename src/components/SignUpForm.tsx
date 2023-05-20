@@ -6,8 +6,8 @@ import { useCallback } from 'react';
 import '../styles/user/user.css';
 import { ButtonType, PrimaryButton } from './common/Buttons';
 import { useNavigate } from 'react-router-dom';
-import { LoginRequest, LoginResponse } from './SignInForm';
 import { SignUpProps } from '../views/SignUp';
+import { LoginPayload, LoginResponse } from '../lib/apiRequests/login';
 
 const SignUpFormHeader = (): JSX.Element => {
   return <h3>Luo uusi käyttäjä</h3>;
@@ -51,7 +51,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ onRegisterSuccess }) => {
       );
 
       if (signUpResponse.data !== undefined) {
-        const loginResponse = await postAsync<LoginResponse, LoginRequest>(
+        const loginResponse = await postAsync<LoginResponse, LoginPayload>(
           '/api/login/',
           {
             email: values.email,
