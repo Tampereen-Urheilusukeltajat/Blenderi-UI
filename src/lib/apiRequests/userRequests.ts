@@ -6,7 +6,7 @@ export type User = {
   email: string;
   forename: string;
   surname: string;
-  phone: string;
+  phoneNumber: string;
   isAdmin: boolean;
   isBlender: boolean;
   archivedAt: string;

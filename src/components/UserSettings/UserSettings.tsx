@@ -35,7 +35,7 @@ export type FormUser = {
   forename: string;
   surname: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   password: string;
   newPassword: string;
   newPasswordAgain: string;
@@ -333,7 +333,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
       {!editingPhone ? (
         <UserVariableRow
           title="Puhelinnumero"
-          content={values.phone}
+          content={values.phoneNumber}
           handleEditButtonClick={changePhoneEditingStatus}
         />
       ) : (
@@ -405,7 +405,7 @@ export const UserSettings: React.FC = () => {
         {
           email: user.email,
           forename: user.forename,
-          phone: user.phone,
+          phoneNumber: user.phoneNumber,
           surname: user.surname,
           password: '',
           newPassword: '',
@@ -428,7 +428,7 @@ export const UserSettings: React.FC = () => {
               forename: user.forename,
               surname: user.surname,
               email: user.email,
-              phone: user.phone,
+              phoneNumber: user.phoneNumber,
               password: '',
               newPassword: '',
               newPasswordAgain: '',

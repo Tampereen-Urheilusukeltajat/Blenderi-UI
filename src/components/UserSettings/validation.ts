@@ -6,7 +6,7 @@ const FIELD_EMAIL = 'Sähköpostin muoto on virheellinen';
 export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
   email: yup.string().email(FIELD_EMAIL).required(FIELD_REQUIRED),
   forename: yup.string().required(FIELD_REQUIRED),
-  phone: yup.string().required(FIELD_REQUIRED),
+  phoneNumber: yup.string().required(FIELD_REQUIRED),
   surname: yup.string().required(FIELD_REQUIRED),
   newPassword: yup
     .string()

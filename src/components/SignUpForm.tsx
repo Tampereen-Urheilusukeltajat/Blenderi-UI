@@ -17,14 +17,14 @@ type SignUpRequest = {
   forename: string;
   surname: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   password: string;
 };
 
 type SignUpResponse = {
   id: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   forename: string;
   surname: string;
   isAdmin: boolean;
@@ -36,7 +36,7 @@ type SignUpFormFields = {
   forename: string;
   surname: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   password: string;
 };
 
@@ -77,7 +77,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ onRegisterSuccess }) => {
           forename: '',
           surname: '',
           email: '',
-          phone: '',
+          phoneNumber: '',
           password: '',
           repeatPassword: '',
         }}
@@ -148,11 +148,11 @@ const SignUpForm: React.FC<SignUpProps> = ({ onRegisterSuccess }) => {
               <Field
                 className="form-control"
                 aria-label="Puhelinnumero"
-                id="phone"
-                name="phone"
-                type="phone"
+                id="phoneNumber"
+                name="phoneNumber"
+                type="phoneNumber"
                 placeholder=""
-                value={form.values.phone}
+                value={form.values.phoneNumber}
                 onChange={form.handleChange}
                 autoComplete="on"
                 required
