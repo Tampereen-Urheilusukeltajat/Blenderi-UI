@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/footer/footer.css';
-import { ReactComponent as Tayttopaikka } from './tayttopaikka.svg';
+import { ReactComponent as Tayttopaikka } from '../../svg/tayttopaikka.svg';
 
 export const Footer: React.FC = () => {
   return (

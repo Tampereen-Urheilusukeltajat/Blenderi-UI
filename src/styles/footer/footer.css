@@ -17,6 +17,7 @@
   flex-wrap: nowrap;
 }
 .footer .row .logo {
+  color: #F2F2F2;
   fill: #F2F2F2;
   padding: 0 0 1rem 0;
 }
