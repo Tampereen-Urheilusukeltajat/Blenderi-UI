@@ -46,6 +46,8 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         email: '',
         password: '',
       }}
+      validateOnChange={false}
+      validateOnBlur={false}
       validationSchema={LOGIN_VALIDATION_SCHEMA}
       onSubmit={async (values) => handleSubmit(values)}
     >
