@@ -7,11 +7,19 @@ import { LoginProps } from '../../views/Login';
 import { TextInput } from '../common/Inputs';
 import { LOGIN_VALIDATION_SCHEMA } from './validation';
 import { useLoginMutation } from '../../lib/queries/loginMutation';
+import { styled } from 'styled-components';
 
 type SignInFormFields = {
   email: string;
   password: string;
 };
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 220px;
+`;
 
 export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -42,7 +50,7 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       onSubmit={async (values) => handleSubmit(values)}
     >
       {({ errors, handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
+        <StyledForm onSubmit={handleSubmit}>
           <TextInput
             aria-label="Sähköpostiosoite"
             name="email"
@@ -62,7 +70,7 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           <div className="d-flex justify-content-center">
             <PrimaryButton text="Kirjaudu sisään" type={ButtonType.submit} />
           </div>
-        </Form>
+        </StyledForm>
       )}
     </Formik>
   );
