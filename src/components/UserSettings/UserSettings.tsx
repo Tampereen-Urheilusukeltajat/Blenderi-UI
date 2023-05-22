@@ -340,7 +340,7 @@ const UserPropertiesForm: React.FC<UserPropertiesFormProps> = ({
         <EditableUserVariableRow
           disableSaving={!dirty}
           errors={errors}
-          fields={[{ fieldName: 'phone', label: 'Puhelinnumero' }]}
+          fields={[{ fieldName: 'phoneNumber', label: 'Puhelinnumero' }]}
           changeEditingStatus={changePhoneEditingStatus}
           resetFields={handleReset}
           submitForm={handleSubmit}
