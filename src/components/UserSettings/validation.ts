@@ -19,7 +19,7 @@ export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
       (phoneNumber) => {
         try {
           return phoneUtil.isValidNumberForRegion(
-            phoneUtil.parse(phoneNumber, 'FI'),
+            phoneUtil.parse(phoneNumber),
             'FI'
           );
         } catch (error) {
