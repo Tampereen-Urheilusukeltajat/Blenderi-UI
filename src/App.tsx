@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './views/Login';
-import SignUp from './views/SignUp';
+import { Register } from './views/Register';
 import { Navbar } from './views/Navbar';
 import {
   QueryClient,
@@ -21,6 +21,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Footer } from './components/Footer/Footer';
 import { GDPR } from './views/GDPR';
+import { FrontPage } from './views/FrontPage';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -52,11 +53,13 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
       <Container className="pt-4 content">
         <Routes>
           {/* Public routes */}
-          <Route index element={<Login onLoginSuccess={forceShowNavbar} />} />
-          <Route
-            path="register"
-            element={<SignUp onRegisterSuccess={forceShowNavbar} />}
-          />
+          <Route element={<FrontPage />}>
+            <Route
+              path="/"
+              element={<Login onLoginSuccess={forceShowNavbar} />}
+            />
+            <Route path="register" element={<Register />} />
+          </Route>
           <Route path="gdpr" element={<GDPR />} />
 
           {/* Private routes */}

@@ -23,17 +23,17 @@ const StyledForm = styled(Form)`
 
 export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
-  const handleSuccesfulLogin = useCallback(() => {
+  const handleSuccessfulLogin = useCallback(() => {
     onLoginSuccess();
     navigate('/logbook');
   }, [navigate, onLoginSuccess]);
 
-  const { mutate } = useLoginMutation(handleSuccesfulLogin);
+  const { mutate } = useLoginMutation(handleSuccessfulLogin);
 
   const handleSubmit = useCallback(
     async (formFields: SignInFormFields) => {
       mutate({
-        email: formFields.email,
+        email: formFields.email.trim(),
         password: formFields.password,
       });
     },
@@ -54,7 +54,6 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       {({ errors, handleSubmit }) => (
         <StyledForm onSubmit={handleSubmit}>
           <TextInput
-            aria-label="Sähköpostiosoite"
             name="email"
             type="email"
             autoComplete="email"
@@ -62,7 +61,6 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             label="Sähköpostiosoite"
           />
           <TextInput
-            aria-label="Salasana"
             name="password"
             autoComplete="password"
             errorText={errors.password}
