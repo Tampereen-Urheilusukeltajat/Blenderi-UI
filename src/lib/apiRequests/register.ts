@@ -21,9 +21,5 @@ export type RegisterResponse = {
 export const register = async (
   payload: RegisterPayload
 ): Promise<RegisterResponse> =>
-  (
-    await postAsync<RegisterResponse, RegisterPayload>(
-      '/api/register/',
-      payload
-    )
-  ).data;
+  (await postAsync<RegisterResponse, RegisterPayload>('/api/user/', payload))
+    .data;
