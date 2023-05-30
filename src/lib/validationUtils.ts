@@ -1,3 +1,8 @@
+import { PhoneNumberUtil } from 'google-libphonenumber';
+
+export const phoneUtil = new PhoneNumberUtil();
+
+// Messages
 export const FIELD_REQUIRED = 'Kenttä on pakollinen';
 export const FIELD_EMAIL = 'Sähköpostin muoto on virheellinen';
 export const PASSWORD_MIN_LENGTH =

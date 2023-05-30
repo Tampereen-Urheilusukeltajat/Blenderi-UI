@@ -403,15 +403,23 @@ export const UserSettings: React.FC = () => {
       if (!user) throw new Error('User not defined when updating');
       const changedValues: Partial<FormUser> = getChangedFieldValues(
         {
-          email: user.email,
-          forename: user.forename,
-          phoneNumber: user.phoneNumber,
-          surname: user.surname,
+          email: user.email.trim(),
+          forename: user.forename.trim(),
+          phoneNumber: user.phoneNumber.replaceAll(' ', ''),
+          surname: user.surname.trim(),
           password: '',
           newPassword: '',
           newPasswordAgain: '',
         },
-        fields
+        {
+          email: fields.email?.trim(),
+          forename: fields.forename?.trim(),
+          phoneNumber: fields.phoneNumber?.replaceAll(' ', ''),
+          surname: fields.surname?.trim(),
+          password: fields.password,
+          newPassword: fields.newPassword,
+          newPasswordAgain: fields.newPasswordAgain,
+        }
       );
 
       userMutation.mutate(changedValues);
