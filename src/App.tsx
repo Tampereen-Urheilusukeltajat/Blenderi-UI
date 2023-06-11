@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Login } from './views/Login';
-import { Register } from './views/Register';
+import { Login } from './views/Login/Login';
+import { Register } from './views/Register/Register';
 import { Navbar } from './views/Navbar';
 import {
   QueryClient,
@@ -10,7 +10,6 @@ import {
 } from '@tanstack/react-query';
 import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
-import UserManagement from './views/UserManagement';
 import { UserSettings } from './components/UserSettings/UserSettings';
 import { BlenderLogbook } from './views/BlenderLogbook';
 import { ProtectedRoute } from './components/common/Auth';
@@ -21,7 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Footer } from './components/Footer/Footer';
 import { GDPR } from './views/GDPR';
-import { FrontPage } from './views/FrontPage';
+import { FrontPage } from './views/FrontPage/FrontPage';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -68,14 +67,6 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
             element={
               <ProtectedRoute>
                 <DivingCylinderSetManagement />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="management"
-            element={
-              <ProtectedRoute>
-                <UserManagement />
               </ProtectedRoute>
             }
           />

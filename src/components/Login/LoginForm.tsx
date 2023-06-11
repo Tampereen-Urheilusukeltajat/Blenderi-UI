@@ -3,23 +3,15 @@ import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { ButtonType, PrimaryButton } from '../common/Buttons';
 import { useNavigate } from 'react-router-dom';
-import { LoginProps } from '../../views/Login';
+import { LoginProps } from '../../views/Login/Login';
 import { TextInput } from '../common/Inputs';
 import { LOGIN_VALIDATION_SCHEMA } from './validation';
 import { useLoginMutation } from '../../lib/queries/loginMutation';
-import { styled } from 'styled-components';
 
 type SignInFormFields = {
   email: string;
   password: string;
 };
-
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 220px;
-`;
 
 export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -52,7 +44,7 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       onSubmit={async (values) => handleSubmit(values)}
     >
       {({ errors, handleSubmit }) => (
-        <StyledForm onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <TextInput
             name="email"
             type="email"
@@ -70,7 +62,7 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           <div className="d-flex justify-content-center">
             <PrimaryButton text="Kirjaudu sisään" type={ButtonType.submit} />
           </div>
-        </StyledForm>
+        </Form>
       )}
     </Formik>
   );

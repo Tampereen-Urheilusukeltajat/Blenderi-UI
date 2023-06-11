@@ -3,23 +3,9 @@ import { Formik } from 'formik';
 import { useCallback } from 'react';
 
 import { ButtonType, PrimaryButton } from '../common/Buttons';
-import { styled } from 'styled-components';
 import { useRegisterMutation } from '../../lib/queries/registerMutation';
 import { TextInput } from '../common/Inputs';
 import { REGISTER_VALIDATION_SCHEMA } from './validation';
-
-const Container = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 240px;
-`;
 
 type RegisterFormFields = {
   forename: string;
@@ -53,7 +39,7 @@ export const RegisterForm: React.FC = () => {
   );
 
   return (
-    <Container>
+    <div>
       <h1>Luo uusi käyttäjä</h1>
       <Formik
         initialValues={{
@@ -70,7 +56,7 @@ export const RegisterForm: React.FC = () => {
         validationSchema={REGISTER_VALIDATION_SCHEMA}
       >
         {({ handleSubmit, errors, handleChange }) => (
-          <StyledForm onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <TextInput
               name="forename"
               autoComplete="given-name"
@@ -134,9 +120,9 @@ export const RegisterForm: React.FC = () => {
             <div className="d-flex justify-content-center mb-5">
               <PrimaryButton text="Luo käyttäjä" type={ButtonType.submit} />
             </div>
-          </StyledForm>
+          </Form>
         )}
       </Formik>
-    </Container>
+    </div>
   );
 };
