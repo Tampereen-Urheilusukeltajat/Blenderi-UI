@@ -1,0 +1,21 @@
+.login {
+  align-items: center;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  padding: 2rem;
+  width: 50%;
+
+  .header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+
+    h1 {
+      font-size: 32px;
+    }
+  }
+}
