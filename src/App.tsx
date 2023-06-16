@@ -22,6 +22,7 @@ import { Footer } from './components/Footer/Footer';
 import { GDPR } from './views/GDPR';
 import { FrontPage } from './views/FrontPage/FrontPage';
 import { PasswordResetRequest } from './views/PasswordResetRequest/PasswordResetRequest';
+import { ResetPassword } from './views/ResetPassword/ResetPassword';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -63,6 +64,7 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
               path={'request-password-reset'}
               element={<PasswordResetRequest />}
             />
+            <Route path={'reset-password'} element={<ResetPassword />} />
           </Route>
           <Route path="gdpr" element={<GDPR />} />
 
