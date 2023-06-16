@@ -15,12 +15,13 @@ import { BlenderLogbook } from './views/BlenderLogbook';
 import { ProtectedRoute } from './components/common/Auth';
 import { Logbook } from './views/Logbook';
 import { FillEvents } from './views/FillEvents';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Footer } from './components/Footer/Footer';
 import { GDPR } from './views/GDPR';
 import { FrontPage } from './views/FrontPage/FrontPage';
+import { PasswordResetRequest } from './views/PasswordResetRequest/PasswordResetRequest';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -58,6 +59,10 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
               element={<Login onLoginSuccess={forceShowNavbar} />}
             />
             <Route path="register" element={<Register />} />
+            <Route
+              path={'request-password-reset'}
+              element={<PasswordResetRequest />}
+            />
           </Route>
           <Route path="gdpr" element={<GDPR />} />
 
