@@ -7,9 +7,22 @@ import {
   phoneUtil,
 } from '../../lib/validationUtils';
 
-export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
-  email: yup.string().email(FIELD_EMAIL).required(FIELD_REQUIRED),
+export const REGISTER_VALIDATION_SCHEMA = yup.object().shape({
   forename: yup.string().required(FIELD_REQUIRED),
+  surname: yup.string().required(FIELD_REQUIRED),
+  email: yup.string().email(FIELD_EMAIL).required(FIELD_REQUIRED),
+  password: yup
+    .string()
+    .required(FIELD_REQUIRED)
+    .min(8, PASSWORD_MIN_LENGTH)
+    .required(FIELD_REQUIRED),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref('password')], PASSWORDS_DO_NOT_MATCH)
+    .when('password', {
+      is: (val: string | undefined) => val?.length ?? -1 > 0,
+      then: (schema) => schema.required(FIELD_REQUIRED),
+    }),
   phoneNumber: yup
     .string()
     .required(FIELD_REQUIRED)
@@ -27,13 +40,4 @@ export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
         }
       }
     ),
-  surname: yup.string().required(FIELD_REQUIRED),
-  newPassword: yup.string().min(8, PASSWORD_MIN_LENGTH),
-  newPasswordAgain: yup
-    .string()
-    .oneOf([yup.ref('newPassword')], PASSWORDS_DO_NOT_MATCH)
-    .when('newPassword', {
-      is: (val: string | undefined) => val?.length ?? -1 > 0,
-      then: (schema) => schema.required(FIELD_REQUIRED),
-    }),
 });

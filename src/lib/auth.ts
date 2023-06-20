@@ -1,5 +1,5 @@
-import { LoginResponse } from '../components/SignInForm';
 import { postAsync } from './apiRequests/api';
+import { LoginResponse } from './apiRequests/login';
 import { getTokenFromLocalStorage, tokenExpired } from './utils';
 
 export type AccessToken = {

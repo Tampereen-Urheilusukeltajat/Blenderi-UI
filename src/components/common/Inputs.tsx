@@ -46,6 +46,7 @@ export const TextInput: React.FC<CommonInputProps> = ({
           <InputGroup.Text>{prefix}</InputGroup.Text>
         ) : null}
         <Field
+          aria-label={label}
           autoComplete={autoComplete}
           id={`id-${name}`}
           className={`form-control ${

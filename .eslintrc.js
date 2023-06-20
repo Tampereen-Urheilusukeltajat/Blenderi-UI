@@ -37,5 +37,6 @@ module.exports = {
     ],
     '@typescript-eslint/indent': 'off',
     'no-trailing-spaces': 'warn',
+    'no-undef': 'off',
   },
 };
