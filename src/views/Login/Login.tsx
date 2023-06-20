@@ -1,5 +1,5 @@
 import React from 'react';
-import { SignInForm } from '../../components/Login/LoginForm';
+import { LoginForm } from '../../components/Login/LoginForm';
 import { Link } from 'react-router-dom';
 import styles from './Login.module.scss';
 
@@ -23,7 +23,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           .
         </p>
       </header>
-      <SignInForm onLoginSuccess={onLoginSuccess} />
+      <LoginForm onLoginSuccess={onLoginSuccess} />
       <div>
         <span>
           Voit rekistöröityä käyttäjäksi <Link to={'/register'}>täältä</Link>.

@@ -8,12 +8,12 @@ import { TextInput } from '../common/Inputs';
 import { LOGIN_VALIDATION_SCHEMA } from './validation';
 import { useLoginMutation } from '../../lib/queries/loginMutation';
 
-type SignInFormFields = {
+type LoginFormFields = {
   email: string;
   password: string;
 };
 
-export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+export const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
   const handleSuccessfulLogin = useCallback(() => {
     onLoginSuccess();
@@ -23,7 +23,7 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const { mutate } = useLoginMutation(handleSuccessfulLogin);
 
   const handleSubmit = useCallback(
-    async (formFields: SignInFormFields) => {
+    async (formFields: LoginFormFields) => {
       mutate({
         email: formFields.email.trim(),
         password: formFields.password,
@@ -47,7 +47,6 @@ export const SignInForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         <Form onSubmit={handleSubmit}>
           <TextInput
             name="email"
-            type="email"
             autoComplete="email"
             errorText={errors.email}
             label="Sähköpostiosoite"
