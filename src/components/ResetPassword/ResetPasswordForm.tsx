@@ -28,7 +28,7 @@ export const ResetPasswordForm: React.FC = () => {
   const userId = params.get('id');
 
   const handleSubmit = useCallback(
-    async (formFields: SetPasswordFields) => {
+    (formFields: SetPasswordFields) => {
       if (
         token === undefined ||
         token === null ||
@@ -43,9 +43,8 @@ export const ResetPasswordForm: React.FC = () => {
         userId,
         password: formFields.password,
       });
-      navigate('/login/');
     },
-    [navigate, token, userId, mutate]
+    [token, userId, mutate]
   );
 
   return (
@@ -58,7 +57,7 @@ export const ResetPasswordForm: React.FC = () => {
         validateOnChange={false}
         validateOnBlur={false}
         validationSchema={RESET_PASSWORD_VALIDATION_SCHEMA}
-        onSubmit={async (values) => handleSubmit(values)}
+        onSubmit={handleSubmit}
       >
         {({ errors, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
