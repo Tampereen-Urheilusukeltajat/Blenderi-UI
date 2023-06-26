@@ -7,6 +7,13 @@ import { CustomLink } from '../components/NavbarLink';
 import { getUserRoles } from '../lib/utils';
 import '../styles/navbar/navbar.css';
 
+const NAVBAR_BLACKLIST = [
+  '/',
+  '/register',
+  '/reset-password',
+  '/request-password-reset',
+];
+
 export const Navbar = (): JSX.Element | null => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -22,7 +29,7 @@ export const Navbar = (): JSX.Element | null => {
   }, [navigate, queryClient]);
 
   const path = useLocation().pathname;
-  if (path === '/' || path === '/register') {
+  if (NAVBAR_BLACKLIST.includes(path)) {
     return null;
   }
 
