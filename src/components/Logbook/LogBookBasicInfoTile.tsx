@@ -18,6 +18,12 @@ export const LogbookBasicInfoTile: React.FC<LogbookBasicInfoTileProps> = ({
           disabled
           placeholder="Paineilma"
         />
+        {/*
+          Add two empty column entries to align Lisätiedot to the right
+          TODO: plz fix
+        */}
+        <div />
+        <div />
         <TextInput
           errorText={errors.additionalInformation}
           label="Lisätiedot"

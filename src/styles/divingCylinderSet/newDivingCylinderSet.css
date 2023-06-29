@@ -17,8 +17,9 @@
 }
 .newCylinderSetForm .divingCylinderGridRow {
   display: grid;
-  grid-template-columns: 15% 20% 20% 20% 20% 5%;
+  grid-template-columns: 15% auto auto auto auto 5%;
   margin: 0 0 1rem 0;
+  gap: 0.5rem;
 }
 .newCylinderSetForm .labelAndInput {
   flex-grow: 0;
