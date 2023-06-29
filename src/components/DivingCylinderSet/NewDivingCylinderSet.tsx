@@ -137,7 +137,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
 
   return (
     <div className="mt-5">
-      <h2>Uusi pullosetti</h2>
+      <h1>Uusi pullosetti</h1>
       <Formik
         initialValues={{
           divingCylinderSetName: '',
