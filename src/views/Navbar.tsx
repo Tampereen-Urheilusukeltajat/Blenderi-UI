@@ -44,7 +44,7 @@ export const Navbar = (): JSX.Element | null => {
             <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
           ) : null}
           <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
-          <CustomLink to="/fill-events">Täyttötapahtumat</CustomLink>
+          <CustomLink to="/fill-events">Täyttöhistoria</CustomLink>
         </div>
         <div className="user">
           <CustomLink to="/user">

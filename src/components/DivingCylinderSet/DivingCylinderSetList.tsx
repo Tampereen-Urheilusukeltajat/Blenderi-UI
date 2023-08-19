@@ -131,7 +131,7 @@ export const DivingCylinderSetList = (): JSX.Element => {
 
   return (
     <div>
-      <h1>Omat pullot</h1>
+      <h1 className="pb-4">Omat pullot</h1>
       <div>
         <CommonTable
           columns={DIVING_CYLINDER_SET_COLUMNS}

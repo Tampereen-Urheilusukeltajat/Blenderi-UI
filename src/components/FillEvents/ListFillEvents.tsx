@@ -25,7 +25,18 @@ export const ListFillEvents = (): JSX.Element => {
 
   return (
     <div>
-      <h1 className="pb-4">Täyttötapahtumat</h1>
+      <div className="d-flex flex-row justify-content-between">
+        <h1 className="pb-4">Täyttöhistoria</h1>
+        <div className="d-flex flex-column align-items-center">
+          <h2>Täyttöjen hinta yhteensä</h2>
+          <h3>
+            {formatEurCentsToEur(
+              fillEvents.reduce((acc, fillEvent) => acc + fillEvent.price, 0)
+            )}{' '}
+            €
+          </h3>
+        </div>
+      </div>
       <table className="table">
         <thead className="tableHead">
           <tr>
