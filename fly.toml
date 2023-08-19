@@ -44,3 +44,4 @@ processes = []
 [[statics]]
   guest_path = "/usr/share/nginx/html/"
   url_prefix = "/"
+  
