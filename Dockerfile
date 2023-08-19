@@ -1,14 +1,17 @@
-FROM node:alpine
+FROM node:18-alpine as build
 
-WORKDIR /usr/src/app
+ENV NODE_ENV production
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+WORKDIR /react-app
+COPY package*.json .
 
-RUN npm install
-EXPOSE 3000
+RUN npm ci
 
 COPY . .
-CMD [ "npm", "start" ]
+
+RUN npm run build
+
+# Serve app with nginx
+FROM nginx:1.25.1
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /react-app/build /usr/share/nginx/html
