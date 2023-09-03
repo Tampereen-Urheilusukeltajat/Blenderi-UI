@@ -1,5 +1,7 @@
+@import '../../variables.scss';
+
 .footer {
-  background-color: #1B2631;
+  background-color: $blue-charcoal;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,8 +19,8 @@
   flex-wrap: nowrap;
 }
 .footer .row .logo {
-  color: #F2F2F2;
-  fill: #F2F2F2;
+  color: $white-smoke;
+  fill: $white-smoke;
   padding: 0 0 1rem 0;
 }
 .footer .row .logo svg {
@@ -27,12 +29,12 @@
 .footer .row .item {
   align-self: center;
   font-size: 16px;
-  color: #F2F2F2;
+  color: $white-smoke;
   width: 220px;
   text-align: center;
   text-decoration: none;
   padding: 0;
 }
-.footer .row .item[aria-disabled=true] {
+.footer .row .item[aria-disabled='true'] {
   cursor: not-allowed;
 }
