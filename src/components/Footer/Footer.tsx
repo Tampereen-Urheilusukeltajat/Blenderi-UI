@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
         <a href="/gdpr" className={styles.item}>
           Tietosuojaseloste
         </a>
-        <a href={happihakkiInstructions} download className="item">
+        <a href={happihakkiInstructions} download className={styles.item}>
           Happihäkin ohjeet
         </a>
       </div>
