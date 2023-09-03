@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.scss';
 import { ReactComponent as Tayttopaikka } from '../../svg/tayttopaikka.svg';
+import happihakkiInstructions from '../../Files/happihakki-instructions.pdf';
 
 export const Footer: React.FC = () => {
   return (
@@ -22,8 +23,8 @@ export const Footer: React.FC = () => {
         <a href="/gdpr" className={styles.item}>
           Tietosuojaseloste
         </a>
-        <a href="" aria-disabled="true" className={styles.item}>
-          Ohjeet
+        <a href={happihakkiInstructions} download className="item">
+          Happihäkin ohjeet
         </a>
       </div>
     </div>
