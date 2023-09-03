@@ -6,7 +6,9 @@ import styles from './FrontPage.module.scss';
 
 export const FrontPage: React.FC = () => (
   <div className={styles.content}>
-    <Outlet />
+    <div className={styles.contentPart}>
+      <Outlet />
+    </div>
     <aside className={styles.logoPart}>
       <div className={styles.logo}>
         <D12 />

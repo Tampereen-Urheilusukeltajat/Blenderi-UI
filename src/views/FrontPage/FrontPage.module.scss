@@ -12,10 +12,10 @@
   min-height: calc(100vh - 64px - 120px);
 
   form {
+    align-items: center;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 220px;
   }
 }
 
@@ -39,5 +39,18 @@
     gap: 1rem;
     padding: 4rem;
     width: 100%;
+  }
+}
+
+.contentPart {
+  width: 50%;
+}
+
+@media (max-width: 780px) {
+  .contentPart {
+    width: 100%;
+  }
+  .logoPart {
+    display: none;
   }
 }
