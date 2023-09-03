@@ -26,7 +26,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       <LoginForm onLoginSuccess={onLoginSuccess} />
       <div>
         <span>
-          Voit rekistöröityä käyttäjäksi <Link to={'/register'}>täältä</Link>.
+          <Link to={'/register'}>Rekistöröidy käyttäjäksi</Link>
           <br />
           <Link to={'/request-password-reset'}>Unohditko salasanasi?</Link>
         </span>
