@@ -8,17 +8,3 @@
   justify-content: space-around;
   padding: 2rem;
 }
-
-.styledLink {
-  align-items: center;
-  display: flex;
-  position: absolute;
-  padding: 1rem 0 0 1rem;
-
-  svg {
-    border-radius: 1rem;
-    color: $dark-blue;
-    min-height: 2rem;
-    min-width: 2rem;
-  }
-}
