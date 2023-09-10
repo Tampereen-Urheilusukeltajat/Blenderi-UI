@@ -1,29 +1,29 @@
 import React from 'react';
-import '../../styles/footer/footer.css';
+import styles from './Footer.module.scss';
 import { ReactComponent as Tayttopaikka } from '../../svg/tayttopaikka.svg';
 import happihakkiInstructions from '../../Files/happihakki-instructions.pdf';
 
 export const Footer: React.FC = () => {
   return (
-    <div className="footer">
-      <div className="row">
-        <div className="logo">
+    <div className={styles.footer}>
+      <div className={styles.row}>
+        <div className={styles.logo}>
           <Tayttopaikka />
         </div>
       </div>
-      <div className="row">
-        <a href="https://taursu.fi" className="item">
+      <div className={styles.row}>
+        <a href="https://taursu.fi" className={styles.item}>
           Tampereen Urheilusukeltajat ry
         </a>
-        <a href="mailto:palaute@tayttopaikka.fi" className="item">
+        <a href="mailto:palaute@tayttopaikka.fi" className={styles.item}>
           Ota yhteyttä
         </a>
       </div>
-      <div className="row">
-        <a href="/gdpr" className="item">
+      <div className={styles.row}>
+        <a href="/gdpr" className={styles.item}>
           Tietosuojaseloste
         </a>
-        <a href={happihakkiInstructions} download className="item">
+        <a href={happihakkiInstructions} download className={styles.item}>
           Happihäkin ohjeet
         </a>
       </div>
