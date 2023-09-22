@@ -1,13 +1,9 @@
 import React from 'react';
-import { LoginForm } from '../../components/Login/LoginForm';
 import { Link } from 'react-router-dom';
 import styles from './Login.module.scss';
+import { LoginForm } from '../../components/Login/LoginForm';
 
-export type LoginProps = {
-  onLoginSuccess: () => void;
-};
-
-export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+export const Login: React.FC = () => {
   return (
     <div className={styles.login}>
       <header className={styles.header}>
@@ -23,7 +19,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           .
         </p>
       </header>
-      <LoginForm onLoginSuccess={onLoginSuccess} />
+      <LoginForm />
       <div>
         <span>
           <Link to={'/register'}>Rekistöröidy käyttäjäksi</Link>

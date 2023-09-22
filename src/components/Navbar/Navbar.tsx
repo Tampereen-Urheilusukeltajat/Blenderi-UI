@@ -1,17 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '../common/Buttons';
 import { CustomLink } from '../NavbarLink';
 import { getUserRoles } from '../../lib/utils';
-
-const NAVBAR_BLACKLIST = [
-  '/',
-  '/register',
-  '/reset-password',
-  '/request-password-reset',
-];
 
 export const Navbar = (): JSX.Element | null => {
   const navigate = useNavigate();
@@ -26,11 +19,6 @@ export const Navbar = (): JSX.Element | null => {
 
     navigate('/');
   }, [navigate, queryClient]);
-
-  const path = useLocation().pathname;
-  if (NAVBAR_BLACKLIST.includes(path)) {
-    return null;
-  }
 
   const { isAdmin, isBlender } = getUserRoles();
 
