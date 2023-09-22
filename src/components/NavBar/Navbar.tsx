@@ -2,10 +2,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { TertiaryButton } from '../components/common/Buttons';
-import { CustomLink } from '../components/NavbarLink';
-import { getUserRoles } from '../lib/utils';
-import '../styles/navbar/navbar.css';
+import { TertiaryButton } from '../common/Buttons';
+import { CustomLink } from '../NavbarLink';
+import { getUserRoles } from '../../lib/utils';
 
 const NAVBAR_BLACKLIST = [
   '/',

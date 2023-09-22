@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './views/Login/Login';
 import { Register } from './views/Register/Register';
-import { Navbar } from './views/Navbar';
+import { Navbar } from './components/NavBar/Navbar';
 import {
   QueryClient,
   QueryClientProvider,
