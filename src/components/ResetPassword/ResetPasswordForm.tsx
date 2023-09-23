@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { ButtonType, PrimaryButton } from '../common/Buttons';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { RESET_PASSWORD_VALIDATION_SCHEMA } from './validation';
 import { useResetPasswordMutation } from '../../lib/queries/resetPasswordMutation';
 import { toast } from 'react-toastify';
@@ -13,7 +13,20 @@ type SetPasswordFields = {
   repeatPassword: string;
 };
 
-export const ResetPasswordForm: React.FC = () => {
+export const linkIsActive = (timestamp: string): boolean => {
+  const tokenCreationTime = new Date(timestamp);
+  const tokenExpirationTime = new Date(
+    tokenCreationTime.getTime() + 10 * 60000
+  );
+
+  return new Date() < tokenExpirationTime;
+};
+
+export const ResetPasswordForm: React.FC<{
+  token: string;
+  userId: string;
+  tokenCreationTimestamp: string;
+}> = ({ token, userId, tokenCreationTimestamp }) => {
   const navigate = useNavigate();
 
   const handleSuccessfulResetPassword = useCallback(() => {
@@ -22,29 +35,20 @@ export const ResetPasswordForm: React.FC = () => {
 
   const { mutate } = useResetPasswordMutation(handleSuccessfulResetPassword);
 
-  const queries = useLocation().search;
-  const params = new URLSearchParams(queries);
-  const token = params.get('token');
-  const userId = params.get('id');
-
   const handleSubmit = useCallback(
     (formFields: SetPasswordFields) => {
-      if (
-        token === undefined ||
-        token === null ||
-        userId === undefined ||
-        userId === null
-      ) {
-        toast.error('Yritit palauttaa salasanaa virheellisellä linkillä');
+      if (!linkIsActive(tokenCreationTimestamp)) {
+        toast.error('Yritit palauttaa salasanaa vanhentuneella linkillä');
         return;
       }
+
       mutate({
         token,
         userId,
         password: formFields.password,
       });
     },
-    [token, userId, mutate]
+    [token, userId, mutate, tokenCreationTimestamp]
   );
 
   return (
