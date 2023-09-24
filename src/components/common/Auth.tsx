@@ -6,7 +6,7 @@ import { getUserRoles } from '../../lib/utils';
 
 import { PageLoadingSpinner } from '../Spinner';
 
-type PrivateRouteProps = {
+export type PrivateRouteProps = {
   children: React.ReactNode;
   blenderOnly?: boolean;
   adminOnly?: boolean;
@@ -52,9 +52,5 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
     }
   }, [authenticated, loading, navigate]);
 
-  return (
-    <div>
-      {loading || !authenticated ? <PageLoadingSpinner /> : <>{children}</>}
-    </div>
-  );
+  return loading || !authenticated ? <PageLoadingSpinner /> : <>{children}</>;
 };

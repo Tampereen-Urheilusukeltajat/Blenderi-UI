@@ -6,7 +6,12 @@ import { TertiaryButton } from '../common/Buttons';
 import { CustomLink } from '../NavbarLink';
 import { getUserRoles } from '../../lib/utils';
 
-export const Navbar = (): JSX.Element | null => {
+/**
+ * 1. Korjaa reititys
+ * 2. Refaktoroi navigaatio
+ */
+
+export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
