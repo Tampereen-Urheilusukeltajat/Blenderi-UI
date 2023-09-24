@@ -1,47 +1,53 @@
-body {
-  margin: 0;
-}
+@import '../../variables.scss';
 
 .nav {
-  background-color: #526578;
-  color: #ffffff;
+  background-color: $blue;
+  color: $white;
   display: flex;
   height: 64px;
   gap: 2rem;
   padding: 0 1rem;
   justify-content: center;
-}
 
-.nav ul {
-  display: flex;
-  padding: 0 1rem;
-  list-style: none;
-  justify-content: space-between;
-  width: 100%;
-}
+  ul {
+    display: flex;
+    padding: 0 1rem;
+    list-style: none;
+    justify-content: space-between;
+    width: 100%;
+  }
 
-.nav p {
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-}
+  p {
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+  }
 
-.nav a {
-  color: inherit;
-  width: 180px;
-  height: 100%;
-  justify-content: center;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
+  a {
+    color: inherit;
+    width: 180px;
+    height: 100%;
+    justify-content: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
 
-.nav li.active {
-  background-color: #f4f4f4;
-  color: #000000;
+  li.active {
+    background-color: $white-smoke;
+    color: $black;
+  }
+
+  li:hover:not(.active) {
+    background-color: $blue-hover;
+  }
+
+  span {
+    padding-left: 0.5rem;
+  }
 }
 
 .user {
@@ -60,28 +66,7 @@ body {
   white-space: nowrap;
 }
 
-.logout {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 180px;
-  height: 32px;
-  border: none;
-  margin-left: 1rem;
-  color: #000000;
-  background: #9aa8b5;
-  border-radius: 12px;
-}
-
-.nav li:hover:not(.active) {
-  background-color: #777;
-}
-
-.nav span {
-  padding-left: 0.5rem;
-}
-
-.nav .iconLink {
+.iconLink {
   display: flex;
   height: 64px;
   align-items: center;

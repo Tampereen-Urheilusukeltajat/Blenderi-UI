@@ -5,11 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '../common/Buttons';
 import { CustomLink } from '../NavbarLink';
 import { getUserRoles } from '../../lib/utils';
-
-/**
- * 1. Korjaa reititys
- * 2. Refaktoroi navigaatio
- */
+import styles from './Navbar.module.scss';
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -28,9 +24,9 @@ export const Navbar: React.FC = () => {
   const { isAdmin, isBlender } = getUserRoles();
 
   return (
-    <nav className="nav">
-      <ul className="container">
-        <div className="leftPart">
+    <nav className={styles.nav}>
+      <ul>
+        <div className={styles.leftPart}>
           <CustomLink to="/logbook">Paineilmatäyttö</CustomLink>
           {isBlender || isAdmin ? (
             <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
@@ -38,9 +34,9 @@ export const Navbar: React.FC = () => {
           <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
           <CustomLink to="/fill-events">Täyttöhistoria</CustomLink>
         </div>
-        <div className="user">
+        <div className={styles.user}>
           <CustomLink to="/user">
-            <div className="iconLink">
+            <div className={styles.iconLink}>
               <BsPersonCircle size={35} />
               <span>Omat tiedot</span>
             </div>
