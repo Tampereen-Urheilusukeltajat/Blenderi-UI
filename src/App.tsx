@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Register } from './views/Register/Register';
 import {
@@ -45,41 +44,39 @@ const Content: React.FC = () => {
   return (
     <main>
       {showSpinner ? <PageLoadingSpinner /> : null}
-      <Container className="pt-4 content">
-        <Routes>
-          {/* Public routes */}
-          <Route element={<FrontPage />}>
-            <Route path="/" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route
-              path={'request-password-reset'}
-              element={<PasswordResetRequest />}
-            />
-            <Route path={'reset-password'} element={<ResetPassword />} />
-          </Route>
-          <Route path="gdpr" element={<GDPR />} />
+      <Routes>
+        {/* Public routes */}
+        <Route element={<FrontPage />}>
+          <Route path="/" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route
+            path={'request-password-reset'}
+            element={<PasswordResetRequest />}
+          />
+          <Route path={'reset-password'} element={<ResetPassword />} />
+        </Route>
+        <Route path="gdpr" element={<GDPR />} />
 
-          {/* Private routes */}
-          <Route element={<PrivateContent />}>
-            <Route
-              path="diving-cylinder-set"
-              element={<DivingCylinderSetManagement />}
-            />
-            <Route path="logbook" element={<Logbook />} />
+        {/* Private routes */}
+        <Route element={<PrivateContent />}>
+          <Route
+            path="diving-cylinder-set"
+            element={<DivingCylinderSetManagement />}
+          />
+          <Route path="logbook" element={<Logbook />} />
 
-            <Route path="fill-events" element={<FillEvents />} />
-            <Route path="user" element={<UserSettings />} />
-          </Route>
+          <Route path="fill-events" element={<FillEvents />} />
+          <Route path="user" element={<UserSettings />} />
+        </Route>
 
-          {/* Blender only views */}
-          <Route element={<PrivateContent blenderOnly />}>
-            <Route path="blender-logbook" element={<BlenderLogbook />} />
-          </Route>
+        {/* Blender only views */}
+        <Route element={<PrivateContent blenderOnly />}>
+          <Route path="blender-logbook" element={<BlenderLogbook />} />
+        </Route>
 
-          {/* 404 */}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Container>
+        {/* 404 */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </main>
   );
 };

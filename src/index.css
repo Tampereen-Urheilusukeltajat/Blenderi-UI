@@ -49,6 +49,7 @@ h3 {
 main {
   background: #F4F4F4;
   display: flex;
+  flex-direction: column;
   flex: 1;
   padding-bottom: 2rem;
   min-height: calc(100vh - 64px - 120px);
