@@ -3,6 +3,7 @@ import {
   linkIsActive,
   ResetPasswordForm,
 } from '../../components/ResetPassword/ResetPasswordForm';
+import { Error } from '../../components/common/Error';
 import styles from './ResetPassword.module.scss';
 import { useLocation } from 'react-router-dom';
 
@@ -23,19 +24,19 @@ export const ResetPassword: React.FC = () => {
 
   if (linkIsInvalid) {
     return (
-      <header className={styles.resetPassword}>
-        <h1>Viallinen linkki</h1>
-        <p>Yritit asettaa salasanaa viallisella linkillä.</p>
-      </header>
+      <Error
+        title={'Viallinen linkki'}
+        body={'Yritit asettaa salasanaa viallisella linkillä.'}
+      />
     );
   }
 
   if (!linkIsActive(tokenCreationTimestamp)) {
     return (
-      <header className={styles.resetPassword}>
-        <h1>Vanhentunut linkki</h1>
-        <p>Yritit asettaa salasanaa vanhentuneella linkillä.</p>
-      </header>
+      <Error
+        title={'Vanhentunut linkki'}
+        body={'Yritit asettaa salasanaa vanhentuneella linkillä.'}
+      />
     );
   }
 
