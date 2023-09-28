@@ -13,8 +13,11 @@ type SetPasswordFields = {
   repeatPassword: string;
 };
 
+// Check that link is not expired yet
 export const linkIsActive = (timestamp: string): boolean => {
   const tokenCreationTime = new Date(timestamp);
+
+  // tokens expire in 10 minutes
   const tokenExpirationTime = new Date(
     tokenCreationTime.getTime() + 10 * 60000
   );
