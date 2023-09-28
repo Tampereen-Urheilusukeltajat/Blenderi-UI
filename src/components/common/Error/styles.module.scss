@@ -1,0 +1,13 @@
+.container {
+  align-items: center;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+  padding: 4rem;
+  text-align: left;
+  h1 {
+    font-size: 32px;
+  }
+}
