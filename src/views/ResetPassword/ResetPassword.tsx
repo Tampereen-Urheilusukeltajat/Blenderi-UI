@@ -23,23 +23,19 @@ export const ResetPassword: React.FC = () => {
 
   if (linkIsInvalid) {
     return (
-      <div className={styles.resetPassword}>
-        <header className={styles.header}>
-          <h1>Viallinen linkki</h1>
-          <p>Yritit asettaa salasanaa viallisella linkillä.</p>
-        </header>
-      </div>
+      <header className={styles.resetPassword}>
+        <h1>Viallinen linkki</h1>
+        <p>Yritit asettaa salasanaa viallisella linkillä.</p>
+      </header>
     );
   }
 
   if (!linkIsActive(tokenCreationTimestamp)) {
     return (
-      <div className={styles.resetPassword}>
-        <header className={styles.header}>
-          <h1>Vanhentunut linkki</h1>
-          <p>Yritit asettaa salasanaa vanhentuneella linkillä.</p>
-        </header>
-      </div>
+      <header className={styles.resetPassword}>
+        <h1>Vanhentunut linkki</h1>
+        <p>Yritit asettaa salasanaa vanhentuneella linkillä.</p>
+      </header>
     );
   }
 
