@@ -15,7 +15,7 @@ export const PasswordResetRequestForm: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSuccessfulPasswordResetRequest = useCallback(() => {
-    navigate('/login');
+    navigate('/');
   }, [navigate]);
 
   const { mutate } = usePasswordResetRequestMutation(
