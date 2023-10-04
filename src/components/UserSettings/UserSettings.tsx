@@ -41,6 +41,16 @@ export type FormUser = {
   newPasswordAgain: string;
 };
 
+export type PatchUser = {
+  email: string;
+  phoneNumber: string;
+  forename: string;
+  surname: string;
+  password: string;
+  currentPassword: string;
+  archive: boolean;
+};
+
 type UserVariableRowProps = {
   title: string;
   content: string;
@@ -380,7 +390,7 @@ export const UserSettings: React.FC = () => {
   const [editingNewPassword, setEditingNewPassword] = useState(false);
 
   const userMutation = useMutation({
-    mutationFn: async (payload: Partial<FormUser>) =>
+    mutationFn: async (payload: Partial<PatchUser>) =>
       patchUser(userId, payload),
     mutationKey: USER_QUERY_KEY(userId),
     onSuccess: (user) => {
@@ -422,7 +432,14 @@ export const UserSettings: React.FC = () => {
         }
       );
 
-      userMutation.mutate(changedValues);
+      userMutation.mutate({
+        email: changedValues.email,
+        phoneNumber: changedValues.phoneNumber,
+        forename: changedValues.forename,
+        surname: changedValues.surname,
+        password: changedValues.newPassword,
+        currentPassword: changedValues.password,
+      });
     },
     [userMutation, user]
   );
