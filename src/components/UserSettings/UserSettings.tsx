@@ -10,7 +10,7 @@ import {
   getUserIdFromAccessToken,
 } from '../../lib/utils';
 import '../../styles/user/user.css';
-import { ButtonType, PrimaryButton, SecondaryButton } from '../common/Buttons';
+import { PrimaryButton, SecondaryButton } from '../common/Buttons';
 import { TextInput } from '../common/Inputs';
 import { USER_SETTINGS_VALIDATION_SCHEMA } from './validation';
 
@@ -204,7 +204,6 @@ const NewPasswordRow: React.FC<NewPasswordRowProps> = ({
           className="primaryButton"
           onClick={handleSubmitButtonClick}
           text="Tallenna"
-          type={ButtonType.submit}
         />
         <PrimaryButton
           className="secondaryButton btn-secondary"
