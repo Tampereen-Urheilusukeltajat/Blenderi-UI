@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
   return (
     <BootNavbar expand="lg">
       <Container>
-        <span className="navbar-brand d-block d-sm-none text-white">
+        <span className="navbar-brand d-block d-lg-none d-xl-none text-white">
           Täyttöpaikka
         </span>
         <BootNavbar.Toggle aria-controls="basic-navbar-nav" />
