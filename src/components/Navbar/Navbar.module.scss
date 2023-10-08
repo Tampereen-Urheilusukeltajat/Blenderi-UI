@@ -66,9 +66,6 @@ nav {
 .user {
   display: flex;
   height: 64px;
-  align-items: center;
-  gap: 1rem;
-  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -80,6 +77,7 @@ nav {
 .logout {
   align-self: center;
   height: 42px;
+  margin: 0rem 1rem;
 }
 
 @media (max-width: 780px) {
@@ -107,5 +105,9 @@ nav {
     svg {
       display: none;
     }
+  }
+
+  .logout {
+    margin: 1rem 0;
   }
 }
