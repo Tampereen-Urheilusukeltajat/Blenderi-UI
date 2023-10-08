@@ -1,4 +1,5 @@
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import styles from './Navbar.module.scss';
 
 export const CustomLink = ({
   to,
@@ -12,7 +13,7 @@ export const CustomLink = ({
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
   return (
-    <li className={isActive !== null ? 'active' : ''}>
+    <li className={isActive !== null ? styles.active : ''}>
       <Link to={to} {...props}>
         {children}
       </Link>

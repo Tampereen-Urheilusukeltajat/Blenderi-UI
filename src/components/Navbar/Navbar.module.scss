@@ -1,19 +1,16 @@
 @import '../../variables.scss';
 
-.nav {
+nav {
   background-color: $blue;
-  color: $white;
-  display: flex;
-  height: 64px;
-  gap: 2rem;
-  padding: 0 1rem;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100%;
+  padding: 0 !important;
+
+  li {
+    align-items: center;
+    color: $white;
+    display: flex;
+  }
 
   ul {
-    display: flex;
     padding: 0 1rem;
     list-style: none;
     justify-content: space-between;
@@ -30,26 +27,39 @@
   }
 
   a {
-    color: inherit;
-    width: 180px;
-    height: 100%;
-    justify-content: center;
-    text-decoration: none;
-    display: flex;
     align-items: center;
-  }
-
-  li.active {
-    background-color: $white-smoke;
-    color: $black;
+    box-sizing: content-box;
+    color: inherit;
+    display: flex;
+    height: 42px;
+    justify-content: center;
+    padding: 0.625rem 1rem;
+    text-decoration: none;
   }
 
   li:hover:not(.active) {
     background-color: $blue-hover;
+    color: $white;
+
+    a {
+      color: inherit;
+    }
   }
 
   span {
     padding-left: 0.5rem;
+  }
+}
+
+.active {
+  background: $white-smoke;
+  color: $black;
+
+  :hover {
+    color: $black;
+    a {
+      color: inherit;
+    }
   }
 }
 
@@ -62,15 +72,40 @@
   white-space: nowrap;
 }
 
-.leftPart {
+.iconLink {
+  align-items: center;
   display: flex;
-  height: 64px;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
-.iconLink {
-  display: flex;
-  height: 64px;
-  align-items: center;
+.logout {
+  align-self: center;
+  height: 42px;
+}
+
+@media (max-width: 780px) {
+  nav {
+    a {
+      justify-content: left;
+      padding: 0 1rem;
+      width: 100%;
+    }
+  }
+
+  .user {
+    height: 42px;
+
+    a {
+      padding: 0 1rem;
+
+      span {
+        padding: 0;
+      }
+    }
+  }
+
+  .iconLink {
+    svg {
+      display: none;
+    }
+  }
 }
