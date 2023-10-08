@@ -52,5 +52,9 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
     }
   }, [authenticated, loading, navigate]);
 
-  return loading || !authenticated ? <PageLoadingSpinner /> : <>{children}</>;
+  return loading || !authenticated ? (
+    <PageLoadingSpinner />
+  ) : (
+    <div>{children}</div>
+  );
 };

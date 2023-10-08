@@ -12,7 +12,7 @@ export const FrontPage: React.FC = () => {
   useEffect(() => setShowBackButton(location.pathname !== '/'), [location]);
 
   return (
-    <Container className="pt-4 h-100">
+    <Container className="pt-4">
       <div className={styles.content}>
         <div className={styles.contentPart}>
           {showBackButton && (
