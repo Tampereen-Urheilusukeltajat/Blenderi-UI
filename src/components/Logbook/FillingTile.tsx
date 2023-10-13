@@ -44,7 +44,13 @@ export const LogbookFillingEventRowComponent: React.FC<
         >
           <optgroup label="Omat pullot">
             {divingCylinderSets.map((dcs: DivingCylinderSet) => (
-              <option key={dcs.id} value={dcs.id}>
+              <option
+                key={dcs.id}
+                value={dcs.id}
+                disabled={values.fillingEventRows.some(
+                  (row) => row.divingCylinderSet === dcs.id
+                )}
+              >
                 {dcs.name}
                 {divingCylinderSets.filter((e) => e.name === dcs.name).length >
                 1
