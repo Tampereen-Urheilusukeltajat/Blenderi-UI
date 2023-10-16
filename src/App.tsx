@@ -1,8 +1,5 @@
-import Container from 'react-bootstrap/Container';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Login } from './views/Login/Login';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Register } from './views/Register/Register';
-import { Navbar } from './views/Navbar';
 import {
   QueryClient,
   QueryClientProvider,
@@ -12,25 +9,29 @@ import { PageLoadingSpinner } from './components/Spinner';
 import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
 import { UserSettings } from './components/UserSettings/UserSettings';
 import { BlenderLogbook } from './views/BlenderLogbook';
-import { ProtectedRoute } from './components/common/Auth';
 import { Logbook } from './views/Logbook';
 import { FillEvents } from './views/FillEvents';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Footer } from './components/Footer/Footer';
 import { GDPR } from './views/GDPR';
 import { FrontPage } from './views/FrontPage/FrontPage';
 import { PasswordResetRequest } from './views/PasswordResetRequest/PasswordResetRequest';
 import { ResetPassword } from './views/ResetPassword/ResetPassword';
+import { Login } from './views/Login/Login';
+import { PrivateContent } from './components/common/PrivateContent';
+import { Footer } from './components/Footer/Footer';
 
 const QUERY_CLIENT = new QueryClient();
 
-type ContentProps = {
-  forceShowNavbar: () => void;
-};
+const BaseElement: React.FC = () => (
+  <div className="position-absolute w-100 h-100 d-flex flex-column justify-content-between">
+    <Outlet />
+    <Footer />
+  </div>
+);
 
-const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
+const Content: React.FC = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const isFetching = useIsFetching();
 
@@ -51,14 +52,11 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
   return (
     <main>
       {showSpinner ? <PageLoadingSpinner /> : null}
-      <Container className="pt-4 content">
-        <Routes>
+      <Routes>
+        <Route element={<BaseElement />}>
           {/* Public routes */}
           <Route element={<FrontPage />}>
-            <Route
-              path="/"
-              element={<Login onLoginSuccess={forceShowNavbar} />}
-            />
+            <Route path="/" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route
               path={'request-password-reset'}
@@ -69,74 +67,35 @@ const Content: React.FC<ContentProps> = ({ forceShowNavbar }) => {
           <Route path="gdpr" element={<GDPR />} />
 
           {/* Private routes */}
-          <Route
-            path="diving-cylinder-set"
-            element={
-              <ProtectedRoute>
-                <DivingCylinderSetManagement />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="logbook"
-            element={
-              <ProtectedRoute>
-                <Logbook />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="blender-logbook"
-            element={
-              <ProtectedRoute blenderOnly>
-                <BlenderLogbook />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="fill-events"
-            element={
-              <ProtectedRoute>
-                <FillEvents />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="user"
-            element={
-              <ProtectedRoute>
-                <UserSettings />
-              </ProtectedRoute>
-            }
-          />
+          <Route element={<PrivateContent />}>
+            <Route
+              path="diving-cylinder-set"
+              element={<DivingCylinderSetManagement />}
+            />
+            <Route path="logbook" element={<Logbook />} />
+
+            <Route path="fill-events" element={<FillEvents />} />
+            <Route path="user" element={<UserSettings />} />
+          </Route>
+
+          {/* Blender only views */}
+          <Route element={<PrivateContent blenderOnly />}>
+            <Route path="blender-logbook" element={<BlenderLogbook />} />
+          </Route>
+
           {/* 404 */}
           <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Container>
+        </Route>
+      </Routes>
     </main>
   );
 };
 
 const App = (): JSX.Element => {
-  // If access token exist, user has authenticated
-  const authenticated = useMemo(
-    () => localStorage.getItem('accessToken') !== null,
-    []
-  );
-  const [showNavbar, setShowNavbar] = useState(authenticated);
-
-  useEffect(() => {
-    setShowNavbar(authenticated);
-  }, [authenticated]);
-
-  const setNavbarVisible = useCallback(() => setShowNavbar(true), []);
-
   return (
     <QueryClientProvider client={QUERY_CLIENT}>
       <ToastContainer className="toast-position" position={'top-right'} />
-      {showNavbar && <Navbar />}
-      <Content forceShowNavbar={setNavbarVisible} />
-      <Footer />
+      <Content />
     </QueryClientProvider>
   );
 };

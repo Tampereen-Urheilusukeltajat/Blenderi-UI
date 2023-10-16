@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { ButtonType, PrimaryButton } from '../common/Buttons';
 import { useNavigate } from 'react-router-dom';
-import { LoginProps } from '../../views/Login/Login';
 import { TextInput } from '../common/Inputs';
 import { LOGIN_VALIDATION_SCHEMA } from './validation';
 import { useLoginMutation } from '../../lib/queries/loginMutation';
@@ -13,12 +12,11 @@ type LoginFormFields = {
   password: string;
 };
 
-export const LoginForm: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const handleSuccessfulLogin = useCallback(() => {
-    onLoginSuccess();
     navigate('/logbook');
-  }, [navigate, onLoginSuccess]);
+  }, [navigate]);
 
   const { mutate } = useLoginMutation(handleSuccessfulLogin);
 

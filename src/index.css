@@ -1,6 +1,5 @@
 body {
-  background: #1B2631;
-  margin: 0;
+  background: #F4F4F4;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,12 +43,4 @@ h3 {
 
 .toast-position {
   top: 5rem !important;
-}
-
-main {
-  background: #F4F4F4;
-  display: flex;
-  flex: 1;
-  padding-bottom: 2rem;
-  min-height: calc(100vh - 64px - 120px);
 }
