@@ -40,7 +40,7 @@ export const LogbookFillingEventRowComponent: React.FC<
       <div className="fillingEventGridRow">
         <DropdownMenu
           name={`fillingEventRows.${index}.divingCylinderSet`}
-          errorText={errors.fillingEventRows?.at(index).divingCylinderSet}
+          errorText={errors.fillingEventRows?.at(index)?.divingCylinderSet}
         >
           <optgroup label="Omat pullot">
             {divingCylinderSets.map((dcs: DivingCylinderSet) => (
