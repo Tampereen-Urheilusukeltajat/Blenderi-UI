@@ -49,16 +49,10 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
     (sc) => sc.id === storageCylinderId
   );
 
-  // User has managed to select cylinder that has invalid id from the dropdown menu
-  // => programming error
-  if (storageCylinder === undefined) {
-    throw new Error('Storage cylinder not found!');
-  }
-
   const gasPriceEurCents = gases.find(
-    (price) => price.gasId === storageCylinder.gasId
+    (price) => price.gasId === storageCylinder?.gasId
   )?.priceEurCents;
-  const storageCylinderVolume = storageCylinder.volume;
+  const storageCylinderVolume = storageCylinder?.volume;
 
   // Calculate price and consumption when row values change
   useEffect(() => {
@@ -66,7 +60,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
       `fillingEventRows.${index}.priceEurCents`,
       formatEurCentsToEur(
         calculateGasConsumption(
-          storageCylinderVolume,
+          storageCylinderVolume ?? 0,
           startPressure ?? 0,
           endPressure ?? 0
         ) * (gasPriceEurCents ?? 0)
@@ -85,7 +79,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
     setFieldValue(
       `fillingEventRows.${index}.consumption`,
       calculateGasConsumption(
-        storageCylinderVolume,
+        storageCylinderVolume ?? 0,
         startPressure ?? 0,
         endPressure ?? 0
       )
@@ -107,7 +101,13 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           errorText={errors.fillingEventRows?.at(index)?.storageCylinderId}
         >
           {storageCylinders.map((sc) => (
-            <option key={sc.id} value={sc.id}>
+            <option
+              disabled={values.fillingEventRows.some(
+                (row) => row.storageCylinderId === sc.id
+              )}
+              key={sc.id}
+              value={sc.id}
+            >
               {sc.name} (
               {mapGasToName(
                 gases.find((gas) => gas.gasId === sc.gasId)?.gasName
@@ -143,7 +143,6 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
             index === 0 && values.fillingEventRows.length === 1
               ? replace(index, {
                   ...EMPTY_FILLING_EVENT_ROW,
-                  storageCylinderId: storageCylinders[0].id,
                 })
               : remove(index)
           }
@@ -155,7 +154,6 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           onClick={() =>
             push({
               ...EMPTY_FILLING_EVENT_ROW,
-              storageCylinderId: storageCylinders[0].id,
             })
           }
           type={ButtonType.button}
