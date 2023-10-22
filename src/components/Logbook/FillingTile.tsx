@@ -54,7 +54,9 @@ export const LogbookFillingEventRowComponent: React.FC<
                 {dcs.name}
                 {divingCylinderSets.filter((e) => e.name === dcs.name).length >
                 1
-                  ? `(${dcs.cylinders[0].serialNumber})`
+                  ? ` (${dcs.cylinders[0].serialNumber}${
+                      dcs.cylinders.length > 1 ? ' jne...' : ''
+                    })`
                   : ''}
               </option>
             ))}
