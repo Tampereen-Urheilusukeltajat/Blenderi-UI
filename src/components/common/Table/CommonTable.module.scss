@@ -1,0 +1,33 @@
+@import '../../../variables.scss';
+
+.noBackground:not(:hover) {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.table {
+  border: 1px solid $aluminium;
+  white-space: nowrap;
+  width: 100%;
+
+  .tableHead {
+    background-color: $timberwolf;
+  }
+
+  .evenRow {
+    background-color: $ghost-white;
+  }
+
+  .oddRow {
+    background-color: $white;
+  }
+
+  th {
+    padding: 0.5rem 1rem;
+  }
+
+  td {
+    border: 1px solid $timberwolf;
+    padding: 0 1rem;
+  }
+}

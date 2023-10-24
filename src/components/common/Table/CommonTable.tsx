@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
-import '../../styles/commonTable/commonTable.css';
-import { IconButton, IconButtonProps } from './Buttons';
+import { IconButton, IconButtonProps } from '../Buttons';
+import styles from './CommonTable.module.scss';
 
 type Row = Array<number | string | null>;
 
@@ -30,7 +30,11 @@ const IconButtonCell: React.FC<IconButtonProps> = ({
 }): JSX.Element => {
   return (
     <td>
-      <IconButton className="no-background" icon={icon} onClick={onClick} />
+      <IconButton
+        className={styles.noBackground}
+        icon={icon}
+        onClick={onClick}
+      />
     </td>
   );
 };
@@ -60,8 +64,8 @@ export const CommonTable: React.FC<CommonTableProps> = ({
   );
 
   return (
-    <table className="table" data-testid="common-table">
-      <thead className="tableHead">
+    <table className={styles.table} data-testid="common-table">
+      <thead className={styles.tableHead}>
         <tr>
           {includeRowNumber ? (
             <th key="row-number" scope="col">
@@ -90,7 +94,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
           <React.Fragment key={`row-fragment-${index + 1}`}>
             <tr
               key={`row-${index + 1}`}
-              className={index % 2 === 0 ? 'evenRow' : 'oddRow'}
+              className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
             >
               {includeRowNumber ? (
                 <td key={`row-number-${index + 1}`} scope="row">
@@ -127,7 +131,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
             {row.childRows?.map((childRow, childRowIndex) => (
               <tr
                 key={`row-${index + 1}-child-row-${childRowIndex}`}
-                className={index % 2 === 0 ? 'evenRow' : 'oddRow'}
+                className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
               >
                 {includeRowNumber ? (
                   <td
