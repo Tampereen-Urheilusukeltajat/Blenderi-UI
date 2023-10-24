@@ -1,28 +1,46 @@
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
-import { FillEvent } from '../../interfaces/FillEvent';
 import { formatEurCentsToEur } from '../../lib/utils';
+import {
+  CommonTable,
+  TableColumn,
+  TableRow,
+} from '../common/Table/CommonTable';
+import { useMemo } from 'react';
 
-const FillEventRow = ({
-  data,
-  index,
-}: {
-  data: FillEvent;
-  index: number;
-}): JSX.Element => {
-  return (
-    <tr className={index % 2 === 0 ? 'evenRow' : 'oddRow'}>
-      <td>{data.createdAt}</td>
-      <td>{data.cylinderSetName}</td>
-      <td>{data.gasMixture}</td>
-      <td>{data.description}</td>
-      <td>{formatEurCentsToEur(data.price)}</td>
-    </tr>
-  );
-};
+const FILL_EVENT_COLUMNS: TableColumn[] = [
+  {
+    title: 'Päivämäärä',
+  },
+  {
+    title: 'Pullosetti',
+  },
+  {
+    title: 'Kaasuseos',
+  },
+  {
+    title: 'Lisätiedot',
+  },
+  {
+    title: 'Hinta (€)',
+  },
+];
 
 export const ListFillEvents = (): JSX.Element => {
-  const fillEvents: FillEvent[] = useFillEventQuery().data ?? [];
-
+  const { data: fillEvents } = useFillEventQuery();
+  const rows: TableRow[] = useMemo(
+    () =>
+      fillEvents?.map((fillEvent) => ({
+        id: fillEvent.id,
+        mainRow: [
+          fillEvent.createdAt,
+          fillEvent.cylinderSetName,
+          fillEvent.gasMixture,
+          fillEvent.description,
+          formatEurCentsToEur(fillEvent.price),
+        ],
+      })) ?? [],
+    [fillEvents]
+  );
   return (
     <div>
       <div className="d-flex flex-row justify-content-between">
@@ -31,28 +49,16 @@ export const ListFillEvents = (): JSX.Element => {
           <h2>Täyttöjen hinta yhteensä</h2>
           <h3>
             {formatEurCentsToEur(
-              fillEvents.reduce((acc, fillEvent) => acc + fillEvent.price, 0)
+              fillEvents?.reduce(
+                (acc, fillEvent) => acc + fillEvent.price,
+                0
+              ) ?? 0
             )}{' '}
             €
           </h3>
         </div>
       </div>
-      <table className="table">
-        <thead className="tableHead">
-          <tr>
-            <th>Päivämäärä</th>
-            <th>pullosetti</th>
-            <th>kaasuseos</th>
-            <th>lisätiedot</th>
-            <th>hinta (€)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fillEvents.map((fillEvent, index) => (
-            <FillEventRow key={fillEvent.id} data={fillEvent} index={index} />
-          ))}
-        </tbody>
-      </table>
+      <CommonTable columns={FILL_EVENT_COLUMNS} rows={rows} />
     </div>
   );
 };
