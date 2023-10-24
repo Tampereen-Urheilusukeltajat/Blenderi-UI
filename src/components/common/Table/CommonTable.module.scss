@@ -5,12 +5,21 @@
   border-color: rgba(0, 0, 0, 0) !important;
 }
 
-.table {
-  border: 1px solid $aluminium;
-  white-space: nowrap;
+.content {
+  box-sizing: border-box;
+  background: $white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  overflow: auto;
+  font-size: 0.75rem;
+  width: 100%;
+}
+
+table {
   width: 100%;
 
-  .tableHead {
+  thead {
     background-color: $timberwolf;
   }
 
@@ -20,6 +29,10 @@
 
   .oddRow {
     background-color: $white;
+  }
+
+  tr {
+    box-sizing: border-box;
   }
 
   th {

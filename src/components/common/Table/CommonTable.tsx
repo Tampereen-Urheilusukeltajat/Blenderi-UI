@@ -7,6 +7,7 @@ type Row = Array<number | string | null>;
 
 export type TableColumn = {
   title: string;
+  shortTitle: string;
 };
 
 export type TableRow = {
@@ -64,107 +65,110 @@ export const CommonTable: React.FC<CommonTableProps> = ({
   );
 
   return (
-    <table className={styles.table} data-testid="common-table">
-      <thead className={styles.tableHead}>
-        <tr>
-          {includeRowNumber ? (
-            <th key="row-number" scope="col">
-              #
-            </th>
-          ) : null}
-          {columns.map((column) => (
-            <th key={column.title} scope="col">
-              {column.title}
-            </th>
-          ))}
-          {includeEditButton ? (
-            <th key="modify" scope="col">
-              Muokkaa
-            </th>
-          ) : null}
-          {includeDeleteButton ? (
-            <th key="delete" scope="col">
-              Poista
-            </th>
-          ) : null}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row, index) => (
-          <React.Fragment key={`row-fragment-${index + 1}`}>
-            <tr
-              key={`row-${index + 1}`}
-              className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
-            >
-              {includeRowNumber ? (
-                <td key={`row-number-${index + 1}`} scope="row">
-                  {index + 1}
-                </td>
-              ) : null}
-
-              {row.mainRow.map((value, valueIndex) => (
-                <td
-                  key={`row-${index + 1}-${columns[valueIndex].title}-${String(
-                    value
-                  )}`}
-                >
-                  {value}
-                </td>
-              ))}
-
-              {includeEditButton ? (
-                <IconButtonCell
-                  key={`row-${index + 1}-modify`}
-                  icon={<BsPencil />}
-                  onClick={handleEditButtonClick}
-                />
-              ) : null}
-              {includeDeleteButton ? (
-                <IconButtonCell
-                  key={`row-${index + 1}-delete`}
-                  icon={<BsTrash />}
-                  onClick={() => handleDeleteButtonClick(row.id)}
-                />
-              ) : null}
-            </tr>
-            {/* Does the row have "child" rows  */}
-            {row.childRows?.map((childRow, childRowIndex) => (
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    <div className={`${styles.content} .table-responsive`}>
+      <table data-testid="common-table">
+        <thead>
+          <tr>
+            {includeRowNumber ? (
+              <th key="row-number" scope="col">
+                #
+              </th>
+            ) : null}
+            {columns.map((column) => (
+              <th key={column.title} scope="col">
+                {column.title}
+              </th>
+            ))}
+            {includeEditButton ? (
+              <th key="modify" scope="col">
+                Muokkaa
+              </th>
+            ) : null}
+            {includeDeleteButton ? (
+              <th key="delete" scope="col">
+                Poista
+              </th>
+            ) : null}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <React.Fragment key={`row-fragment-${index + 1}`}>
               <tr
-                key={`row-${index + 1}-child-row-${childRowIndex}`}
+                key={`row-${index + 1}`}
                 className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
               >
                 {includeRowNumber ? (
-                  <td
-                    key={`row-number-${index + 1}-child-row-${childRowIndex}`}
-                    scope="row"
-                  >
-                    {index + 1}.{childRowIndex + 1}
+                  <td key={`row-number-${index + 1}`} scope="row">
+                    {index + 1}
                   </td>
                 ) : null}
-                {childRow.map((value, valueIndex) => (
+
+                {row.mainRow.map((value, valueIndex) => (
                   <td
-                    key={`row-${index + 1}-child-row-${childRowIndex}-${
+                    key={`row-${index + 1}-${
                       columns[valueIndex].title
                     }-${String(value)}`}
                   >
                     {value}
                   </td>
                 ))}
+
                 {includeEditButton ? (
-                  <td
-                    key={`row-${index + 1}-child-row-${childRowIndex}-edit`}
-                  ></td>
+                  <IconButtonCell
+                    key={`row-${index + 1}-modify`}
+                    icon={<BsPencil />}
+                    onClick={handleEditButtonClick}
+                  />
                 ) : null}
                 {includeDeleteButton ? (
-                  <td
-                    key={`row-${index + 1}-child-row-${childRowIndex}-delete`}
-                  ></td>
+                  <IconButtonCell
+                    key={`row-${index + 1}-delete`}
+                    icon={<BsTrash />}
+                    onClick={() => handleDeleteButtonClick(row.id)}
+                  />
                 ) : null}
               </tr>
-            ))}
-          </React.Fragment>
-        ))}
-      </tbody>
-    </table>
+              {/* Does the row have "child" rows  */}
+              {row.childRows?.map((childRow, childRowIndex) => (
+                <tr
+                  key={`row-${index + 1}-child-row-${childRowIndex}`}
+                  className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
+                >
+                  {includeRowNumber ? (
+                    <td
+                      key={`row-number-${index + 1}-child-row-${childRowIndex}`}
+                      scope="row"
+                    >
+                      {index + 1}.{childRowIndex + 1}
+                    </td>
+                  ) : null}
+                  {childRow.map((value, valueIndex) => (
+                    <td
+                      key={`row-${index + 1}-child-row-${childRowIndex}-${
+                        columns[valueIndex].title
+                      }-${String(value)}`}
+                    >
+                      {value}
+                    </td>
+                  ))}
+                  {includeEditButton ? (
+                    <td
+                      key={`row-${index + 1}-child-row-${childRowIndex}-edit`}
+                    ></td>
+                  ) : null}
+                  {includeDeleteButton ? (
+                    <td
+                      key={`row-${index + 1}-child-row-${childRowIndex}-delete`}
+                    ></td>
+                  ) : null}
+                </tr>
+              ))}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
