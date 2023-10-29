@@ -1,3 +1,4 @@
+import format from 'date-fns/format';
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import {
@@ -10,20 +11,28 @@ import { useMemo } from 'react';
 const FILL_EVENT_COLUMNS: TableColumn[] = [
   {
     title: 'Päivämäärä',
+    shortTitle: 'Pvm',
   },
   {
     title: 'Pullosetti',
+    shortTitle: 'PS',
   },
   {
     title: 'Kaasuseos',
+    shortTitle: 'KS',
   },
   {
     title: 'Lisätiedot',
+    shortTitle: 'LT',
   },
   {
     title: 'Hinta (€)',
+    shortTitle: '€',
   },
 ];
+
+const dateFormatter = (date: string): string =>
+  format(new Date(date), 'd.MM.yy');
 
 export const ListFillEvents = (): JSX.Element => {
   const { data: fillEvents } = useFillEventQuery();
@@ -32,7 +41,7 @@ export const ListFillEvents = (): JSX.Element => {
       fillEvents?.map((fillEvent) => ({
         id: fillEvent.id,
         mainRow: [
-          fillEvent.createdAt,
+          dateFormatter(fillEvent.createdAt),
           fillEvent.cylinderSetName,
           fillEvent.gasMixture,
           fillEvent.description,
@@ -43,20 +52,16 @@ export const ListFillEvents = (): JSX.Element => {
   );
   return (
     <div>
-      <div className="d-flex flex-row justify-content-between">
-        <h1 className="pb-4">Täyttöhistoria</h1>
-        <div className="d-flex flex-column align-items-center">
-          <h2>Täyttöjen hinta yhteensä</h2>
-          <h3>
-            {formatEurCentsToEur(
-              fillEvents?.reduce(
-                (acc, fillEvent) => acc + fillEvent.price,
-                0
-              ) ?? 0
-            )}{' '}
-            €
-          </h3>
-        </div>
+      <div className="d-flex flex-row justify-content-between pb-4">
+        <h1>Täyttöhistoria</h1>
+        <h2>
+          Täyttöjen hinta yhteensä:{' '}
+          {formatEurCentsToEur(
+            fillEvents?.reduce((acc, fillEvent) => acc + fillEvent.price, 0) ??
+              0
+          )}{' '}
+          €
+        </h2>
       </div>
       <CommonTable columns={FILL_EVENT_COLUMNS} rows={rows} />
     </div>

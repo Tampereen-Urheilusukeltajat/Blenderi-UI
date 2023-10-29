@@ -18,21 +18,27 @@ import {
 const DIVING_CYLINDER_SET_COLUMNS: TableColumn[] = [
   {
     title: 'Nimi',
+    shortTitle: 'Nimi',
   },
   {
     title: 'Koko (l)',
+    shortTitle: 'l',
   },
   {
     title: 'Materiaali',
+    shortTitle: 'Mat',
   },
   {
     title: 'Suurin täyttöpaine (bar)',
+    shortTitle: 'bar',
   },
   {
     title: 'Sarjanumero',
+    shortTitle: 'SN',
   },
   {
     title: 'Katsastusvuosi',
+    shortTitle: 'KV',
   },
 ];
 
