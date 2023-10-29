@@ -14,6 +14,7 @@ export type TableRow = {
   id: string;
   mainRow: Row;
   childRows?: Row[];
+  formatter?: () => string;
 };
 
 type CommonTableProps = {
@@ -77,7 +78,8 @@ export const CommonTable: React.FC<CommonTableProps> = ({
             ) : null}
             {columns.map((column) => (
               <th key={column.title} scope="col">
-                {column.title}
+                <span className="long">{column.title}</span>
+                <span className="short">{column.shortTitle}</span>
               </th>
             ))}
             {includeEditButton ? (
