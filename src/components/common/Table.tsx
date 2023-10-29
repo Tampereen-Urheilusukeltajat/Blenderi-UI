@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
 import '../../styles/commonTable/commonTable.css';
-import { IconButton, IconButtonProps } from './Buttons';
+import { IconButton, IconButtonProps } from './Button/Buttons';
 
 type Row = Array<number | string | null>;
 

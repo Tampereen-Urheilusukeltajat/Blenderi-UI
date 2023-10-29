@@ -1,0 +1,20 @@
+@import '../../variables.scss';
+
+.content {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px $grey;
+  padding: 1rem;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.title {
+  font-weight: 900;
+}
+
+@media (max-width: 780px) {
+  .content {
+    width: 100%;
+  }
+}

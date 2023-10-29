@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
-import { ButtonType, PrimaryButton } from '../common/Buttons';
+import { ButtonType, PrimaryButton } from '../common/Button/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { RESET_PASSWORD_VALIDATION_SCHEMA } from './validation';
 import { useResetPasswordMutation } from '../../lib/queries/resetPasswordMutation';

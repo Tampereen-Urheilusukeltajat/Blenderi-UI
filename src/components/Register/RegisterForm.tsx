@@ -2,7 +2,7 @@ import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { useCallback } from 'react';
 
-import { ButtonType, PrimaryButton } from '../common/Buttons';
+import { ButtonType, PrimaryButton } from '../common/Button/Buttons';
 import { useRegisterMutation } from '../../lib/queries/registerMutation';
 import { TextInput } from '../common/Inputs';
 import { REGISTER_VALIDATION_SCHEMA } from './validation';

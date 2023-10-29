@@ -13,7 +13,11 @@ import {
   DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
 import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
-import { ButtonType, IconButton, PrimaryButton } from '../common/Buttons';
+import {
+  ButtonType,
+  IconButton,
+  PrimaryButton,
+} from '../common/Button/Buttons';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
