@@ -1,6 +1,6 @@
 import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback, useMemo } from 'react';
-import { BsPlusLg, BsXLg } from 'react-icons/bs';
+import { BsTrash } from 'react-icons/bs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../interfaces/DivingCylinderSet';
 import {
   ButtonType,
-  IconButton,
+  ElementButton,
   PrimaryButton,
 } from '../common/Button/Buttons';
 import { getUserIdFromAccessToken } from '../../lib/utils';
@@ -61,9 +61,9 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
     <div>
       <div className={styles.cylinder}>
         <div className={styles.deleteButtonWrapper}>
-          <IconButton
+          <ElementButton
             tooltip="Poista pullo"
-            icon={<BsXLg />}
+            element={<BsTrash />}
             onClick={() =>
               lastItem && index === 0
                 ? replace(index, { ...EmptyDivingCylinder() })
@@ -109,7 +109,7 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
         />
       </div>
       {lastItem ? (
-        <IconButton
+        <ElementButton
           onClick={() =>
             push({
               ...EmptyDivingCylinder(
@@ -121,8 +121,7 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
             })
           }
           type={ButtonType.button}
-          icon={<BsPlusLg />}
-          tooltip="Lisää pullo"
+          element={<>Lisää pullo</>}
         />
       ) : null}
     </div>
