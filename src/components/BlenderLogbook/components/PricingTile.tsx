@@ -1,5 +1,5 @@
 import { formatEurCentsToEur, mapGasToName } from '../../../lib/utils';
-import { CommonTileProps } from '../NewBlenderFillingEvent';
+import { CommonTileProps } from '../BlenderLogbook';
 import React from 'react';
 import { GasWithPricing } from '../../../lib/queries/gasQuery';
 

@@ -1,6 +1,6 @@
 import { Form, Formik, FormikValues } from 'formik';
 import { AirLogbookSavingTile } from './components/SavingTile';
-import { LogbookFillingEventRow } from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookFillingEventRow } from '../BlenderLogbook/BlenderLogbook';
 import { LogbookFillingTile } from './components/FillingTile';
 import { LogbookBasicInfoTile } from './LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';

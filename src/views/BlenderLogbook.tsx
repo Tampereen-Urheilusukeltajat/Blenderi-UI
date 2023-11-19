@@ -1,4 +1,4 @@
-import { NewBlenderFillingEvent } from '../components/BlenderLogbook/NewBlenderFillingEvent';
+import { NewBlenderFillingEvent } from '../components/BlenderLogbook/BlenderLogbook';
 
 export const BlenderLogbook = (): JSX.Element => {
   return <NewBlenderFillingEvent />;

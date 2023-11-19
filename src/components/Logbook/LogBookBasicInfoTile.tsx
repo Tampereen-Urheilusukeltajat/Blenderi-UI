@@ -1,4 +1,4 @@
-import { LogbookCommonTileProps } from '../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookCommonTileProps } from '../BlenderLogbook/BlenderLogbook';
 import { TextInput } from '../common/Inputs';
 import React from 'react';
 

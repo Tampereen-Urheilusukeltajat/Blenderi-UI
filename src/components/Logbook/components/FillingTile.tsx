@@ -1,6 +1,6 @@
 import { FieldArray } from 'formik';
 import { BsTrash } from 'react-icons/bs';
-import { LogbookCommonTileProps } from '../../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookCommonTileProps } from '../../BlenderLogbook/BlenderLogbook';
 import { EmptyLogbookFillingEventRow } from '../Logbook';
 import { useDivingCylinderQuery } from '../../../lib/queries/divingCylinderQuery';
 import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';

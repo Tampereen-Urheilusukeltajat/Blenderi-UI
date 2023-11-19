@@ -1,6 +1,6 @@
 import { Field } from 'formik';
 import { ButtonType, PrimaryButton } from '../../common/Button/Buttons';
-import { LogbookCommonTileProps } from '../../BlenderLogbook/NewBlenderFillingEvent';
+import { LogbookCommonTileProps } from '../../BlenderLogbook/BlenderLogbook';
 import React from 'react';
 import styles from './SavingTile.module.scss';
 

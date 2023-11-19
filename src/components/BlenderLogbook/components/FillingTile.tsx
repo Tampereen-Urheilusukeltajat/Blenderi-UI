@@ -14,10 +14,7 @@ import {
   PrimaryButton,
 } from '../../common/Button/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
-import {
-  CommonTileProps,
-  EMPTY_FILLING_EVENT_ROW,
-} from '../NewBlenderFillingEvent';
+import { CommonTileProps, EMPTY_FILLING_EVENT_ROW } from '../BlenderLogbook';
 
 type FillingEventRowProps = CommonTileProps & {
   index: number;

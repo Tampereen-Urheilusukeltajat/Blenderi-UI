@@ -1,6 +1,6 @@
 import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
-import { CommonTileProps } from '../NewBlenderFillingEvent';
+import { CommonTileProps } from '../BlenderLogbook';
 import React from 'react';
 import {
   AvailableGasses,
