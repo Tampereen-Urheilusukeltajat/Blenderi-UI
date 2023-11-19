@@ -195,7 +195,7 @@ export const NewDivingCylinderSet: React.FC = () => {
         handleReset={resetForm}
       >
         {({ values, errors, isSubmitting }) => (
-          <Form>
+          <Form className={styles.form}>
             <h2>Yleistiedot</h2>
             <TextInput
               name="divingCylinderSetName"
