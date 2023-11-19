@@ -30,13 +30,12 @@ const EmptyDivingCylinder = (
   material = 'steel',
   pressure = 0,
   inspection = '',
-  serialNumber = '',
   volume = 0
 ): FormDivingCylinder => ({
   material,
   pressure,
   inspection,
-  serialNumber,
+  serialNumber: '',
   uniqueId: crypto.randomUUID(),
   volume,
 });
@@ -47,6 +46,7 @@ type NewDivingCylinderRowProps = {
   lastItem: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: any;
+  firstCylinder?: Omit<DivingCylinder, 'id'>;
 };
 
 const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
@@ -54,6 +54,7 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
   index,
   errors,
   lastItem,
+  firstCylinder,
 }) => {
   const { replace, remove, push } = fieldProps;
   return (
@@ -109,7 +110,16 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
       </div>
       {lastItem ? (
         <IconButton
-          onClick={() => push({ ...EmptyDivingCylinder() })}
+          onClick={() =>
+            push({
+              ...EmptyDivingCylinder(
+                firstCylinder?.material,
+                firstCylinder?.pressure,
+                firstCylinder?.inspection,
+                firstCylinder?.volume
+              ),
+            })
+          }
           type={ButtonType.button}
           icon={<BsPlusLg />}
           tooltip="Lisää pullo"
@@ -204,6 +214,7 @@ export const NewDivingCylinderSet: React.FC = () => {
                     fieldProps={arrayHelpers}
                     index={index}
                     lastItem={values.divingCylinders.length === index + 1}
+                    firstCylinder={values.divingCylinders[0]}
                   />
                 ))
               }
