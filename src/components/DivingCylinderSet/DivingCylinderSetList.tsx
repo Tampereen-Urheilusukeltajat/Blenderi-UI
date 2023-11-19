@@ -9,26 +9,36 @@ import { archiveDivingCylinderSet } from '../../lib/apiRequests/divingCylinderSe
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import { getUserIdFromAccessToken } from '../../lib/utils';
-import { CommonTable, TableColumn, TableRow } from '../common/Table';
+import {
+  CommonTable,
+  TableColumn,
+  TableRow,
+} from '../common/Table/CommonTable';
 
 const DIVING_CYLINDER_SET_COLUMNS: TableColumn[] = [
   {
     title: 'Nimi',
+    shortTitle: 'Nimi',
   },
   {
     title: 'Koko (l)',
+    shortTitle: 'l',
   },
   {
     title: 'Materiaali',
+    shortTitle: 'Mat',
   },
   {
     title: 'Suurin täyttöpaine (bar)',
+    shortTitle: 'bar',
   },
   {
     title: 'Sarjanumero',
+    shortTitle: 'SN',
   },
   {
     title: 'Katsastusvuosi',
+    shortTitle: 'KV',
   },
 ];
 
