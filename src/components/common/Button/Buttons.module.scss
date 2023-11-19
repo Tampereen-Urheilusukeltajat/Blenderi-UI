@@ -38,7 +38,7 @@ $white: #ffffff;
   background-color: $primaryBlue;
   color: $white;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: $primaryBlueHover !important;
   }
 }
@@ -47,7 +47,7 @@ $white: #ffffff;
   background-color: $transparent;
   outline: 2px solid $primaryBlue;
   color: $primaryBlue;
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: $secondaryBlueHover !important;
   }
 }
@@ -55,7 +55,7 @@ $white: #ffffff;
 .tertiaryButton {
   background-color: $tertiaryBlue;
   color: $white;
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: $tertiaryBlueHover !important;
   }
 }
@@ -64,7 +64,7 @@ $white: #ffffff;
   padding: 0.5rem 1rem;
   min-width: 100% !important;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: $grey;
   }
 }

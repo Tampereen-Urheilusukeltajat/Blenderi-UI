@@ -8,7 +8,6 @@ import {
   getUserIdFromAccessToken,
 } from '../../lib/utils';
 import { FillingTile } from './components/FillingTile';
-import { SavingTile } from './components/SavingTile';
 import { PricingTile } from './components/PricingTile';
 import { BasicInfoTile } from './components/BasicInfoTile';
 import { BLENDER_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
@@ -20,6 +19,7 @@ import { useMutation } from '@tanstack/react-query';
 import { NewFillEvent, storageCylinderUsage } from '../../interfaces/FillEvent';
 import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
 import { toast } from 'react-toastify';
+import { SavingTile } from './components/SavingTile';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -46,6 +46,7 @@ type FillingEventRow = {
 
 export type LogbookFillingEventRow = {
   divingCylinderSet: string;
+  uniqueId: string;
 };
 
 type GuestDivingCylinder = {

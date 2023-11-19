@@ -9,22 +9,17 @@ export const LogbookBasicInfoTile: React.FC<LogbookBasicInfoTileProps> = ({
   values,
 }): JSX.Element => {
   return (
-    <div className="tileWrapper">
+    <div>
       <h2>Esitiedot</h2>
-      <div className="basicInfoGridRow">
+      <div className="d-flex gap-3">
         <TextInput
           name="gasMixture"
           label="Kaasu"
           disabled
           placeholder="Paineilma"
         />
-        {/*
-          Add two empty column entries to align Lisätiedot to the right
-          TODO: plz fix
-        */}
-        <div />
-        <div />
         <TextInput
+          disabled={values.userConfirm}
           errorText={errors.additionalInformation}
           label="Lisätiedot"
           name="additionalInformation"
