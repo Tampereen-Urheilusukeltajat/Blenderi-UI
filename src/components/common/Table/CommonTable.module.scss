@@ -1,0 +1,80 @@
+@import '../../../variables.scss';
+
+.noBackground:not(:hover) {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.content {
+  box-sizing: border-box;
+  background: $white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  overflow: auto;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+
+  thead {
+    background-color: $timberwolf;
+  }
+
+  .evenRow {
+    background-color: $ghost-white;
+  }
+
+  .oddRow {
+    background-color: $white;
+  }
+
+  tr {
+    box-sizing: border-box;
+  }
+
+  th {
+    padding: 0.5rem 1rem;
+
+    span {
+      &:first-child {
+        display: inline;
+      }
+      &:last-child {
+        display: none;
+      }
+    }
+  }
+
+  td {
+    border: 1px solid $timberwolf;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 780px) {
+  h1 {
+    font-size: 1.5rem;
+    width: 50%;
+  }
+  h2 {
+    font-size: 1.25rem;
+    width: 50%;
+  }
+
+  table {
+    th {
+      padding: 0.25rem 0.5rem;
+
+      span {
+        &:first-child {
+          display: none;
+        }
+        &:last-child {
+          display: inline;
+        }
+      }
+    }
+  }
+}

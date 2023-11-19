@@ -1,58 +1,69 @@
+import format from 'date-fns/format';
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
-import { FillEvent } from '../../interfaces/FillEvent';
 import { formatEurCentsToEur } from '../../lib/utils';
+import {
+  CommonTable,
+  TableColumn,
+  TableRow,
+} from '../common/Table/CommonTable';
+import { useMemo } from 'react';
 
-const FillEventRow = ({
-  data,
-  index,
-}: {
-  data: FillEvent;
-  index: number;
-}): JSX.Element => {
-  return (
-    <tr className={index % 2 === 0 ? 'evenRow' : 'oddRow'}>
-      <td>{data.createdAt}</td>
-      <td>{data.cylinderSetName}</td>
-      <td>{data.gasMixture}</td>
-      <td>{data.description}</td>
-      <td>{formatEurCentsToEur(data.price)}</td>
-    </tr>
-  );
-};
+const FILL_EVENT_COLUMNS: TableColumn[] = [
+  {
+    title: 'Päivämäärä',
+    shortTitle: 'Pvm',
+  },
+  {
+    title: 'Pullosetti',
+    shortTitle: 'PS',
+  },
+  {
+    title: 'Kaasuseos',
+    shortTitle: 'KS',
+  },
+  {
+    title: 'Lisätiedot',
+    shortTitle: 'LT',
+  },
+  {
+    title: 'Hinta (€)',
+    shortTitle: '€',
+  },
+];
+
+const dateFormatter = (date: string): string =>
+  format(new Date(date), 'd.MM.yy');
 
 export const ListFillEvents = (): JSX.Element => {
-  const fillEvents: FillEvent[] = useFillEventQuery().data ?? [];
-
+  const { data: fillEvents } = useFillEventQuery();
+  const rows: TableRow[] = useMemo(
+    () =>
+      fillEvents?.map((fillEvent) => ({
+        id: fillEvent.id,
+        mainRow: [
+          dateFormatter(fillEvent.createdAt),
+          fillEvent.cylinderSetName,
+          fillEvent.gasMixture,
+          fillEvent.description,
+          formatEurCentsToEur(fillEvent.price),
+        ],
+      })) ?? [],
+    [fillEvents]
+  );
   return (
     <div>
-      <div className="d-flex flex-row justify-content-between">
-        <h1 className="pb-4">Täyttöhistoria</h1>
-        <div className="d-flex flex-column align-items-center">
-          <h2>Täyttöjen hinta yhteensä</h2>
-          <h3>
-            {formatEurCentsToEur(
-              fillEvents.reduce((acc, fillEvent) => acc + fillEvent.price, 0)
-            )}{' '}
-            €
-          </h3>
-        </div>
+      <div className="d-flex flex-row justify-content-between pb-4">
+        <h1>Täyttöhistoria</h1>
+        <h2>
+          Täyttöjen hinta yhteensä:{' '}
+          {formatEurCentsToEur(
+            fillEvents?.reduce((acc, fillEvent) => acc + fillEvent.price, 0) ??
+              0
+          )}{' '}
+          €
+        </h2>
       </div>
-      <table className="table">
-        <thead className="tableHead">
-          <tr>
-            <th>Päivämäärä</th>
-            <th>pullosetti</th>
-            <th>kaasuseos</th>
-            <th>lisätiedot</th>
-            <th>hinta (€)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fillEvents.map((fillEvent, index) => (
-            <FillEventRow key={fillEvent.id} data={fillEvent} index={index} />
-          ))}
-        </tbody>
-      </table>
+      <CommonTable columns={FILL_EVENT_COLUMNS} rows={rows} />
     </div>
   );
 };
