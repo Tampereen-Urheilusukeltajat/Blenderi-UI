@@ -1,6 +1,6 @@
 import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback, useMemo } from 'react';
-import { BsTrash } from 'react-icons/bs';
+import { BsPlusLg, BsXLg } from 'react-icons/bs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import {
@@ -12,7 +12,6 @@ import {
   DivingCylinder,
   DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
-import '../../styles/divingCylinderSet/newDivingCylinderSet.css';
 import {
   ButtonType,
   IconButton,
@@ -23,32 +22,64 @@ import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
 import { AxiosError } from 'axios';
+import styles from './NewDivingCylinderSet.module.scss';
 
-const EmptyDivingCylinder: Omit<DivingCylinder, 'id'> = {
-  volume: 0,
-  material: 'steel',
-  pressure: 0,
-  serialNumber: '',
-  inspection: '',
+type FormDivingCylinder = Omit<DivingCylinder, 'id'> & { uniqueId: string };
+
+const EmptyDivingCylinder = (
+  material = 'steel',
+  pressure = 0,
+  inspection = '',
+  serialNumber = '',
+  volume = 0
+): FormDivingCylinder => ({
+  material,
+  pressure,
+  inspection,
+  serialNumber,
+  uniqueId: crypto.randomUUID(),
+  volume,
+});
+
+type NewDivingCylinderRowProps = {
+  fieldProps: FieldArrayRenderProps;
+  index: number;
+  lastItem: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any;
 };
 
-const NewDivingCylinderRow = (
-  { remove, push, replace }: FieldArrayRenderProps,
-  index: number,
-  lastItem: boolean,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  errors: any
-): JSX.Element => {
+const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
+  fieldProps,
+  index,
+  errors,
+  lastItem,
+}) => {
+  const { replace, remove, push } = fieldProps;
   return (
-    <div key={index}>
-      <div className="divingCylinderGridRow">
+    <div>
+      <div className={styles.cylinder}>
+        <div className={styles.deleteButtonWrapper}>
+          <IconButton
+            tooltip="Poista pullo"
+            icon={<BsXLg />}
+            onClick={() =>
+              lastItem && index === 0
+                ? replace(index, { ...EmptyDivingCylinder() })
+                : remove(index)
+            }
+          />
+        </div>
+
         <TextInput
+          label="Tilavuus"
           name={`divingCylinders.${index}.volume`}
           type="number"
           errorText={errors.divingCylinders?.at(index)?.volume}
           unit="l"
         />
         <DropdownMenu
+          label="Materiaali"
           name={`divingCylinders.${index}.material`}
           errorText={errors.divingCylinders?.at(index)?.material}
         >
@@ -57,43 +88,38 @@ const NewDivingCylinderRow = (
           <option value="carbonFiber">Hiilikuitu</option>
         </DropdownMenu>
         <TextInput
+          label="Suurin sallittu paine"
           name={`divingCylinders.${index}.pressure`}
           type="number"
           errorText={errors.divingCylinders?.at(index)?.pressure}
           unit="bar"
         />
         <TextInput
+          label="Sarjanumero"
           name={`divingCylinders.${index}.serialNumber`}
           type="string"
           errorText={errors.divingCylinders?.at(index)?.serialNumber}
         />
         <TextInput
+          label="Katsastusvuosi"
           name={`divingCylinders.${index}.inspection`}
           type="number"
           errorText={errors.divingCylinders?.at(index)?.inspection}
         />
-        <IconButton
-          icon={<BsTrash />}
-          onClick={() =>
-            lastItem && index === 0
-              ? replace(index, EmptyDivingCylinder)
-              : remove(index)
-          }
-        />
       </div>
       {lastItem ? (
-        <PrimaryButton
-          className="addNewDivingCylinder"
-          onClick={() => push(EmptyDivingCylinder)}
+        <IconButton
+          onClick={() => push({ ...EmptyDivingCylinder() })}
           type={ButtonType.button}
-          text="Lisää pullo"
+          icon={<BsPlusLg />}
+          tooltip="Lisää pullo"
         />
       ) : null}
     </div>
   );
 };
 
-export const NewDivingCylinderSet = (): JSX.Element => {
+export const NewDivingCylinderSet: React.FC = () => {
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
 
   const queryClient = useQueryClient();
@@ -120,7 +146,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
 
   const resetForm = useCallback((values: DivingCylinderSetTable): void => {
     values.divingCylinderSetName = '';
-    values.divingCylinders = [EmptyDivingCylinder];
+    values.divingCylinders = [{ ...EmptyDivingCylinder() }];
   }, []);
 
   const handleFormSubmit = useCallback(
@@ -130,7 +156,13 @@ export const NewDivingCylinderSet = (): JSX.Element => {
       await cylinderSetMutation.mutateAsync({
         owner: getUserIdFromAccessToken(),
         name: values.divingCylinderSetName,
-        cylinders: values.divingCylinders,
+        cylinders: values.divingCylinders.map((dc) => ({
+          inspection: dc.inspection,
+          material: dc.material,
+          pressure: dc.pressure,
+          serialNumber: dc.serialNumber,
+          volume: dc.volume,
+        })),
       });
       if (!cylinderSetMutation.isError) {
         resetForm(values);
@@ -145,7 +177,7 @@ export const NewDivingCylinderSet = (): JSX.Element => {
       <Formik
         initialValues={{
           divingCylinderSetName: '',
-          divingCylinders: [EmptyDivingCylinder],
+          divingCylinders: [{ ...EmptyDivingCylinder() }],
         }}
         validateOnChange={false}
         validateOnBlur={false}
@@ -154,42 +186,36 @@ export const NewDivingCylinderSet = (): JSX.Element => {
         handleReset={resetForm}
       >
         {({ values, errors, isSubmitting }) => (
-          <Form className="newCylinderSetForm">
-            <div className="divingCylinderFlexRow">
-              <TextInput
-                name="divingCylinderSetName"
-                placeholder="Esim. D12"
-                label="Pullosetin nimi"
-                errorText={errors.divingCylinderSetName}
-              />
+          <Form>
+            <h2>Yleistiedot</h2>
+            <TextInput
+              name="divingCylinderSetName"
+              placeholder="Esim. D12"
+              label="Pullosetin nimi"
+              errorText={errors.divingCylinderSetName}
+            />
+            <h2 className="pt-3">Pullot</h2>
+            <FieldArray name="divingCylinders">
+              {(arrayHelpers) =>
+                values.divingCylinders.map((dc, index) => (
+                  <NewDivingCylinderRow
+                    key={dc.uniqueId}
+                    errors={errors}
+                    fieldProps={arrayHelpers}
+                    index={index}
+                    lastItem={values.divingCylinders.length === index + 1}
+                  />
+                ))
+              }
+            </FieldArray>
+
+            <div className={styles.submit}>
               <PrimaryButton
+                disabled={isSubmitting}
                 text="Tallenna pullosetti"
                 type={ButtonType.submit}
-                disabled={isSubmitting}
               />
             </div>
-            <div className="divingCylinderGridRow titleBar">
-              <span>Koko</span>
-              <span>Materiaali</span>
-              <span>Suurin täyttöpaine</span>
-              <span>Sarjanumero</span>
-              <span>Katsastusvuosi</span>
-              <span>Poista</span>
-            </div>
-            <FieldArray name="divingCylinders">
-              {(arrayHelpers) => (
-                <>
-                  {values.divingCylinders.map((dc, index) =>
-                    NewDivingCylinderRow(
-                      arrayHelpers,
-                      index,
-                      values.divingCylinders.length === index + 1,
-                      errors
-                    )
-                  )}
-                </>
-              )}
-            </FieldArray>
           </Form>
         )}
       </Formik>

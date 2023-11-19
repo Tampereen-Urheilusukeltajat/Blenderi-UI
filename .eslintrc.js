@@ -33,7 +33,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/strict-boolean-expressions': [
       'error',
-      { allowNullableObject: true, allowNumber: true, allowString: true },
+      {
+        allowNullableObject: true,
+        allowNumber: true,
+        allowString: true,
+        allowNullableString: true,
+      },
     ],
     '@typescript-eslint/indent': 'off',
     'no-trailing-spaces': 'warn',

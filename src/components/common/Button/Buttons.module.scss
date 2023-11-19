@@ -23,7 +23,7 @@ $white: #ffffff;
   padding: 0.5rem 1rem;
 
   &:hover {
-    transition-duration: 0.25s;
+    transition-duration: 0.5s;
   }
 
   &:disabled {
@@ -37,8 +37,9 @@ $white: #ffffff;
 .primaryButton {
   background-color: $primaryBlue;
   color: $white;
+
   &:hover {
-    background-color: $primaryBlueHover;
+    background-color: $primaryBlueHover !important;
   }
 }
 
@@ -47,7 +48,7 @@ $white: #ffffff;
   outline: 2px solid $primaryBlue;
   color: $primaryBlue;
   &:hover {
-    background-color: $secondaryBlueHover;
+    background-color: $secondaryBlueHover !important;
   }
 }
 
@@ -55,7 +56,7 @@ $white: #ffffff;
   background-color: $tertiaryBlue;
   color: $white;
   &:hover {
-    background-color: $tertiaryBlueHover;
+    background-color: $tertiaryBlueHover !important;
   }
 }
 

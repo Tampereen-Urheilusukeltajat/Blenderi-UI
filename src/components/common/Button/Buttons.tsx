@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './Buttons.module.scss';
+import { Tooltip } from 'react-tooltip';
 
 export enum ButtonType {
   button = 'button',
@@ -21,6 +22,7 @@ export type TextButtonProps = CommonButtonProps & {
 
 export type IconButtonProps = CommonButtonProps & {
   icon: JSX.Element;
+  tooltip?: string;
 };
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -28,19 +30,32 @@ export const IconButton: React.FC<IconButtonProps> = ({
   key,
   icon,
   onClick,
+  tooltip,
   type = ButtonType.button,
-}) => (
-  <button
-    id={styles.commonButton}
-    className={styles.iconButton}
-    onClick={onClick}
-    key={key}
-    disabled={disabled}
-    type={type}
-  >
-    {icon}
-  </button>
-);
+}) => {
+  const tooltipId = useMemo(
+    () => (tooltip ? crypto.randomUUID() : ''),
+    [tooltip]
+  );
+
+  return (
+    <>
+      <button
+        className={styles.iconButton}
+        data-tooltip-id={tooltipId}
+        data-tooltip-content={tooltip}
+        disabled={disabled}
+        id={styles.commonButton}
+        key={key}
+        onClick={onClick}
+        type={type}
+      >
+        {icon}
+      </button>
+      {tooltip && <Tooltip id={tooltipId} />}
+    </>
+  );
+};
 
 export const PrimaryButton: React.FC<TextButtonProps> = ({
   disabled,
