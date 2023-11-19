@@ -9,7 +9,7 @@ export type FillEvent = {
   createdAt: string;
 };
 
-export type storageCylinderUsage = {
+export type StorageCylinderUsage = {
   storageCylinderId: number;
   startPressure: number;
   endPressure: number;
@@ -21,7 +21,7 @@ export type NewFillEvent = {
   filledAir: boolean;
   description: string;
   price: number;
-  storageCylinderUsageArr: storageCylinderUsage[];
+  storageCylinderUsageArr: StorageCylinderUsage[];
 };
 
 export type CreatedFillEvent = NewFillEvent & {

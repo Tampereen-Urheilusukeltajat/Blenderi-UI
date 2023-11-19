@@ -1,11 +1,11 @@
 import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
-import { CommonTileProps } from '../BlenderLogbook';
 import React from 'react';
 import {
   AvailableGasses,
   AvailableMixtureCompositions,
 } from '../../../lib/utils';
+import { CommonTileProps } from './BlenderFillingEventForm';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: DivingCylinderSet[];

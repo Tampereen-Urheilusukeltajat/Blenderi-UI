@@ -1,6 +1,5 @@
 import { FieldArray } from 'formik';
 import { BsTrash } from 'react-icons/bs';
-import { LogbookCommonTileProps } from '../../BlenderLogbook/BlenderLogbook';
 import { EmptyLogbookFillingEventRow } from '../Logbook';
 import { useDivingCylinderQuery } from '../../../lib/queries/divingCylinderQuery';
 import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
@@ -13,6 +12,7 @@ import { DropdownMenu } from '../../common/Inputs';
 import React, { useMemo } from 'react';
 import { getUserIdFromAccessToken } from '../../../lib/utils';
 import styles from './FillingTile.module.scss';
+import { LogbookCommonTileProps } from '../LogBookBasicInfoTile';
 
 type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   index: number;

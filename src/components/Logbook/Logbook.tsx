@@ -1,8 +1,10 @@
 import { Form, Formik, FormikValues } from 'formik';
 import { AirLogbookSavingTile } from './components/SavingTile';
-import { LogbookFillingEventRow } from '../BlenderLogbook/BlenderLogbook';
 import { LogbookFillingTile } from './components/FillingTile';
-import { LogbookBasicInfoTile } from './LogBookBasicInfoTile';
+import {
+  LogbookBasicInfoTile,
+  LogbookFillingEventRow,
+} from './LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
@@ -20,6 +22,7 @@ export const EmptyLogbookFillingEventRow = (): LogbookFillingEventRow => ({
   divingCylinderSet: '',
   uniqueId: crypto.randomUUID(),
 });
+
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
   gasMixture: 'Paineilma',

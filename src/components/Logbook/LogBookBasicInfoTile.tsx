@@ -1,6 +1,29 @@
-import { LogbookCommonTileProps } from '../BlenderLogbook/BlenderLogbook';
 import { TextInput } from '../common/Inputs';
 import React from 'react';
+
+export type LogbookFillingEventRow = {
+  divingCylinderSet: string;
+  uniqueId: string;
+};
+
+type LogbookFillingEventBasicInfo = {
+  additionalInformation: string;
+  gasMixture: string;
+  userConfirm: boolean;
+};
+
+type LogbookFormFields = LogbookFillingEventBasicInfo & {
+  fillingEventRows: LogbookFillingEventRow[];
+};
+
+export type LogbookCommonTileProps = {
+  // TODO FIX THIS
+  // Casting as any because array errors wouldn't be otherwise correctly typed
+  // It might be possible to fix this in the future with bit more time
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: any;
+  values: LogbookFormFields;
+};
 
 type LogbookBasicInfoTileProps = LogbookCommonTileProps;
 
