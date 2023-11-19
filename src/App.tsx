@@ -6,7 +6,7 @@ import {
   useIsFetching,
 } from '@tanstack/react-query';
 import { PageLoadingSpinner } from './components/Spinner';
-import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings';
+import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings/DivingCylinderSetSettings';
 import { UserSettings } from './components/UserSettings/UserSettings';
 import { BlenderLogbook } from './views/BlenderLogbook';
 import { Logbook } from './views/Logbook';
