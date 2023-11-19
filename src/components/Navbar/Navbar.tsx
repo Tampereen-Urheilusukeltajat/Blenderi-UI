@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { TertiaryButton } from '../common/Buttons';
+import { TertiaryButton } from '../common/Button/Buttons';
 import { getUserRoles } from '../../lib/utils';
 import styles from './Navbar.module.scss';
 import { Navbar as BootNavbar, Container, Nav } from 'react-bootstrap';

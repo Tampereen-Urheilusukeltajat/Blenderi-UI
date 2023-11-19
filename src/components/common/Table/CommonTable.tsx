@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
-import { IconButton, IconButtonProps } from '../Buttons';
+import { IconButton, IconButtonProps } from '../Button/Buttons';
 import styles from './CommonTable.module.scss';
 
 type Row = Array<number | string | null>;

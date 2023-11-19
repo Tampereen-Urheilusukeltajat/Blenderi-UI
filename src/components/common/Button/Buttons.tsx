@@ -1,5 +1,5 @@
-import '../../styles/common/button.css';
 import React from 'react';
+import styles from './Buttons.module.scss';
 
 export enum ButtonType {
   button = 'button',
@@ -24,7 +24,6 @@ export type IconButtonProps = CommonButtonProps & {
 };
 
 export const IconButton: React.FC<IconButtonProps> = ({
-  className = '',
   disabled,
   key,
   icon,
@@ -32,8 +31,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
-    id="commonButton"
-    className={`iconButton ${className}`}
+    id={styles.commonButton}
+    className={styles.iconButton}
     onClick={onClick}
     key={key}
     disabled={disabled}
@@ -44,7 +43,6 @@ export const IconButton: React.FC<IconButtonProps> = ({
 );
 
 export const PrimaryButton: React.FC<TextButtonProps> = ({
-  className = '',
   disabled,
   key,
   onClick,
@@ -52,8 +50,8 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
-    id="commonButton"
-    className={`primaryButton ${className}`}
+    id={styles.commonButton}
+    className={styles.primaryButton}
     disabled={disabled}
     key={key}
     onClick={onClick}
@@ -64,7 +62,6 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
 );
 
 export const SecondaryButton: React.FC<TextButtonProps> = ({
-  className = '',
   disabled,
   key,
   onClick,
@@ -72,8 +69,8 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
-    id="commonButton"
-    className={`secondaryButton ${className}`}
+    id={styles.commonButton}
+    className={styles.secondaryButton}
     disabled={disabled}
     key={key}
     onClick={onClick}
@@ -84,7 +81,6 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
 );
 
 export const TertiaryButton: React.FC<TextButtonProps> = ({
-  className = '',
   disabled,
   key,
   onClick,
@@ -92,8 +88,8 @@ export const TertiaryButton: React.FC<TextButtonProps> = ({
   type = ButtonType.button,
 }) => (
   <button
-    id="commonButton"
-    className={`tertiaryButton ${className}`}
+    id={styles.commonButton}
+    className={styles.tertiaryButton}
     disabled={disabled}
     key={key}
     onClick={onClick}

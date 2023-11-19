@@ -8,7 +8,11 @@ import {
   formatEurCentsToEur,
   mapGasToName,
 } from '../../../lib/utils';
-import { ButtonType, IconButton, PrimaryButton } from '../../common/Buttons';
+import {
+  ButtonType,
+  IconButton,
+  PrimaryButton,
+} from '../../common/Button/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import {
   CommonTileProps,

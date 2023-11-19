@@ -12,7 +12,6 @@ export type CommonInputProps = {
   prefix?: string;
   placeholder?: string;
   name: string;
-  key?: string;
   unit?: string;
   validate?: (fieldValue: never) => void;
   type?: string;
@@ -29,13 +28,13 @@ export const TextInput: React.FC<CommonInputProps> = ({
   name,
   placeholder,
   prefix,
-  key,
   unit,
   validate,
   type,
+  ...props
 }) => {
   return (
-    <div key={key} className={`${className ?? ''} inputField`}>
+    <div {...props} className={`${className ?? ''} inputField`}>
       {label !== undefined ? (
         <label className="field-title" htmlFor={`id-${name}`}>
           {label}
@@ -73,12 +72,12 @@ export const DropdownMenu: React.FC<SelectInputProps> = ({
   label,
   name,
   placeholder,
-  key,
   unit,
   type,
+  ...props
 }) => {
   return (
-    <div key={key} className={`${className ?? ''} inputField`}>
+    <div {...props} className={`${className ?? ''} inputField`}>
       {label !== undefined ? (
         <label className="field-title" htmlFor={`id-${name}`}>
           {label}

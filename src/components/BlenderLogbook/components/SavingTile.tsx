@@ -1,5 +1,5 @@
 import { Field } from 'formik';
-import { ButtonType, PrimaryButton } from '../../common/Buttons';
+import { ButtonType, PrimaryButton } from '../../common/Button/Buttons';
 import {
   CommonTileProps,
   LogbookCommonTileProps,
