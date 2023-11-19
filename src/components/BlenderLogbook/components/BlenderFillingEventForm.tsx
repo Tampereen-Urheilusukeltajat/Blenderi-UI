@@ -55,7 +55,7 @@ const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   userConfirm: false,
 };
 
-export const emptyFillingRow = (startPressure = 200): FillingEventRow => ({
+export const emptyFillingRow = (startPressure = 0): FillingEventRow => ({
   consumption: 0,
   endPressure: startPressure,
   priceEurCents: 0,
