@@ -4,7 +4,7 @@ import { LogbookFillingTile } from './components/FillingTile';
 import {
   LogbookBasicInfoTile,
   LogbookFillingEventRow,
-} from './LogBookBasicInfoTile';
+} from './components/LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';

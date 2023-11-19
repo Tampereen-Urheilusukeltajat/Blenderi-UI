@@ -12,7 +12,7 @@ import { DropdownMenu } from '../../common/Inputs';
 import React, { useMemo } from 'react';
 import { getUserIdFromAccessToken } from '../../../lib/utils';
 import styles from './FillingTile.module.scss';
-import { LogbookCommonTileProps } from '../LogBookBasicInfoTile';
+import { LogbookCommonTileProps } from './LogBookBasicInfoTile';
 
 type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   index: number;
@@ -85,7 +85,7 @@ export const LogbookFillingTile: React.FC<AirLogbookFillingTileProps> = ({
   values,
 }) => {
   return (
-    <div className="pt-3">
+    <div className="pt-3 pb-3 border-bottom">
       <h2>Täytetyt pullosetit</h2>
       <FieldArray name="fillingEventRows">
         {({ remove, push }) => (
