@@ -38,16 +38,21 @@ export const ListFillEvents = (): JSX.Element => {
   const { data: fillEvents } = useFillEventQuery();
   const rows: TableRow[] = useMemo(
     () =>
-      fillEvents?.map((fillEvent) => ({
-        id: fillEvent.id,
-        mainRow: [
-          dateFormatter(fillEvent.createdAt),
-          fillEvent.cylinderSetName,
-          fillEvent.gasMixture,
-          fillEvent.description,
-          formatEurCentsToEur(fillEvent.price),
-        ],
-      })) ?? [],
+      fillEvents
+        ?.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+        .map((fillEvent) => ({
+          id: fillEvent.id,
+          mainRow: [
+            dateFormatter(fillEvent.createdAt),
+            fillEvent.cylinderSetName,
+            fillEvent.gasMixture,
+            fillEvent.description,
+            formatEurCentsToEur(fillEvent.price),
+          ],
+        })) ?? [],
     [fillEvents]
   );
   return (
