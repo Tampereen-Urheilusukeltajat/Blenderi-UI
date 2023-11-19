@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
-import { IconButton, IconButtonProps } from '../Button/Buttons';
+import { ElementButton, ElementButtonProps } from '../Button/Buttons';
 import styles from './CommonTable.module.scss';
 
 type Row = Array<number | string | null>;
@@ -26,17 +26,13 @@ type CommonTableProps = {
   onRowDelete?: (id: string) => void;
 };
 
-const IconButtonCell: React.FC<IconButtonProps> = ({
+const ElementButtonCell: React.FC<ElementButtonProps> = ({
   onClick,
-  icon,
+  element,
 }): JSX.Element => {
   return (
-    <td>
-      <IconButton
-        className={styles.noBackground}
-        icon={icon}
-        onClick={onClick}
-      />
+    <td className={styles.noBackground}>
+      <ElementButton element={element} onClick={onClick} />
     </td>
   );
 };
@@ -118,16 +114,16 @@ export const CommonTable: React.FC<CommonTableProps> = ({
                 ))}
 
                 {includeEditButton ? (
-                  <IconButtonCell
+                  <ElementButtonCell
                     key={`row-${index + 1}-modify`}
-                    icon={<BsPencil />}
+                    element={<BsPencil />}
                     onClick={handleEditButtonClick}
                   />
                 ) : null}
                 {includeDeleteButton ? (
-                  <IconButtonCell
+                  <ElementButtonCell
                     key={`row-${index + 1}-delete`}
-                    icon={<BsTrash />}
+                    element={<BsTrash className={styles.delete} />}
                     onClick={() => handleDeleteButtonClick(row.id)}
                   />
                 ) : null}

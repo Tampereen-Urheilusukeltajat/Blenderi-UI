@@ -1,4 +1,4 @@
-import { AccessToken } from './auth';
+import { type AccessToken } from './auth';
 
 type UserRoles = {
   isAdmin: boolean;
