@@ -5,7 +5,7 @@ import { EMPTY_LOGBOOK_FILLING_EVENT_ROW } from './NewFillingEvent';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
 import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import {
-  IconButton,
+  ElementButton,
   PrimaryButton,
   ButtonType,
 } from '../common/Button/Buttons';
@@ -66,9 +66,9 @@ export const LogbookFillingEventRowComponent: React.FC<
             ))}
           </optgroup>
         </DropdownMenu>
-        <IconButton
+        <ElementButton
           className="deleteRowButton"
-          icon={<BsTrash />}
+          element={<BsTrash />}
           onClick={() => remove(index)}
         />
       </div>

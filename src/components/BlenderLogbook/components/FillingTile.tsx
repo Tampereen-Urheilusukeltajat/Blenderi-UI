@@ -10,7 +10,7 @@ import {
 } from '../../../lib/utils';
 import {
   ButtonType,
-  IconButton,
+  ElementButton,
   PrimaryButton,
 } from '../../common/Button/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
@@ -140,9 +140,9 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           disabled
           unit="€"
         />
-        <IconButton
+        <ElementButton
           className="deleteRowButton"
-          icon={<BsTrash />}
+          element={<BsTrash />}
           onClick={() =>
             index === 0 && values.fillingEventRows.length === 1
               ? replace(index, {

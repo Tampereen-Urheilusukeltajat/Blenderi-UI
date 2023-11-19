@@ -20,15 +20,15 @@ export type TextButtonProps = CommonButtonProps & {
   text: string;
 };
 
-export type IconButtonProps = CommonButtonProps & {
-  icon: JSX.Element;
+export type ElementButtonProps = CommonButtonProps & {
+  element: JSX.Element;
   tooltip?: string;
 };
 
-export const IconButton: React.FC<IconButtonProps> = ({
+export const ElementButton: React.FC<ElementButtonProps> = ({
   disabled,
   key,
-  icon,
+  element,
   onClick,
   tooltip,
   type = ButtonType.button,
@@ -41,7 +41,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   return (
     <>
       <button
-        className={styles.iconButton}
+        className={styles.elementButton}
         data-tooltip-id={tooltipId}
         data-tooltip-content={tooltip}
         disabled={disabled}
@@ -50,7 +50,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         onClick={onClick}
         type={type}
       >
-        {icon}
+        {element}
       </button>
       {tooltip && <Tooltip id={tooltipId} />}
     </>
