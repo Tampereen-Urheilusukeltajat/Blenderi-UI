@@ -18,7 +18,6 @@ export const AirLogbookSavingTile: React.FC<LogbookCommonTileProps> = ({
       </div>
       <div className={styles.submit}>
         <PrimaryButton
-          className="saveFillEventButton"
           disabled={!values.userConfirm}
           type={ButtonType.submit}
           text="Tallenna täyttö"

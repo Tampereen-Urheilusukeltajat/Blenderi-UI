@@ -21,6 +21,7 @@ import { PricingTile } from './PricingTile';
 import { FillingTile } from './FillingTile';
 import { GasWithPricing } from '../../../lib/queries/gasQuery';
 import { StorageCylinder } from '../../../lib/queries/storageCylinderQuery';
+import styles from './BlenderFillingEventForm.module.scss';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -37,17 +38,11 @@ type FillingEventRow = {
   priceEurCents: number;
   startPressure: number;
   storageCylinderId: string;
-};
-
-type GuestDivingCylinder = {
-  inspectionYear: number;
-  maxPressure: number;
-  volume: number;
+  uniqueId: string;
 };
 
 type FormFields = FillingEventBasicInfo & {
   fillingEventRows: FillingEventRow[];
-  guestDivingCylinder: GuestDivingCylinder;
 };
 
 // TODO find a better way to initialize divingCylinderSetId
@@ -60,20 +55,14 @@ const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   userConfirm: false,
 };
 
-// TODO find a better way to initialize storageCylinderId
-export const EMPTY_FILLING_EVENT_ROW: FillingEventRow = {
+export const emptyFillingRow = (startPressure = 200): FillingEventRow => ({
   consumption: 0,
-  endPressure: 0,
+  endPressure: startPressure,
   priceEurCents: 0,
-  startPressure: 0,
+  startPressure,
   storageCylinderId: '',
-};
-
-const EMPTY_GUEST_DIVING_CYLINDER: GuestDivingCylinder = {
-  inspectionYear: new Date().getFullYear(),
-  maxPressure: 232,
-  volume: 12,
-};
+  uniqueId: crypto.randomUUID(),
+});
 
 export type CommonTileProps = {
   // TODO FIX THIS
@@ -151,11 +140,10 @@ export const BlenderFillingEventForm: React.FC<
         divingCylinderSetId: divingCylinderSets[0]?.id ?? '',
         fillingEventRows: [
           {
-            ...EMPTY_FILLING_EVENT_ROW,
+            ...emptyFillingRow(),
             storageCylinderId: storageCylinders[0]?.id ?? '',
           },
         ],
-        guestDivingCylinder: EMPTY_GUEST_DIVING_CYLINDER,
       }}
       validateOnBlur={false}
       validateOnChange={false}
@@ -163,32 +151,32 @@ export const BlenderFillingEventForm: React.FC<
       onSubmit={handleFormSubmit}
     >
       {({ errors, values, setFieldValue, isSubmitting }) => (
-        <Form>
-          <div className="fillingEventFlexRow">
+        <Form className={styles.form}>
+          <div className="d-flex justify-content-between gap-3 pb-3 border-bottom">
             <BasicInfoTile
               divingCylinderSets={divingCylinderSets}
               errors={errors}
               values={values}
             />
-            <SavingTile
-              totalPrice={values.fillingEventRows
-                .map((row) => row.priceEurCents)
-                .reduce((partialSum, price) => partialSum + price, 0)}
-              errors={errors}
-              values={values}
-              isSubmitting={isSubmitting}
-            />
             <PricingTile errors={errors} gases={gases} values={values} />
           </div>
-          <div className="fillingEventFlexRow">
-            <FillingTile
-              setFieldValue={setFieldValue}
-              errors={errors}
-              values={values}
-              storageCylinders={storageCylinders}
-              gases={gases}
-            />
-          </div>
+
+          <FillingTile
+            setFieldValue={setFieldValue}
+            errors={errors}
+            values={values}
+            storageCylinders={storageCylinders}
+            gases={gases}
+          />
+
+          <SavingTile
+            totalPrice={values.fillingEventRows
+              .map((row) => row.priceEurCents)
+              .reduce((partialSum, price) => partialSum + price, 0)}
+            errors={errors}
+            values={values}
+            isSubmitting={isSubmitting}
+          />
         </Form>
       )}
     </Formik>

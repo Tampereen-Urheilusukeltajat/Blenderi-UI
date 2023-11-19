@@ -18,24 +18,6 @@ export const BLENDER_FILLING_EVENT_VALIDATION_SCHEMA = yup.object().shape({
     .max(100)
     .optional(),
   userConfirm: yup.boolean().isTrue(),
-  guestDivingCylinder: yup.object().shape({
-    inspectionYear: yup
-      .number()
-      .typeError(FIELD_NUMBER)
-      .min(2000)
-      .max(new Date().getFullYear())
-      .required(FIELD_REQUIRED),
-    maxPressure: yup
-      .number()
-      .typeError(FIELD_NUMBER)
-      .min(0)
-      .required(FIELD_REQUIRED),
-    volume: yup
-      .number()
-      .typeError(FIELD_NUMBER)
-      .min(0)
-      .required(FIELD_REQUIRED),
-  }),
   fillingEventRows: yup
     .array()
     .of(
