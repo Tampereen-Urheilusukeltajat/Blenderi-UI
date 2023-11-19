@@ -1,0 +1,54 @@
+@import '../../../variables.scss';
+
+.fillingRow {
+  background: $white-smoke-light;
+  border-radius: 12px;
+  border: 1px solid $timberwolf;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.deleteButtonWrapper {
+  align-items: flex-end;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  button {
+    background: transparent;
+    color: $red;
+
+    &:disabled {
+      background: transparent !important;
+      color: $grey60;
+    }
+  }
+}
+
+.form {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px $grey;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.submit {
+  padding: 1rem 0;
+
+  button {
+    min-width: 100%;
+  }
+}
+
+.addRow {
+  button {
+    width: 100%;
+  }
+}

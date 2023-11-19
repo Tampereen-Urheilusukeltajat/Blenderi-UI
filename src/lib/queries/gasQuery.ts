@@ -22,6 +22,7 @@ export const useGasesQuery = (): UseQuery<GasWithPricing[]> => {
       toast.error('Kaasujen hakeminen epäonnistui. Yritä uudelleen.');
     },
     retry: 1,
+    staleTime: 1000 * 60 * 60, // One hour
   });
 
   return {

@@ -14,10 +14,8 @@ import {
   PrimaryButton,
 } from '../../common/Button/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
-import {
-  CommonTileProps,
-  EMPTY_FILLING_EVENT_ROW,
-} from '../NewBlenderFillingEvent';
+import { CommonTileProps, emptyFillingRow } from './BlenderFillingEventForm';
+import styles from './FillingTile.module.scss';
 
 type FillingEventRowProps = CommonTileProps & {
   index: number;
@@ -31,6 +29,7 @@ type FillingEventRowProps = CommonTileProps & {
   ) => void;
   storageCylinders: StorageCylinder[];
   gases: GasWithPricing[];
+  lastItem: boolean;
 };
 
 const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
@@ -43,6 +42,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   setFieldValue,
   storageCylinders,
   gases,
+  lastItem,
 }) => {
   const startPressure = values.fillingEventRows.at(index)?.startPressure;
   const endPressure = values.fillingEventRows.at(index)?.endPressure;
@@ -99,8 +99,24 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   ]);
   return (
     <div>
-      <div className="fillingEventGridRow">
+      <div className={styles.fillingRow}>
+        <div className={styles.deleteButtonWrapper}>
+          <ElementButton
+            disabled={values.userConfirm}
+            element={<BsTrash />}
+            onClick={() =>
+              index === 0 && values.fillingEventRows.length === 1
+                ? replace(index, {
+                    ...emptyFillingRow(),
+                  })
+                : remove(index)
+            }
+          />
+        </div>
+
         <DropdownMenu
+          disabled={values.userConfirm}
+          label="Varastopullo"
           name={`fillingEventRows.${index}.storageCylinderId`}
           errorText={errors.fillingEventRows?.at(index)?.storageCylinderId}
         >
@@ -121,48 +137,45 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           ))}
         </DropdownMenu>
         <TextInput
+          disabled={values.userConfirm}
+          label="Lähtöpaine"
           name={`fillingEventRows.${index}.startPressure`}
           unit="bar"
           errorText={errors.fillingEventRows?.at(index)?.startPressure}
         />
         <TextInput
+          disabled={values.userConfirm}
+          label="Loppupaine"
           name={`fillingEventRows.${index}.endPressure`}
           unit="bar"
           errorText={errors.fillingEventRows?.at(index)?.endPressure}
         />
         <TextInput
+          label="Kulutus"
           name={`fillingEventRows.${index}.consumption`}
           disabled
           unit="l"
         />
         <TextInput
+          label="Hinta"
           name={`fillingEventRows.${index}.priceEurCents`}
           disabled
           unit="€"
         />
-        <ElementButton
-          className="deleteRowButton"
-          element={<BsTrash />}
-          onClick={() =>
-            index === 0 && values.fillingEventRows.length === 1
-              ? replace(index, {
-                  ...EMPTY_FILLING_EVENT_ROW,
-                })
-              : remove(index)
-          }
-        />
       </div>
-      {values.fillingEventRows.length === index + 1 ? (
-        <PrimaryButton
-          className="addNewRow"
-          onClick={() =>
-            push({
-              ...EMPTY_FILLING_EVENT_ROW,
-            })
-          }
-          type={ButtonType.button}
-          text="Lisää uusi rivi"
-        />
+      {lastItem ? (
+        <div className={styles.addRow}>
+          <PrimaryButton
+            disabled={values.userConfirm}
+            onClick={() =>
+              push({
+                ...emptyFillingRow(),
+              })
+            }
+            type={ButtonType.button}
+            text="Lisää uusi rivi"
+          />
+        </div>
       ) : null}
     </div>
   );
@@ -186,26 +199,19 @@ export const FillingTile: React.FC<FillingTileProps> = ({
   gases,
 }) => {
   return (
-    <div className="tileWrapper">
+    <div className="pt-3 pb-3 border-bottom">
       <h2>Täyttö</h2>
-      <div className="fillingEventGridRow titleBar">
-        <span>Varastopullo</span>
-        <span>Lähtöpaine</span>
-        <span>Loppupaine</span>
-        <span>Kulutus</span>
-        <span>Hinta</span>
-        <span>Poista</span>
-      </div>
       <FieldArray name="fillingEventRows">
         {({ replace, remove, push }) => (
           <>
             {values.fillingEventRows.map((row, index) => (
               <FillingEventRowComponent
-                key={`${row.storageCylinderId}-${index}`}
+                key={row.uniqueId}
                 errors={errors}
                 index={index}
                 push={push}
                 gases={gases}
+                lastItem={values.fillingEventRows.length === index + 1}
                 remove={remove}
                 replace={replace}
                 setFieldValue={setFieldValue}

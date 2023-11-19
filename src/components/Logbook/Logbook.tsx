@@ -1,13 +1,16 @@
 import { Form, Formik, FormikValues } from 'formik';
-import { AirLogbookSavingTile } from '../BlenderLogbook/components/SavingTile';
-import { LogbookFillingEventRow } from '../BlenderLogbook/NewBlenderFillingEvent';
-import { LogbookFillingTile } from './FillingTile';
-import { LogbookBasicInfoTile } from './LogBookBasicInfoTile';
+import { AirLogbookSavingTile } from './components/SavingTile';
+import { LogbookFillingTile } from './components/FillingTile';
+import {
+  LogbookBasicInfoTile,
+  LogbookFillingEventRow,
+} from './components/LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { NewFillEvent } from '../../interfaces/FillEvent';
 import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
+import styles from './Logbook.module.scss';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -15,9 +18,10 @@ type FillingEventBasicInfo = {
   userConfirm: boolean;
 };
 
-export const EMPTY_LOGBOOK_FILLING_EVENT_ROW: LogbookFillingEventRow = {
+export const EmptyLogbookFillingEventRow = (): LogbookFillingEventRow => ({
   divingCylinderSet: '',
-};
+  uniqueId: crypto.randomUUID(),
+});
 
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
@@ -28,7 +32,7 @@ const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
 export const NewFillingEvent = (): JSX.Element => {
   const fillEventMutation = useMutation({
     mutationFn: async (payload: NewFillEvent) => postFillEvent(payload),
-    onSuccess: (cylinderSet) => {
+    onSuccess: () => {
       toast.success('Uusi täyttötapahtuma lisätty!');
     },
     onError: () => {
@@ -62,7 +66,7 @@ export const NewFillingEvent = (): JSX.Element => {
           ...EMPTY_FILLING_EVENT_BASIC_INFO,
           fillingEventRows: [
             {
-              ...EMPTY_LOGBOOK_FILLING_EVENT_ROW,
+              ...EmptyLogbookFillingEventRow(),
             },
           ],
         }}
@@ -72,18 +76,14 @@ export const NewFillingEvent = (): JSX.Element => {
         onSubmit={handleSubmit}
       >
         {({ errors, values, setFieldValue }) => (
-          <Form>
-            <div className="fillingEventFlexRow">
-              <LogbookBasicInfoTile errors={errors} values={values} />
-              <AirLogbookSavingTile errors={errors} values={values} />
-            </div>
-            <div className="fillingEventFlexRow">
-              <LogbookFillingTile
-                errors={errors}
-                setFieldValue={setFieldValue}
-                values={values}
-              />
-            </div>
+          <Form className={styles.form}>
+            <LogbookBasicInfoTile errors={errors} values={values} />
+            <LogbookFillingTile
+              errors={errors}
+              setFieldValue={setFieldValue}
+              values={values}
+            />
+            <AirLogbookSavingTile errors={errors} values={values} />
           </Form>
         )}
       </Formik>

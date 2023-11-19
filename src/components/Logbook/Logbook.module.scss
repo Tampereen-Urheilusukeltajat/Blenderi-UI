@@ -1,0 +1,9 @@
+@import '../../variables.scss';
+
+.form {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px $grey;
+  padding: 1rem;
+  margin: 0 auto;
+}

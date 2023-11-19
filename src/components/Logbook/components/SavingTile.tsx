@@ -1,29 +1,16 @@
 import { Field } from 'formik';
 import { ButtonType, PrimaryButton } from '../../common/Button/Buttons';
 import React from 'react';
-import { CommonTileProps } from './BlenderFillingEventForm';
 import styles from './SavingTile.module.scss';
+import { LogbookCommonTileProps } from './LogBookBasicInfoTile';
 
-type SavingTileProps = CommonTileProps & {
-  totalPrice: number;
-  isSubmitting: boolean;
-};
-
-export const SavingTile: React.FC<SavingTileProps> = ({
+export const AirLogbookSavingTile: React.FC<LogbookCommonTileProps> = ({
   values,
-  totalPrice,
-  isSubmitting,
-}) => (
+}): JSX.Element => (
   <div className="pt-3">
     <h2>Tallenna</h2>
     <div>
       <div className="d-flex gap-2">
-        <span>Kokonaishinta</span>
-        <span>{totalPrice} €</span>
-      </div>
-    </div>
-    <div>
-      <div className="d-flex gap-1">
         <Field id="id-userConfirm" type="checkbox" name="userConfirm" />
         <label htmlFor="id-userConfirm">
           Olen tarkistanut täyttämäni arvot
@@ -31,7 +18,7 @@ export const SavingTile: React.FC<SavingTileProps> = ({
       </div>
       <div className={styles.submit}>
         <PrimaryButton
-          disabled={!values.userConfirm || isSubmitting}
+          disabled={!values.userConfirm}
           type={ButtonType.submit}
           text="Tallenna täyttö"
         />

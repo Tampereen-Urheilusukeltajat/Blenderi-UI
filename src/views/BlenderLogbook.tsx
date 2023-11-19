@@ -1,10 +1,5 @@
-import { NewBlenderFillingEvent } from '../components/BlenderLogbook/NewBlenderFillingEvent';
-import '../styles/blenderLogbook/blenderLogBook.css';
+import { NewBlenderFillingEvent } from '../components/BlenderLogbook/BlenderLogbook';
 
 export const BlenderLogbook = (): JSX.Element => {
-  return (
-    <div>
-      <NewBlenderFillingEvent />
-    </div>
-  );
+  return <NewBlenderFillingEvent />;
 };
