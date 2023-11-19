@@ -1,10 +1,5 @@
 @import '../../../variables.scss';
 
-.noBackground:not(:hover) {
-  background-color: rgba(0, 0, 0, 0) !important;
-  border-color: rgba(0, 0, 0, 0) !important;
-}
-
 .content {
   box-sizing: border-box;
   background: $white;
@@ -51,6 +46,17 @@ table {
     border: 1px solid $timberwolf;
     padding: 0 1rem;
   }
+}
+
+.noBackground:not(:hover) {
+  button {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-color: rgba(0, 0, 0, 0) !important;
+  }
+}
+
+.delete {
+  color: $red;
 }
 
 @media (max-width: 780px) {

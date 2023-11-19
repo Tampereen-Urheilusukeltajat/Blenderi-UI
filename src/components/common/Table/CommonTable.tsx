@@ -31,12 +31,8 @@ const ElementButtonCell: React.FC<ElementButtonProps> = ({
   element,
 }): JSX.Element => {
   return (
-    <td>
-      <ElementButton
-        className={styles.noBackground}
-        element={element}
-        onClick={onClick}
-      />
+    <td className={styles.noBackground}>
+      <ElementButton element={element} onClick={onClick} />
     </td>
   );
 };
@@ -127,7 +123,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
                 {includeDeleteButton ? (
                   <ElementButtonCell
                     key={`row-${index + 1}-delete`}
-                    element={<BsTrash />}
+                    element={<BsTrash className={styles.delete} />}
                     onClick={() => handleDeleteButtonClick(row.id)}
                   />
                 ) : null}
