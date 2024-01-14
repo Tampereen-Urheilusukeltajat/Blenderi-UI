@@ -6,6 +6,7 @@ import { ButtonType, PrimaryButton } from '../common/Button/Buttons';
 import { useRegisterMutation } from '../../lib/queries/registerMutation';
 import { TextInput } from '../common/Inputs';
 import { REGISTER_VALIDATION_SCHEMA } from './validation';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 type RegisterFormFields = {
   forename: string;
@@ -14,9 +15,16 @@ type RegisterFormFields = {
   phoneNumber: string;
   password: string;
   repeatPassword: string;
+  turnstileToken: string;
 };
 
+const TURNSTILE_SITE_KEY = process.env.REACT_APP_TURNSTILE_SITE_KEY;
+
 export const RegisterForm: React.FC = () => {
+  if (TURNSTILE_SITE_KEY === undefined) {
+    throw new Error('Initiation failed');
+  }
+
   const { mutate } = useRegisterMutation();
 
   const handleSubmit = useCallback(
@@ -26,6 +34,7 @@ export const RegisterForm: React.FC = () => {
       password,
       phoneNumber,
       surname,
+      turnstileToken,
     }: RegisterFormFields) => {
       mutate({
         email: email.trim(),
@@ -33,6 +42,7 @@ export const RegisterForm: React.FC = () => {
         password,
         phoneNumber: phoneNumber.replaceAll(' ', ''),
         surname: surname.trim(),
+        turnstileToken,
       });
     },
     [mutate]
@@ -49,13 +59,14 @@ export const RegisterForm: React.FC = () => {
           phoneNumber: '',
           password: '',
           repeatPassword: '',
+          turnstileToken: '',
         }}
         onSubmit={async (values) => handleSubmit(values)}
         validateOnChange={false}
         validateOnBlur={false}
         validationSchema={REGISTER_VALIDATION_SCHEMA}
       >
-        {({ handleSubmit, errors, handleChange }) => (
+        {({ handleSubmit, errors, handleChange, setFieldValue }) => (
           <Form onSubmit={handleSubmit}>
             <TextInput
               name="forename"
@@ -117,6 +128,18 @@ export const RegisterForm: React.FC = () => {
                 </div>
               </Form.Label>
             </Form.Group>
+            {/*
+              By default Turnstile is hidden and will only show up to user if
+              it requires user input (aka challenges user)
+            */}
+            <Turnstile
+              siteKey={TURNSTILE_SITE_KEY}
+              onSuccess={(token) => setFieldValue('turnstileToken', token)}
+              options={{
+                appearance: 'interaction-only',
+                theme: 'light',
+              }}
+            />
             <div className="d-flex justify-content-center mb-5">
               <PrimaryButton text="Luo käyttäjä" type={ButtonType.submit} />
             </div>

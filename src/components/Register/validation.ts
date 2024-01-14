@@ -28,7 +28,7 @@ export const REGISTER_VALIDATION_SCHEMA = yup.object().shape({
     .required(FIELD_REQUIRED)
     .test(
       'phoneNumberCheck',
-      'Anna puhelinnumero muodossa "+358 ..."',
+      'Anna puhelinnumero muodossa "+358..."',
       (phoneNumber) => {
         try {
           return phoneUtil.isValidNumberForRegion(
