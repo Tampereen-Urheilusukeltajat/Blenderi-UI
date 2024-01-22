@@ -22,7 +22,7 @@ const TURNSTILE_SITE_KEY = process.env.REACT_APP_TURNSTILE_SITE_KEY;
 
 export const RegisterForm: React.FC = () => {
   if (TURNSTILE_SITE_KEY === undefined) {
-    throw new Error('Initiation failed');
+    throw new Error('Turnstile initiation failed');
   }
 
   const { mutate } = useRegisterMutation();
