@@ -74,6 +74,7 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
       <Formik
         initialValues={{
           ...EMPTY_FILLING_EVENT_BASIC_INFO,
+          compressorId: compressors[0].id ?? '',
           fillingEventRows: [
             {
               ...EmptyLogbookFillingEventRow(),
