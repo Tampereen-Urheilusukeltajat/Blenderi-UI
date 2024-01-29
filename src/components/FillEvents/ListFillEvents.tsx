@@ -1,5 +1,4 @@
 import format from 'date-fns/format';
-import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import {
   CommonTable,
@@ -7,6 +6,7 @@ import {
   TableRow,
 } from '../common/Table/CommonTable';
 import { useMemo } from 'react';
+import { FillEvent } from '../../interfaces/FillEvent';
 
 const FILL_EVENT_COLUMNS: TableColumn[] = [
   {
@@ -34,12 +34,17 @@ const FILL_EVENT_COLUMNS: TableColumn[] = [
 const dateFormatter = (date: string): string =>
   format(new Date(date), 'd.MM.yy');
 
-export const ListFillEvents = (): JSX.Element => {
-  const { data: fillEvents } = useFillEventQuery();
+type ListFillEventsProps = {
+  fillEvents: FillEvent[];
+};
+
+export const ListFillEvents: React.FC<ListFillEventsProps> = ({
+  fillEvents,
+}) => {
   const rows: TableRow[] = useMemo(
     () =>
       fillEvents
-        ?.sort(
+        .sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         )
