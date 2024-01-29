@@ -6,12 +6,15 @@ import {
   AvailableMixtureCompositions,
 } from '../../../lib/utils';
 import { CommonTileProps } from '../BlenderLogbook';
+import { Compressor } from '../../../lib/queries/compressorQuery';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: DivingCylinderSet[];
+  compressors: Compressor[];
 };
 
 export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
+  compressors,
   divingCylinderSets,
   errors,
   values,
@@ -39,6 +42,18 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
               </option>
             ))}
           </optgroup>
+        </DropdownMenu>
+        <DropdownMenu
+          name="compressorId"
+          label="Kompressori"
+          disabled={values.userConfirm}
+          errorText={errors.compressorId}
+        >
+          {compressors.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
         </DropdownMenu>
         <TextInput
           disabled={values.userConfirm}

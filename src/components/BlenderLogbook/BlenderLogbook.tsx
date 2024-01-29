@@ -146,6 +146,7 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
         initialValues={{
           ...EMPTY_FILLING_EVENT_BASIC_INFO,
           divingCylinderSetId: divingCylinderSets[0]?.id ?? '',
+          compressorId: compressors[0].id ?? '',
           fillingEventRows: [
             {
               ...emptyFillingRow(),
@@ -162,6 +163,7 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
           <Form className={styles.form}>
             <div className="d-flex justify-content-between gap-3 pb-3 border-bottom">
               <BasicInfoTile
+                compressors={compressors}
                 divingCylinderSets={divingCylinderSets}
                 errors={errors}
                 values={values}
