@@ -5,7 +5,7 @@ import {
   AvailableGasses,
   AvailableMixtureCompositions,
 } from '../../../lib/utils';
-import { CommonTileProps } from './BlenderFillingEventForm';
+import { CommonTileProps } from '../BlenderLogbook';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: DivingCylinderSet[];
