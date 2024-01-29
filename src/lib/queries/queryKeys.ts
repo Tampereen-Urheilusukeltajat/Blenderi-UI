@@ -17,3 +17,9 @@ export const BARE_FILL_EVENT_QUERY_KEY = ['bareFillEvents'];
 
 // Gas
 export const GAS_QUERY = ['gas'];
+
+// Payment
+export const PAYMENT_EVENT_QUERY_KEY = (paymentEventId: string): string[] => [
+  'paymentEvent',
+  paymentEventId,
+];
