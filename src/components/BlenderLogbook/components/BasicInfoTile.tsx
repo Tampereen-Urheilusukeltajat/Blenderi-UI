@@ -54,6 +54,9 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
               {c.name}
             </option>
           ))}
+          <option key="empty" value="">
+            Ei kompressoria (tyhjä)
+          </option>
         </DropdownMenu>
         <TextInput
           disabled={values.userConfirm}

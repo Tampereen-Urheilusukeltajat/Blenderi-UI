@@ -122,7 +122,7 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
               endPressure: row.endPressure,
               startPressure: row.startPressure,
             })),
-          compressorId: values.compressorId,
+          compressorId: values.compressorId ? values.compressorId : undefined,
         },
         {
           onSuccess: () => {
