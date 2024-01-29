@@ -9,7 +9,7 @@ import { useDivingCylinderQuery } from '../lib/queries/divingCylinderQuery';
 export const BlenderLogbook = (): JSX.Element => {
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
 
-  const { data: compressors, isError: isCompressorError } =
+  const { data: allCompressors, isError: isCompressorError } =
     useCompressorQuery();
   const { data: storageCylinders, isError: isStorageCylinderError } =
     useStorageCylinderQuery();
@@ -17,22 +17,38 @@ export const BlenderLogbook = (): JSX.Element => {
   const { data: divingCylinderSets, isError: isDivingCylindersError } =
     useDivingCylinderQuery(userId);
 
-  const requiredDataLoaded =
-    (storageCylinders &&
-      storageCylinders.length > 0 &&
-      gases &&
-      gases.length > 0 &&
-      divingCylinderSets &&
-      divingCylinderSets.length > 0 &&
-      compressors &&
-      compressors.length > 0) ??
-    false;
+  const compressors = useMemo(
+    () => allCompressors?.filter((c) => !c.airOnly) ?? [],
+    [allCompressors]
+  );
 
-  const anyErrors =
-    isCompressorError ||
-    isStorageCylinderError ||
-    isGasesError ||
-    isDivingCylindersError;
+  const requiredDataLoaded = useMemo(
+    () =>
+      (storageCylinders &&
+        storageCylinders.length > 0 &&
+        gases &&
+        gases.length > 0 &&
+        divingCylinderSets &&
+        divingCylinderSets.length > 0 &&
+        compressors &&
+        compressors.length > 0) ??
+      false,
+    [compressors, divingCylinderSets, gases, storageCylinders]
+  );
+
+  const anyErrors = useMemo(
+    () =>
+      isCompressorError ||
+      isStorageCylinderError ||
+      isGasesError ||
+      isDivingCylindersError,
+    [
+      isCompressorError,
+      isStorageCylinderError,
+      isGasesError,
+      isDivingCylindersError,
+    ]
+  );
 
   return (
     <>

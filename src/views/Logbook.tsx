@@ -1,8 +1,14 @@
+import { useMemo } from 'react';
 import { NewFillingEvent } from '../components/Logbook/Logbook';
 import { useCompressorQuery } from '../lib/queries/compressorQuery';
 
 export const Logbook = (): JSX.Element => {
-  const { data, isError } = useCompressorQuery();
+  const { data: allCompressors, isError } = useCompressorQuery();
+
+  const compressors = useMemo(
+    () => allCompressors?.filter((c) => c.airOnly) ?? [],
+    [allCompressors]
+  );
 
   return (
     <>
@@ -11,7 +17,9 @@ export const Logbook = (): JSX.Element => {
           Kompuroiden lataaminen epäonnistui. Yritä ladata sivu uudestaan.
         </div>
       )}
-      {data && !isError && <NewFillingEvent compressors={data} />}
+      {allCompressors && !isError && (
+        <NewFillingEvent compressors={compressors} />
+      )}
     </>
   );
 };
