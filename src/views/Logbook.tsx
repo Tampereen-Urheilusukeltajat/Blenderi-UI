@@ -1,5 +1,17 @@
 import { NewFillingEvent } from '../components/Logbook/Logbook';
+import { useCompressorQuery } from '../lib/queries/compressorQuery';
 
 export const Logbook = (): JSX.Element => {
-  return <NewFillingEvent />;
+  const { data, isError } = useCompressorQuery();
+
+  return (
+    <>
+      {isError && (
+        <div>
+          Kompuroiden lataaminen epäonnistui. Yritä ladata sivu uudestaan.
+        </div>
+      )}
+      {data && !isError && <NewFillingEvent compressors={data} />}
+    </>
+  );
 };

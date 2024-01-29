@@ -22,6 +22,7 @@ export type NewFillEvent = {
   description: string;
   price: number;
   storageCylinderUsageArr: StorageCylinderUsage[];
+  compressorId: string;
 };
 
 export type CreatedFillEvent = NewFillEvent & {

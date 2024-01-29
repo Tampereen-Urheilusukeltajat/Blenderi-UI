@@ -11,11 +11,13 @@ import { toast } from 'react-toastify';
 import { NewFillEvent } from '../../interfaces/FillEvent';
 import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
 import styles from './Logbook.module.scss';
+import { Compressor } from '../../lib/queries/compressorQuery';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
   gasMixture: string;
   userConfirm: boolean;
+  compressorId: string;
 };
 
 export const EmptyLogbookFillingEventRow = (): LogbookFillingEventRow => ({
@@ -27,9 +29,16 @@ const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
   gasMixture: 'Paineilma',
   userConfirm: false,
+  compressorId: '',
 };
 
-export const NewFillingEvent = (): JSX.Element => {
+type NewFillingEventProps = {
+  compressors: Compressor[];
+};
+
+export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
+  compressors,
+}) => {
   const fillEventMutation = useMutation({
     mutationFn: async (payload: NewFillEvent) => postFillEvent(payload),
     onSuccess: () => {
@@ -52,6 +61,7 @@ export const NewFillingEvent = (): JSX.Element => {
           description: values.additionalInformation,
           price: 0,
           storageCylinderUsageArr: [],
+          compressorId: values.compressorId,
         },
         {}
       );
@@ -77,7 +87,11 @@ export const NewFillingEvent = (): JSX.Element => {
       >
         {({ errors, values, setFieldValue }) => (
           <Form className={styles.form}>
-            <LogbookBasicInfoTile errors={errors} values={values} />
+            <LogbookBasicInfoTile
+              errors={errors}
+              values={values}
+              compressors={compressors}
+            />
             <LogbookFillingTile
               errors={errors}
               setFieldValue={setFieldValue}
