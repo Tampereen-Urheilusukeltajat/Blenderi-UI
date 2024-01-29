@@ -6,6 +6,8 @@ export type FillEvent = {
   gasMixture: string;
   description: string;
   price: number;
+  compressorId?: string;
+  compressorName?: string;
   createdAt: string;
 };
 
