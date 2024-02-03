@@ -17,7 +17,7 @@ export const useCompressorQuery = (): UseQuery<Compressor[]> => {
     queryKey: COMPRESSOR_QUERY_KEY,
     queryFn: async () => getCompressors(),
     onError: () => {
-      toast.error('Kompuroiden hakeminen epäonnistui. Yritä uudelleen.');
+      toast.error('Kompressoreiden hakeminen epäonnistui. Yritä uudelleen.');
     },
     staleTime: 1000 * 60 * 60, // One hour
     retry: 1,

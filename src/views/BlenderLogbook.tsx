@@ -58,6 +58,12 @@ export const BlenderLogbook = (): JSX.Element => {
           uudestaan.
         </div>
       )}
+      {(!divingCylinderSets || divingCylinderSets.length < 1) && (
+        <div>
+          Sinulla ei ole järjestelmään merkittyä omaa pullosettiä, jota voisi
+          täyttää.
+        </div>
+      )}
       {requiredDataLoaded && (
         <NewBlenderFillingEvent
           compressors={compressors ?? []}

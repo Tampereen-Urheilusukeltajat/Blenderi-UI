@@ -12,6 +12,7 @@ import { NewFillEvent } from '../../interfaces/FillEvent';
 import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
 import styles from './Logbook.module.scss';
 import { Compressor } from '../../lib/queries/compressorQuery';
+import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -34,10 +35,12 @@ const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
 
 type NewFillingEventProps = {
   compressors: Compressor[];
+  divingCylinderSets: DivingCylinderSet[];
 };
 
 export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
   compressors,
+  divingCylinderSets,
 }) => {
   const fillEventMutation = useMutation({
     mutationFn: async (payload: NewFillEvent) => postFillEvent(payload),
@@ -97,6 +100,7 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
               errors={errors}
               setFieldValue={setFieldValue}
               values={values}
+              divingCylinderSets={divingCylinderSets}
             />
             <AirLogbookSavingTile errors={errors} values={values} />
           </Form>
