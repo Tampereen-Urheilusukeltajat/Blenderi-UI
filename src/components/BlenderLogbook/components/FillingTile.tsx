@@ -14,8 +14,9 @@ import {
   PrimaryButton,
 } from '../../common/Button/Buttons';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
-import { CommonTileProps, emptyFillingRow } from './BlenderFillingEventForm';
+
 import styles from './FillingTile.module.scss';
+import { CommonTileProps, emptyFillingRow } from '../BlenderLogbook';
 
 type FillingEventRowProps = CommonTileProps & {
   index: number;

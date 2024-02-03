@@ -23,3 +23,5 @@ export const PAYMENT_EVENT_QUERY_KEY = (paymentEventId: string): string[] => [
   'paymentEvent',
   paymentEventId,
 ];
+// Compressor
+export const COMPRESSOR_QUERY_KEY = ['compressor'];
