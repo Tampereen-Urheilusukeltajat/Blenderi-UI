@@ -1,8 +1,8 @@
 import { formatEurCentsToEur, mapGasToName } from '../../../lib/utils';
 import React from 'react';
 import { GasWithPricing } from '../../../lib/queries/gasQuery';
-import { CommonTileProps } from './BlenderFillingEventForm';
 import styles from './PricingTile.module.scss';
+import { CommonTileProps } from '../BlenderLogbook';
 
 type PricingTileProps = CommonTileProps & {
   gases: GasWithPricing[];

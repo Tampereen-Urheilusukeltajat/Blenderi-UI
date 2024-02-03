@@ -22,6 +22,10 @@ const FILL_EVENT_COLUMNS: TableColumn[] = [
     shortTitle: 'KS',
   },
   {
+    title: 'Kompressori',
+    shortTitle: 'K',
+  },
+  {
     title: 'Lisätiedot',
     shortTitle: 'LT',
   },
@@ -49,6 +53,7 @@ export const ListFillEvents = (): JSX.Element => {
             dateFormatter(fillEvent.createdAt),
             fillEvent.cylinderSetName,
             fillEvent.gasMixture,
+            fillEvent.compressorName ?? '',
             fillEvent.description,
             formatEurCentsToEur(fillEvent.price),
           ],

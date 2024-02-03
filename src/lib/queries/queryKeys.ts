@@ -17,3 +17,6 @@ export const BARE_FILL_EVENT_QUERY_KEY = ['bareFillEvents'];
 
 // Gas
 export const GAS_QUERY = ['gas'];
+
+// Compressor
+export const COMPRESSOR_QUERY_KEY = ['compressor'];

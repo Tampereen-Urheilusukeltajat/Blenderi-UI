@@ -6,6 +6,8 @@ export type FillEvent = {
   gasMixture: string;
   description: string;
   price: number;
+  compressorId?: string;
+  compressorName?: string;
   createdAt: string;
 };
 
@@ -22,6 +24,7 @@ export type NewFillEvent = {
   description: string;
   price: number;
   storageCylinderUsageArr: StorageCylinderUsage[];
+  compressorId?: string;
 };
 
 export type CreatedFillEvent = NewFillEvent & {

@@ -1,7 +1,6 @@
 import { FieldArray } from 'formik';
 import { BsTrash } from 'react-icons/bs';
 import { EmptyLogbookFillingEventRow } from '../Logbook';
-import { useDivingCylinderQuery } from '../../../lib/queries/divingCylinderQuery';
 import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import {
   ElementButton,
@@ -9,8 +8,7 @@ import {
   ButtonType,
 } from '../../common/Button/Buttons';
 import { DropdownMenu } from '../../common/Inputs';
-import React, { useMemo } from 'react';
-import { getUserIdFromAccessToken } from '../../../lib/utils';
+import React from 'react';
 import styles from './FillingTile.module.scss';
 import { LogbookCommonTileProps } from './LogBookBasicInfoTile';
 
@@ -22,6 +20,7 @@ type LogbookFillingEventRowProps = LogbookCommonTileProps & {
     value: unknown,
     shouldValidate?: boolean
   ) => void;
+  divingCylinderSets: DivingCylinderSet[];
 };
 
 type AirLogbookFillingTileProps = LogbookCommonTileProps & {
@@ -30,59 +29,54 @@ type AirLogbookFillingTileProps = LogbookCommonTileProps & {
     value: unknown,
     shouldValidate?: boolean
   ) => void;
+  divingCylinderSets: DivingCylinderSet[];
 };
 
 export const LogbookFillingEventRowComponent: React.FC<
   LogbookFillingEventRowProps
-> = ({ index, errors, values, remove }) => {
-  const userId = useMemo(() => getUserIdFromAccessToken(), []);
-
-  const divingCylinderSets: DivingCylinderSet[] =
-    useDivingCylinderQuery(userId).data ?? [];
-
-  return (
-    <div className={styles.cylinderSet}>
-      <DropdownMenu
+> = ({ index, errors, values, remove, divingCylinderSets }) => (
+  <div className={styles.cylinderSet}>
+    <DropdownMenu
+      disabled={values.userConfirm}
+      label="Pullosetti"
+      name={`fillingEventRows.${index}.divingCylinderSet`}
+      errorText={errors.fillingEventRows?.at(index)?.divingCylinderSet}
+    >
+      <optgroup label="Omat pullot">
+        {divingCylinderSets.map((dcs: DivingCylinderSet) => (
+          <option
+            key={dcs.id}
+            value={dcs.id}
+            disabled={values.fillingEventRows.some(
+              (row) => row.divingCylinderSet === dcs.id
+            )}
+          >
+            {dcs.name}
+            {divingCylinderSets.filter((e) => e.name === dcs.name).length > 1
+              ? ` (${dcs.cylinders[0].serialNumber}${
+                  dcs.cylinders.length > 1 ? ' jne...' : ''
+                })`
+              : ''}
+          </option>
+        ))}
+      </optgroup>
+    </DropdownMenu>
+    <div className={styles.deleteButtonWrapper}>
+      <ElementButton
         disabled={values.userConfirm}
-        label="Pullosetti"
-        name={`fillingEventRows.${index}.divingCylinderSet`}
-        errorText={errors.fillingEventRows?.at(index)?.divingCylinderSet}
-      >
-        <optgroup label="Omat pullot">
-          {divingCylinderSets.map((dcs: DivingCylinderSet) => (
-            <option
-              key={dcs.id}
-              value={dcs.id}
-              disabled={values.fillingEventRows.some(
-                (row) => row.divingCylinderSet === dcs.id
-              )}
-            >
-              {dcs.name}
-              {divingCylinderSets.filter((e) => e.name === dcs.name).length > 1
-                ? ` (${dcs.cylinders[0].serialNumber}${
-                    dcs.cylinders.length > 1 ? ' jne...' : ''
-                  })`
-                : ''}
-            </option>
-          ))}
-        </optgroup>
-      </DropdownMenu>
-      <div className={styles.deleteButtonWrapper}>
-        <ElementButton
-          disabled={values.userConfirm}
-          className="deleteRowButton"
-          element={<BsTrash />}
-          onClick={() => remove(index)}
-        />
-      </div>
+        className="deleteRowButton"
+        element={<BsTrash />}
+        onClick={() => remove(index)}
+      />
     </div>
-  );
-};
+  </div>
+);
 
 export const LogbookFillingTile: React.FC<AirLogbookFillingTileProps> = ({
   errors,
   setFieldValue,
   values,
+  divingCylinderSets,
 }) => {
   return (
     <div className="pt-3 pb-3 border-bottom">
@@ -98,6 +92,7 @@ export const LogbookFillingTile: React.FC<AirLogbookFillingTileProps> = ({
                 remove={remove}
                 setFieldValue={setFieldValue}
                 values={values}
+                divingCylinderSets={divingCylinderSets}
               />
             ))}
             <div className={styles.addRow}>
