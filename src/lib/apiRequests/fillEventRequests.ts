@@ -3,6 +3,7 @@ import {
   FillEvent,
   CreatedFillEvent,
   NewFillEvent,
+  UnpaidFillEventsResponse,
 } from '../../interfaces/FillEvent';
 
 export const postFillEvent = async (
@@ -20,3 +21,12 @@ export const getFillEvents = async (): Promise<FillEvent[]> => {
 
   return response.data;
 };
+
+export const getUnpaidFillEvents =
+  async (): Promise<UnpaidFillEventsResponse> => {
+    const response = await authGetAsync<UnpaidFillEventsResponse>(
+      '/api/fill-event/unpaid'
+    );
+
+    return response.data;
+  };

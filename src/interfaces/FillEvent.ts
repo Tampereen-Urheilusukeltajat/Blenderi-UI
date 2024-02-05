@@ -31,3 +31,8 @@ export type CreatedFillEvent = NewFillEvent & {
   id: string;
   userId: string;
 };
+
+export type UnpaidFillEventsResponse = {
+  fillEvents: FillEvent[];
+  totalPriceInEurCents: number;
+};

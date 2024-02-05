@@ -1,13 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { getFillEvents, postFillEvent } from '../apiRequests/fillEventRequests';
+import {
+  getFillEvents,
+  getUnpaidFillEvents,
+  postFillEvent,
+} from '../apiRequests/fillEventRequests';
 import {
   FillEvent,
   CreatedFillEvent,
   NewFillEvent,
+  UnpaidFillEventsResponse,
 } from '../../interfaces/FillEvent';
 import { UseQuery } from './common';
-import { FILL_EVENT_QUERY_KEY } from './queryKeys';
+import {
+  FILL_EVENT_QUERY_KEY,
+  UNPAID_FILL_EVENTS_QUERY_KEY,
+} from './queryKeys';
 
 export const useFillEventQuery = (): UseQuery<FillEvent[]> => {
   const { isLoading, data, isError } = useQuery({
@@ -45,3 +53,24 @@ export const useNewFillEventQuery = (
     isError,
   };
 };
+
+export const useUnpaidFillEventsQuery =
+  (): UseQuery<UnpaidFillEventsResponse> => {
+    const { isLoading, data, isError } = useQuery({
+      queryKey: UNPAID_FILL_EVENTS_QUERY_KEY,
+      queryFn: async () => getUnpaidFillEvents(),
+      onError: () => {
+        toast.error(
+          'Maksamattomien täyttötapahtumien hakeminen epäonnistui. Yritä uudelleen.'
+        );
+      },
+      retry: 1,
+      refetchOnWindowFocus: false,
+    });
+
+    return {
+      data,
+      isLoading,
+      isError,
+    };
+  };
