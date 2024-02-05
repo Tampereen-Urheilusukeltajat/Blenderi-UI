@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
       <div className={styles.row}>
-        <a href="https://taursu.fi" className={styles.item}>
+        <a href="https://taursu.fi" target="_blank" className={styles.item}>
           Tampereen Urheilusukeltajat ry
         </a>
         <a href="mailto:palaute@tayttopaikka.fi" className={styles.item}>
@@ -20,10 +20,15 @@ export const Footer: React.FC = () => {
         </a>
       </div>
       <div className={styles.row}>
-        <a href="/gdpr" className={styles.item}>
+        <a href="/gdpr" target="_blank" className={styles.item}>
           Tietosuojaseloste
         </a>
-        <a href={happihakkiInstructions} download className={styles.item}>
+        <a
+          href={happihakkiInstructions}
+          target="_blank"
+          download
+          className={styles.item}
+        >
           Happihäkin ohjeet
         </a>
       </div>
