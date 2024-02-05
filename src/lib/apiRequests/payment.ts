@@ -1,5 +1,5 @@
 import { PaymentIntent } from '@stripe/stripe-js';
-import { authGetAsync } from './api';
+import { authGetAsync, authPostAsync } from './api';
 
 export enum PaymentStatus {
   created = 'CREATED',
@@ -25,6 +25,21 @@ export const getPaymentEvent = async (
 ): Promise<PaymentEvent> => {
   const response = await authGetAsync<PaymentEvent>(
     `/api/payment/${paymentEventId}`
+  );
+
+  return response.data;
+};
+
+export const getPaymentEvents = async (): Promise<PaymentEvent[]> => {
+  const response = await authGetAsync<PaymentEvent[]>('/api/payment');
+
+  return response.data;
+};
+
+export const createPaymentEvent = async (): Promise<PaymentEvent> => {
+  const response = await authPostAsync<PaymentEvent, Record<string, unknown>>(
+    '/api/payment',
+    {}
   );
 
   return response.data;
