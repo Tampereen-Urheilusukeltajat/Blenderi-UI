@@ -6,6 +6,7 @@ import {
   TableRow,
 } from '../common/Table/CommonTable';
 import format from 'date-fns/format';
+import { compareDesc } from 'date-fns';
 
 type PaymentsListProps = {
   paymentEvents: PaymentEvent[];
@@ -27,12 +28,19 @@ export const PaymentsList: React.FC<PaymentsListProps> = ({
 }) => {
   const paymentEventTableRows = useMemo(
     () =>
-      paymentEvents.map(
-        (pe): TableRow => ({
-          id: pe.id,
-          mainRow: [format(new Date(pe.createdAt), 'd.MM.yy hh:ss'), pe.status],
-        })
-      ),
+      paymentEvents
+        .sort((a, b) =>
+          compareDesc(new Date(a.createdAt), new Date(b.createdAt))
+        )
+        .map(
+          (pe): TableRow => ({
+            id: pe.id,
+            mainRow: [
+              format(new Date(pe.createdAt), 'dd.MM.yy hh:ss'),
+              pe.status,
+            ],
+          })
+        ),
     [paymentEvents]
   );
 
