@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { usePaymentEventQuery } from '../../lib/queries/paymentQuery';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { StripePayForm } from '../../components/Pay/StripePayForm';
+import { StripePayForm } from '../../components/Payments/StripePayForm';
 
 const stripePublicApiKey = process.env.REACT_APP_STRIPE_PUBLIC_API_KEY;
 if (!stripePublicApiKey) {
