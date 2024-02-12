@@ -20,14 +20,19 @@ export const Pay: React.FC = () => {
       {isError && (
         <div>Jotain meni pieleen. Palaa alkuun ja yritä uudelleen.</div>
       )}
-      {paymentEvent && (
+      {paymentEvent?.stripePaymentClientSecret && (
         <Elements
           options={{
             clientSecret: paymentEvent.stripePaymentClientSecret,
+            appearance: {
+              theme: 'stripe',
+              labels: 'floating',
+            },
           }}
           stripe={stripePromise}
         >
-          <StripePayForm />
+          <h1>Maksa täyttötapahtumat</h1>
+          <StripePayForm paymentEvent={paymentEvent} />
         </Elements>
       )}
     </>
