@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { UseQuery } from './common';
+import { UseMutation, UseQuery } from './common';
 import { PAYMENT_EVENTS, PAYMENT_EVENT_QUERY_KEY } from './queryKeys';
 import {
   PaymentEvent,
@@ -21,6 +21,8 @@ export const usePaymentEventQuery = (
     },
     retry: 0,
     refetchOnWindowFocus: false,
+    cacheTime: 0,
+    staleTime: 0,
   });
 
   return {
@@ -48,8 +50,11 @@ export const usePaymentEventsQuery = (): UseQuery<PaymentEvent[]> => {
   };
 };
 
-export const useCreatePaymentEventMutation = (): UseQuery<PaymentEvent> => {
-  const { isLoading, data, isError } = useMutation({
+export const useCreatePaymentEventMutation = (): UseMutation<
+  PaymentEvent,
+  void
+> => {
+  const { isLoading, data, isError, mutate } = useMutation({
     mutationFn: async () => createPaymentEvent(),
     onError: () => {
       toast.error('Maksutapahtuman luominen epäonnistui. Yritä uudelleen.');
@@ -58,6 +63,7 @@ export const useCreatePaymentEventMutation = (): UseQuery<PaymentEvent> => {
   });
 
   return {
+    mutate,
     data,
     isLoading,
     isError,
