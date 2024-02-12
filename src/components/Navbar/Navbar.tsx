@@ -54,11 +54,12 @@ export const Navbar: React.FC = () => {
                   </div>
                 </CustomLink>
               </div>
-              <TertiaryButton
-                className={styles.logout}
-                onClick={handleLogoutButtonClick}
-                text="Kirjaudu ulos"
-              />
+              <div className={styles.logout}>
+                <TertiaryButton
+                  onClick={handleLogoutButtonClick}
+                  text="Kirjaudu ulos"
+                />
+              </div>
             </Nav>
           </div>
         </BootNavbar.Collapse>
