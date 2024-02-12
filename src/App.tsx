@@ -23,6 +23,7 @@ import { PrivateContent } from './components/common/PrivateContent';
 import { Footer } from './components/Footer/Footer';
 import { ListPayments } from './views/Payment/ListPayments';
 import { Pay } from './views/Payment/Pay';
+import { AfterPaymentLanding } from './views/Payment/AfterPaymentLanding';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -86,6 +87,10 @@ const Content: React.FC = () => {
             <Route path="payment">
               <Route path="" element={<ListPayments />} />
               <Route path=":paymentEventId/pay" element={<Pay />} />
+              <Route
+                path=":paymentEventId/success"
+                element={<AfterPaymentLanding />}
+              />
             </Route>
           </Route>
 
