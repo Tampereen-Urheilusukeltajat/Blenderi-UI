@@ -58,6 +58,7 @@ export const ElementButton: React.FC<ElementButtonProps> = ({
 };
 
 export const PrimaryButton: React.FC<TextButtonProps> = ({
+  className,
   disabled,
   key,
   onClick,
@@ -66,7 +67,7 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
 }) => (
   <button
     id={styles.commonButton}
-    className={styles.primaryButton}
+    className={`${styles.primaryButton as string} ${className ?? ''}`}
     disabled={disabled}
     key={key}
     onClick={onClick}
@@ -77,6 +78,7 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
 );
 
 export const SecondaryButton: React.FC<TextButtonProps> = ({
+  className,
   disabled,
   key,
   onClick,
@@ -85,7 +87,7 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
 }) => (
   <button
     id={styles.commonButton}
-    className={styles.secondaryButton}
+    className={`${styles.secondaryButton as string} ${className ?? ''}`}
     disabled={disabled}
     key={key}
     onClick={onClick}
@@ -96,6 +98,7 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
 );
 
 export const TertiaryButton: React.FC<TextButtonProps> = ({
+  className,
   disabled,
   key,
   onClick,
@@ -104,7 +107,7 @@ export const TertiaryButton: React.FC<TextButtonProps> = ({
 }) => (
   <button
     id={styles.commonButton}
-    className={styles.tertiaryButton}
+    className={`${styles.tertiaryButton as string} ${className ?? ''}`}
     disabled={disabled}
     key={key}
     onClick={onClick}
