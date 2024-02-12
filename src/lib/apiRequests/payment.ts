@@ -14,6 +14,7 @@ export type PaymentEvent = {
   status: PaymentStatus;
   createdAt: string;
   updatedAt: string;
+  totalAmountEurCents: number;
   stripePaymentMethod?: string;
   stripeAmountEurCents?: number;
   stripePaymentStatus?: PaymentIntent.Status;
