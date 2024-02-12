@@ -7,7 +7,16 @@ export const GDPR: React.FC = () => {
       <h2>
         Tämä on Tampereen Urheilusukeltajat ry:n (Taursu) EU:n yleisen
         tietosuoja-asetuksen (GDPR) mukainen rekisteri- ja tietosuojaseloste.
-        Laadittu 30.11.2022. Viimeisin muutos 18.04.2023.
+        Laadittu 30.11.2022. Viimeisin muutos 12.02.2024.
+      </h2>
+      <h2>
+        Huomaathan, että tämä rekisteri- ja tietosuojaseloste soveltuu
+        ainoastaan Täyttöpaikan rekisterinpitäjänä suorittamaan henkilötietojen
+        käsittelyyn. Maksutapahtumien osalta rekisterinpitäjänä toimii Stripe.
+        Stripen tietosuojaselosteet ovat luettavissa osoitteesta{' '}
+        <a href="https://stripe.com/en-fi/legal/ssa" target="_blank">
+          https://stripe.com/en-fi/legal/ssa
+        </a>
       </h2>
       <ul style={{ listStyle: 'none', padding: '0' }}>
         <li style={{ margin: '12px 0' }}>
