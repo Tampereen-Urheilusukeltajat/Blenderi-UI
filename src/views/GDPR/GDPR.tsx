@@ -1,8 +1,9 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 
 export const GDPR: React.FC = () => {
   return (
-    <div>
+    <Container className="pt-4">
       <h1>Rekisteri- ja tietosuojaseloste</h1>
       <h2>
         Tämä on Tampereen Urheilusukeltajat ry:n (Taursu) EU:n yleisen
@@ -156,6 +157,6 @@ export const GDPR: React.FC = () => {
           </p>
         </li>
       </ul>
-    </div>
+    </Container>
   );
 };
