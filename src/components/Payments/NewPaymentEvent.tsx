@@ -7,8 +7,9 @@ type NewPaymentEventProps = {
   creatingNewPaymentEventDisabled: boolean;
   totalPrice: number;
   totalFillEvents: number;
-  firstPaymentEventDate: Date;
-  lastPaymentEventDate: Date;
+  firstPaymentEventDate?: Date;
+  lastPaymentEventDate?: Date;
+  onNewPaymentEventButtonClick: () => void;
 };
 
 export const NewPaymentEvent: React.FC<NewPaymentEventProps> = ({
@@ -17,6 +18,7 @@ export const NewPaymentEvent: React.FC<NewPaymentEventProps> = ({
   totalFillEvents,
   totalPrice,
   creatingNewPaymentEventDisabled,
+  onNewPaymentEventButtonClick,
 }) => {
   return (
     <div className="pb-4">
@@ -35,13 +37,17 @@ export const NewPaymentEvent: React.FC<NewPaymentEventProps> = ({
             sallittu maksu on 10&nbsp;€.
           </p>
           <p>
-            Maksupalvelun tarjoaa{' '}
+            Maksupalvelun tarjoaa kansainvälinen maksunvälittäjä{' '}
             <a href="https://stripe.com/en-fi" target="_blank">
               Stripe
             </a>
-            .
+            . Maksaessasi hyväksyt myös{' '}
+            <a href="https://stripe.com/en-fi/legal/ssa" target="_blank">
+              Stripen ehdot.
+            </a>
           </p>
           <PrimaryButton
+            onClick={onNewPaymentEventButtonClick}
             disabled={creatingNewPaymentEventDisabled}
             text="Aloita maksutapahtuma"
           />
@@ -64,8 +70,13 @@ export const NewPaymentEvent: React.FC<NewPaymentEventProps> = ({
           <div>
             <span>Aikaväli: </span>
             <span>
-              {format(firstPaymentEventDate, 'd.M.yy')} -{' '}
-              {format(lastPaymentEventDate, 'd.M.yy')}
+              {firstPaymentEventDate
+                ? format(firstPaymentEventDate, 'd.M.yy')
+                : ''}{' '}
+              -{' '}
+              {lastPaymentEventDate
+                ? format(lastPaymentEventDate, 'd.M.yy')
+                : ''}
             </span>
           </div>
         </div>
