@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+.box {
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 0 20px $grey;
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.leftBorder {
+  border-left: 1px solid $grey;
+  padding-left: 1rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.total {
+  font-size: large;
+}
+
+.sum {
+  font-weight: bold;
+}

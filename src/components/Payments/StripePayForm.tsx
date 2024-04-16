@@ -1,95 +1,153 @@
-import {
-  PaymentElement,
-  useElements,
-  useStripe,
-} from '@stripe/react-stripe-js';
-import { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { AddressElement, PaymentElement } from '@stripe/react-stripe-js';
+import { FormEvent, useCallback } from 'react';
+import styles from './StripePayForm.module.scss';
+import { PrimaryButton, SecondaryButton } from '../common/Button/Buttons';
+import { PaymentEvent } from '../../lib/apiRequests/payment';
+import { formatEurCentsToEur } from '../../lib/utils';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { UseMutation } from '../../lib/queries/common';
+import { Stripe, StripeElements } from '@stripe/stripe-js';
+import { toast } from 'react-toastify';
 
-export const StripePayForm: React.FC = () => {
-  const stripe = useStripe();
-  const elements = useElements();
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+if (!BASE_URL) throw new Error('Env variable "REACT_APP_BASE_URL" is not set');
 
-  const [message, setMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+type StripePayFormProps = {
+  paymentEvent: PaymentEvent;
+  stripe: Stripe;
+  elements: StripeElements;
+};
 
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
+const useStripeConfirmPayment = (
+  paymentEventId: string,
+  stripe: Stripe,
+  elements: StripeElements
+): UseMutation<void, void> => {
+  const { isLoading, isError, mutate } = useMutation({
+    mutationFn: async () =>
+      stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${BASE_URL}/payment/${paymentEventId}/success`,
+        },
+      }),
+    // onSuccess actually fires only when there has been an error :D
+    // If the payment is really succesful the user will be redirected
+    // to return_url and the app will handle the situation from there
+    // See AfterPaymentLanding.tsx
+    onSuccess: ({ error }) => {
+      toast.error(error.message ?? 'Tuntematon virhe. Yritä uudelleen');
+    },
+    onError: () => {
+      toast.error('Tuntematon virhe. Yritä uudelleen');
+    },
+  });
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret'
-    );
-
-    if (!clientSecret) {
-      return;
-    }
-
-    void stripe
-      .retrievePaymentIntent(clientSecret)
-      .then(({ paymentIntent }) => {
-        switch (paymentIntent?.status) {
-          case 'succeeded':
-            setMessage('Payment succeeded!');
-            break;
-          case 'processing':
-            setMessage('Your payment is processing.');
-            break;
-          case 'requires_payment_method':
-            setMessage('Your payment was not successful, please try again.');
-            break;
-          default:
-            setMessage('Something went wrong.');
-            break;
-        }
-      });
-  }, [stripe]);
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-explicit-any
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
-      return;
-    }
-
-    setIsLoading(true);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000',
-      },
-    });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message ?? '');
-    } else {
-      setMessage('An unexpected error occurred.');
-    }
-
-    setIsLoading(false);
+  return {
+    mutate,
+    isLoading,
+    isError,
   };
+};
+
+export const StripePayForm: React.FC<StripePayFormProps> = ({
+  paymentEvent,
+  elements,
+  stripe,
+}) => {
+  const navigate = useNavigate();
+  const { mutate: confirmStripePayment, isLoading } = useStripeConfirmPayment(
+    paymentEvent.id,
+    stripe,
+    elements
+  );
+
+  const handleCancel = useCallback(() => {
+    navigate('/payment');
+  }, [navigate]);
+
+  const handleSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+
+      confirmStripePayment();
+    },
+    [confirmStripePayment]
+  );
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={{ layout: 'tabs' }} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}
-        </span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+    <div className={`${styles.box as string}`}>
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <div className="d-flex gap-3">
+          <div className="w-75">
+            <h2>Maksa kortilla</h2>
+            <AddressElement
+              options={{
+                mode: 'billing',
+                allowedCountries: ['fi'],
+              }}
+            />
+            <PaymentElement
+              id="payment-element"
+              options={{
+                layout: 'tabs',
+                business: {
+                  name: 'Tampereen Urheilusukeltajat ry',
+                },
+              }}
+            />
+
+            <div className="d-flex pt-4 gap-2 justify-content-end w-100">
+              <PrimaryButton
+                className="w-50"
+                disabled={isLoading}
+                text="Maksa"
+                onClick={handleSubmit}
+              />
+              <SecondaryButton
+                className="w-50"
+                disabled={isLoading}
+                text="Palaa takaisin"
+                onClick={handleCancel}
+              />
+            </div>
+          </div>
+
+          <div className={styles.leftBorder}>
+            <div className="d-flex flex-column">
+              <div className={`${styles.info as string}`}>
+                <h2>Maksun tiedot</h2>
+                <p>
+                  Maksu happihäkissä suoritetuista kaasutäytöistä. Maksu
+                  suoritetaan Tampereen Urheilusukeltajat ry:lle.
+                </p>
+                <p className={styles.total}>
+                  Hinta yhteensä{' '}
+                  <span className={styles.sum}>
+                    {formatEurCentsToEur(
+                      paymentEvent.stripeAmountEurCents ?? 0
+                    )}{' '}
+                  </span>
+                  €
+                </p>
+              </div>
+            </div>
+            <p>
+              Maksupalvelun tarjoaa{' '}
+              <a href="https://stripe.com/en-fi" target="_blank">
+                Stripe
+              </a>
+              . Maksamalla hyväksyt{' '}
+              <a href="https://stripe.com/en-fi/legal/ssa" target="_blank">
+                Stripen ehdot
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };

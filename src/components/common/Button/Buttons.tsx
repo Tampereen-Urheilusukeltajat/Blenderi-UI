@@ -26,6 +26,7 @@ export type ElementButtonProps = CommonButtonProps & {
 };
 
 export const ElementButton: React.FC<ElementButtonProps> = ({
+  className,
   disabled,
   key,
   element,
@@ -39,9 +40,9 @@ export const ElementButton: React.FC<ElementButtonProps> = ({
   );
 
   return (
-    <>
+    <div className={className}>
       <button
-        className={styles.elementButton}
+        className={`${styles.elementButton as string} `}
         data-tooltip-id={tooltipId}
         data-tooltip-content={tooltip}
         disabled={disabled}
@@ -53,7 +54,7 @@ export const ElementButton: React.FC<ElementButtonProps> = ({
         {element}
       </button>
       {tooltip && <Tooltip id={tooltipId} />}
-    </>
+    </div>
   );
 };
 

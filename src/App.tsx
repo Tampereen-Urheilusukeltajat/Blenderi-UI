@@ -14,7 +14,7 @@ import { FillEvents } from './views/FillEvents';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { GDPR } from './views/GDPR';
+import { GDPR } from './views/GDPR/GDPR';
 import { FrontPage } from './views/FrontPage/FrontPage';
 import { PasswordResetRequest } from './views/PasswordResetRequest/PasswordResetRequest';
 import { ResetPassword } from './views/ResetPassword/ResetPassword';

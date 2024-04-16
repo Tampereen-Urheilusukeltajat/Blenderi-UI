@@ -8,6 +8,8 @@ import {
 import format from 'date-fns/format';
 import compareDesc from 'date-fns/compareDesc';
 import { formatEurCentsToEur } from '../../lib/utils';
+import { PrimaryButton } from '../common/Button/Buttons';
+import { useNavigate } from 'react-router-dom';
 
 type PaymentsListProps = {
   paymentEvents: PaymentEvent[];
@@ -35,19 +37,21 @@ const PAYMENT_EVENTS_COLUMNS: TableColumn[] = [
 const getDisplayTextForPaymentEvent = (status: PaymentStatus): string => {
   switch (status) {
     case PaymentStatus.completed:
-      return 'Maksu suoritettu onnistuneesti';
+      return 'Maksu onnistui';
     case PaymentStatus.created:
       return 'Maksutapahtuma on luotu, mutta maksua ei ole vielä suoritettu';
     case PaymentStatus.failed:
-      return 'Maksutapahtuma epäonnistui. Yritä uudelleen';
+      return 'Maksu epäonnistui';
     case PaymentStatus.inProgress:
-      return 'Maksutapahtuma on vielä kesken. Tarkista tilanne uudestaan hetken kulttua';
+      return 'Maksu on vielä kesken. Tarkista tilanne uudestaan hetken kulttua';
   }
 };
 
 export const PaymentsList: React.FC<PaymentsListProps> = ({
   paymentEvents,
 }) => {
+  const navigate = useNavigate();
+
   const paymentEventTableRows = useMemo(
     () =>
       paymentEvents
@@ -61,10 +65,17 @@ export const PaymentsList: React.FC<PaymentsListProps> = ({
               format(new Date(pe.createdAt), 'dd.MM.yy - HH:mm'),
               getDisplayTextForPaymentEvent(pe.status),
               formatEurCentsToEur(pe.totalAmountEurCents) ?? 0,
+              <div className="d-flex gap-2 p-2">
+                <PrimaryButton
+                  disabled={pe.status !== PaymentStatus.created}
+                  text="Siirry maksamaan"
+                  onClick={() => navigate(`/payment/${pe.id}/pay`)}
+                />
+              </div>,
             ],
           })
         ),
-    [paymentEvents]
+    [paymentEvents, navigate]
   );
 
   return (

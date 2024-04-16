@@ -12,7 +12,7 @@ export const AfterPaymentLanding: React.FC = () => {
 
   useEffect(() => {
     if (paymentEvent?.status === PaymentStatus.completed) {
-      toast.success('Kiitos maksustasi.');
+      toast.success('Kiitos maksustasi');
       navigate('/payment');
     }
     if (paymentEvent?.status === PaymentStatus.failed) {
@@ -23,12 +23,12 @@ export const AfterPaymentLanding: React.FC = () => {
     }
     if (paymentEvent?.status === PaymentStatus.inProgress) {
       toast.warning(
-        'Maksu on vielä kesken. Tarkista maksun tila hetken kulttua uudestaan.'
+        'Maksu on vielä kesken. Tarkista maksun tila hetken kulttua uudestaan'
       );
       navigate('/payment');
     }
     if (paymentEvent?.status === PaymentStatus.created) {
-      toast.error('Jotain meni pieleen. Tarkista maksun tiedot.');
+      toast.error('Jotain meni pieleen. Tarkista maksun tiedot');
       navigate('/payment');
     }
   }, [paymentEvent, navigate]);

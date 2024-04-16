@@ -64,10 +64,7 @@ $white: #ffffff;
 }
 
 .elementButton {
+  background: $transparent;
   padding: 0.5rem 1rem;
   min-width: 100% !important;
-
-  &:hover:not(:disabled) {
-    background-color: $grey;
-  }
 }

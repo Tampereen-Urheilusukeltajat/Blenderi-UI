@@ -3,7 +3,7 @@ import { BsPencil, BsTrash } from 'react-icons/bs';
 import { ElementButton, ElementButtonProps } from '../Button/Buttons';
 import styles from './CommonTable.module.scss';
 
-type Row = Array<number | string | null>;
+type Row = Array<number | JSX.Element | string | null>;
 
 export type TableColumn = {
   title: string;
@@ -26,7 +26,7 @@ type CommonTableProps = {
   onRowDelete?: (id: string) => void;
 };
 
-const ElementButtonCell: React.FC<ElementButtonProps> = ({
+export const ElementButtonCell: React.FC<ElementButtonProps> = ({
   onClick,
   element,
 }): JSX.Element => {

@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { usePaymentEventQuery } from '../../lib/queries/paymentQuery';
-import { Elements } from '@stripe/react-stripe-js';
+import { Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { StripePayForm } from '../../components/Payments/StripePayForm';
+import { PaymentEvent } from '../../lib/apiRequests/payment';
 
 const stripePublicApiKey = process.env.REACT_APP_STRIPE_PUBLIC_API_KEY;
 if (!stripePublicApiKey) {
@@ -10,6 +11,26 @@ if (!stripePublicApiKey) {
 }
 
 const stripePromise = loadStripe(stripePublicApiKey);
+
+const StripePaymentForm: React.FC<{ paymentEvent: PaymentEvent }> = ({
+  paymentEvent,
+}) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  return (
+    <>
+      <h1>Maksa täyttötapahtumat</h1>
+      {stripe && elements && (
+        <StripePayForm
+          paymentEvent={paymentEvent}
+          elements={elements}
+          stripe={stripe}
+        />
+      )}
+    </>
+  );
+};
 
 export const Pay: React.FC = () => {
   const { paymentEventId } = useParams<{ paymentEventId: string }>();
@@ -31,8 +52,7 @@ export const Pay: React.FC = () => {
           }}
           stripe={stripePromise}
         >
-          <h1>Maksa täyttötapahtumat</h1>
-          <StripePayForm paymentEvent={paymentEvent} />
+          <StripePaymentForm paymentEvent={paymentEvent} />
         </Elements>
       )}
     </>
