@@ -11,7 +11,11 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  ignorePatterns: ['.eslintrc.js, playwright.config.js'],
+  ignorePatterns: [
+    '.eslintrc.js, playwright.config.js',
+    'vite.config.ts',
+    'vite-env.d.ts',
+  ],
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 'latest',
