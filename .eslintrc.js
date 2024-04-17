@@ -47,5 +47,9 @@ module.exports = {
     '@typescript-eslint/indent': 'off',
     'no-trailing-spaces': 'warn',
     'no-undef': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      { checksVoidReturn: { attributes: false } },
+    ],
   },
 };

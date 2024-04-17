@@ -134,7 +134,9 @@ export const RegisterForm: React.FC = () => {
             */}
             <Turnstile
               siteKey={TURNSTILE_SITE_KEY}
-              onSuccess={(token) => setFieldValue('turnstileToken', token)}
+              onSuccess={async (token) =>
+                setFieldValue('turnstileToken', token)
+              }
               options={{
                 appearance: 'interaction-only',
                 theme: 'light',
