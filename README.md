@@ -1,3 +1,3 @@
-# Blenderi-UI
+# Tayttopaikka
 
-To compile sass files run `npx sass --watch <input file>.sass <output file>.css --no-source-map`.
+Basic React app to provide UI for Tayttopaikka. Running at https://tayttopaikka.fi
