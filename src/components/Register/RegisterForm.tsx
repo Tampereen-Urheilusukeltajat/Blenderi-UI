@@ -18,7 +18,7 @@ type RegisterFormFields = {
   turnstileToken: string;
 };
 
-const TURNSTILE_SITE_KEY = process.env.REACT_APP_TURNSTILE_SITE_KEY;
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
 export const RegisterForm: React.FC = () => {
   if (TURNSTILE_SITE_KEY === undefined) {
@@ -45,7 +45,7 @@ export const RegisterForm: React.FC = () => {
         turnstileToken,
       });
     },
-    [mutate]
+    [mutate],
   );
 
   return (
@@ -134,7 +134,9 @@ export const RegisterForm: React.FC = () => {
             */}
             <Turnstile
               siteKey={TURNSTILE_SITE_KEY}
-              onSuccess={(token) => setFieldValue('turnstileToken', token)}
+              onSuccess={async (token) =>
+                setFieldValue('turnstileToken', token)
+              }
               options={{
                 appearance: 'interaction-only',
                 theme: 'light',

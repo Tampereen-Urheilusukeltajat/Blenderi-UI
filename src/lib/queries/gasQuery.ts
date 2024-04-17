@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { getGases } from '../apiRequests/gasRequests';
-import { AvailableGasses } from '../utils';
-import { UseQuery } from './common';
+import { type AvailableGasses } from '../utils';
+import { type UseQuery } from './common';
 import { GAS_QUERY } from './queryKeys';
+import { useEffect } from 'react';
 
 export type GasWithPricing = {
   activeFrom: string;
@@ -18,12 +19,16 @@ export const useGasesQuery = (): UseQuery<GasWithPricing[]> => {
   const { isLoading, data, isError } = useQuery({
     queryKey: GAS_QUERY,
     queryFn: async () => getGases(),
-    onError: () => {
-      toast.error('Kaasujen hakeminen epäonnistui. Yritä uudelleen.');
-    },
+
     retry: 1,
     staleTime: 1000 * 60 * 60, // One hour
   });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Kaasujen hakeminen epäonnistui. Yritä uudelleen.');
+    }
+  }, [isError]);
 
   return {
     data,

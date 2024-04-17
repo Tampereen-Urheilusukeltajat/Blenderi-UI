@@ -1,16 +1,16 @@
-import { FieldArray, FieldArrayRenderProps, Formik, Form } from 'formik';
+import { FieldArray, type FieldArrayRenderProps, Formik, Form } from 'formik';
 import React, { useCallback, useMemo } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import {
-  DivingCylinderSetPostRequest,
-  DivingCylinderSetTable,
+  type DivingCylinderSetPostRequest,
+  type DivingCylinderSetTable,
   postDivingCylinderSet,
 } from '../../lib/apiRequests/divingCylinderSetRequests';
 import {
-  DivingCylinder,
-  DivingCylinderSet,
+  type DivingCylinder,
+  type DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
 import {
   ButtonType,
@@ -21,7 +21,7 @@ import { getUserIdFromAccessToken } from '../../lib/utils';
 import { toast } from 'react-toastify';
 import { NEW_CYLINDER_SET_VALIDATION_SCHEMA } from './validation';
 import { TextInput, DropdownMenu } from '../common/Inputs';
-import { AxiosError } from 'axios';
+import { type AxiosError } from 'axios';
 import styles from './NewDivingCylinderSet.module.scss';
 
 type FormDivingCylinder = Omit<DivingCylinder, 'id'> & { uniqueId: string };
@@ -30,7 +30,7 @@ const EmptyDivingCylinder = (
   material = 'steel',
   pressure = 0,
   inspection = '',
-  volume = 0
+  volume = 0,
 ): FormDivingCylinder => ({
   material,
   pressure,
@@ -64,11 +64,11 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
           <ElementButton
             tooltip="Poista pullo"
             element={<BsTrash />}
-            onClick={() =>
+            onClick={() => {
               lastItem && index === 0
                 ? replace(index, { ...EmptyDivingCylinder() })
-                : remove(index)
-            }
+                : remove(index);
+            }}
           />
         </div>
 
@@ -110,16 +110,16 @@ const NewDivingCylinderRow: React.FC<NewDivingCylinderRowProps> = ({
       </div>
       {lastItem ? (
         <ElementButton
-          onClick={() =>
+          onClick={() => {
             push({
               ...EmptyDivingCylinder(
                 firstCylinder?.material,
                 firstCylinder?.pressure,
                 firstCylinder?.inspection,
-                firstCylinder?.volume
+                firstCylinder?.volume,
               ),
-            })
-          }
+            });
+          }}
           type={ButtonType.button}
           element={<>Lisää pullo</>}
         />
@@ -137,7 +137,7 @@ export const NewDivingCylinderSet: React.FC = () => {
       postDivingCylinderSet(payload),
     onSuccess: (cylinderSet) => {
       const cylinderSets = queryClient.getQueryData<DivingCylinderSet[]>(
-        DIVING_CYLINDER_SETS_QUERY_KEY(userId)
+        DIVING_CYLINDER_SETS_QUERY_KEY(userId),
       );
 
       queryClient.setQueryData(DIVING_CYLINDER_SETS_QUERY_KEY(userId), [
@@ -148,7 +148,7 @@ export const NewDivingCylinderSet: React.FC = () => {
     },
     onError: (res: AxiosError) => {
       toast.error(
-        'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+        'Uuden pullosetin luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.',
       );
     },
   });
@@ -177,7 +177,7 @@ export const NewDivingCylinderSet: React.FC = () => {
         resetForm(values);
       }
     },
-    [cylinderSetMutation, resetForm]
+    [cylinderSetMutation, resetForm],
   );
 
   return (

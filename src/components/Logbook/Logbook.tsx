@@ -1,18 +1,18 @@
-import { Form, Formik, FormikValues } from 'formik';
+import { Form, Formik, type FormikValues } from 'formik';
 import { AirLogbookSavingTile } from './components/SavingTile';
 import { LogbookFillingTile } from './components/FillingTile';
 import {
   LogbookBasicInfoTile,
-  LogbookFillingEventRow,
+  type LogbookFillingEventRow,
 } from './components/LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { NewFillEvent } from '../../interfaces/FillEvent';
+import { type NewFillEvent } from '../../interfaces/FillEvent';
 import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
 import styles from './Logbook.module.scss';
-import { Compressor } from '../../lib/queries/compressorQuery';
-import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
+import { type Compressor } from '../../lib/queries/compressorQuery';
+import { type DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 
 type FillingEventBasicInfo = {
   additionalInformation: string;
@@ -49,7 +49,7 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
     },
     onError: () => {
       toast.error(
-        'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+        'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.',
       );
     },
   });
@@ -66,7 +66,7 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
           storageCylinderUsageArr: [],
           compressorId: values.compressorId,
         },
-        {}
+        {},
       );
     }
   };

@@ -1,16 +1,16 @@
 import { authGetAsync, authPostAsync } from './api';
 import {
-  FillEvent,
-  CreatedFillEvent,
-  NewFillEvent,
+  type FillEvent,
+  type CreatedFillEvent,
+  type NewFillEvent,
 } from '../../interfaces/FillEvent';
 
 export const postFillEvent = async (
-  payload: NewFillEvent
+  payload: NewFillEvent,
 ): Promise<CreatedFillEvent> => {
   const response = await authPostAsync<CreatedFillEvent, NewFillEvent>(
     '/api/fill-event/',
-    payload
+    payload,
   );
   return response.data;
 };

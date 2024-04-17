@@ -1,16 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import {
-  ResetRequestPayload,
-  ResetRequestResponse,
+  type ResetRequestPayload,
+  type ResetRequestResponse,
   passwordResetRequest,
 } from '../apiRequests/passwordResetRequest';
-import { UseMutation } from './common';
+import { type UseMutation } from './common';
 import { toast } from 'react-toastify';
 
 export const usePasswordResetRequestMutation = (
-  onSuccess: () => void
+  onSuccess: () => void,
 ): UseMutation<ResetRequestResponse, ResetRequestPayload> => {
-  const { isError, isLoading, data, mutate } = useMutation({
+  const { isError, isPending, data, mutate } = useMutation({
     mutationFn: async (payload: ResetRequestPayload) =>
       passwordResetRequest(payload),
     onError: () => {
@@ -24,7 +24,7 @@ export const usePasswordResetRequestMutation = (
 
   return {
     isError,
-    isLoading,
+    isPending,
     data,
     mutate,
   };

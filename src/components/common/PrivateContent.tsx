@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Navbar } from '../Navbar/Navbar';
-import { PrivateRouteProps, ProtectedRoute } from './Auth';
+import { type PrivateRouteProps, ProtectedRoute } from './Auth';
 import { Container } from 'react-bootstrap';
 
 type PrivateContentProps = Omit<PrivateRouteProps, 'children'>;

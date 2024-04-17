@@ -1,12 +1,12 @@
-import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
+import { type DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import React from 'react';
 import {
   AvailableGasses,
   AvailableMixtureCompositions,
 } from '../../../lib/utils';
-import { CommonTileProps } from '../BlenderLogbook';
-import { Compressor } from '../../../lib/queries/compressorQuery';
+import { type CommonTileProps } from '../BlenderLogbook';
+import { type Compressor } from '../../../lib/queries/compressorQuery';
 
 type BasicInfoTileProps = CommonTileProps & {
   divingCylinderSets: DivingCylinderSet[];
@@ -83,7 +83,7 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
           disabled={
             values.userConfirm ||
             AvailableMixtureCompositions.find(
-              (m) => m.id === values.gasMixture
+              (m) => m.id === values.gasMixture,
             )?.components.includes(AvailableGasses.oxygen) === false
           }
           errorText={errors.oxygenPercentage}
@@ -95,7 +95,7 @@ export const BasicInfoTile: React.FC<BasicInfoTileProps> = ({
           disabled={
             values.userConfirm ||
             AvailableMixtureCompositions.find(
-              (m) => m.id === values.gasMixture
+              (m) => m.id === values.gasMixture,
             )?.components.includes(AvailableGasses.helium) === false
           }
           errorText={errors.heliumPercentage}

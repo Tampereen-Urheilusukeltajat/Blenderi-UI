@@ -6,12 +6,16 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'standard-with-typescript',
+    'eslint-config-love',
     'plugin:react-hooks/recommended',
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-  ignorePatterns: ['.eslintrc.js, playwright.config.js'],
+  ignorePatterns: [
+    '.eslintrc.js, playwright.config.js',
+    'vite.config.ts',
+    'vite-env.d.ts',
+  ],
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 'latest',
@@ -43,5 +47,10 @@ module.exports = {
     '@typescript-eslint/indent': 'off',
     'no-trailing-spaces': 'warn',
     'no-undef': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      { checksVoidReturn: { attributes: false } },
+    ],
+    '@typescript-eslint/unbound-method': 'off',
   },
 };

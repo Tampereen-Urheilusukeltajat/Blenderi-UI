@@ -35,7 +35,7 @@ export const ElementButton: React.FC<ElementButtonProps> = ({
 }) => {
   const tooltipId = useMemo(
     () => (tooltip ? crypto.randomUUID() : ''),
-    [tooltip]
+    [tooltip],
   );
 
   return (

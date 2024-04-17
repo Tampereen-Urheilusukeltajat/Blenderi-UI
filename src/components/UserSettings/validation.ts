@@ -20,12 +20,12 @@ export const USER_SETTINGS_VALIDATION_SCHEMA = yup.object().shape({
         try {
           return phoneUtil.isValidNumberForRegion(
             phoneUtil.parse(phoneNumber),
-            'FI'
+            'FI',
           );
         } catch (error) {
           return false;
         }
-      }
+      },
     ),
   surname: yup.string().required(FIELD_REQUIRED),
   newPassword: yup.string().min(8, PASSWORD_MIN_LENGTH),

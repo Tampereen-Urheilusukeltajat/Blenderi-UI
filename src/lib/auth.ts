@@ -1,5 +1,5 @@
 import { postAsync } from './apiRequests/api';
-import { LoginResponse } from './apiRequests/login';
+import { type LoginResponse } from './apiRequests/login';
 import { getTokenFromLocalStorage, tokenExpired } from './utils';
 
 export type AccessToken = {
@@ -22,13 +22,13 @@ export type RefreshToken = AccessToken & {
  * @returns fresh tokens
  */
 export const rotateTokens = async (
-  refreshToken: string
+  refreshToken: string,
 ): Promise<LoginResponse> => {
   const res = await postAsync<LoginResponse, { refreshToken: string }>(
     '/api/refresh',
     {
       refreshToken,
-    }
+    },
   );
 
   localStorage.setItem('accessToken', res.data.accessToken);

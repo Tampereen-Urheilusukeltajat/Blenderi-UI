@@ -11,11 +11,11 @@ export type ResetResponse = {
 };
 
 export const resetPassword = async (
-  payload: ResetPayload
+  payload: ResetPayload,
 ): Promise<ResetResponse> =>
   (
     await postAsync<ResetResponse, ResetPayload>(
       '/api/reset-password/set-password/',
-      payload
+      payload,
     )
   ).data;

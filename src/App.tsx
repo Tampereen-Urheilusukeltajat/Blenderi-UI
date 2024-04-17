@@ -46,7 +46,9 @@ const Content: React.FC = () => {
       return;
     }
 
-    setTimeout(() => setShowSpinner(false), 150);
+    setTimeout(() => {
+      setShowSpinner(false);
+    }, 150);
   }, [isFetching]);
 
   return (

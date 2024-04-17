@@ -1,7 +1,7 @@
 import { FieldArray } from 'formik';
 import { BsTrash } from 'react-icons/bs';
 import { EmptyLogbookFillingEventRow } from '../Logbook';
-import { DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
+import { type DivingCylinderSet } from '../../../interfaces/DivingCylinderSet';
 import {
   ElementButton,
   PrimaryButton,
@@ -10,7 +10,7 @@ import {
 import { DropdownMenu } from '../../common/Inputs';
 import React from 'react';
 import styles from './FillingTile.module.scss';
-import { LogbookCommonTileProps } from './LogBookBasicInfoTile';
+import { type LogbookCommonTileProps } from './LogBookBasicInfoTile';
 
 type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   index: number;
@@ -18,7 +18,7 @@ type LogbookFillingEventRowProps = LogbookCommonTileProps & {
   setFieldValue: (
     field: string,
     value: unknown,
-    shouldValidate?: boolean
+    shouldValidate?: boolean,
   ) => void;
   divingCylinderSets: DivingCylinderSet[];
 };
@@ -27,7 +27,7 @@ type AirLogbookFillingTileProps = LogbookCommonTileProps & {
   setFieldValue: (
     field: string,
     value: unknown,
-    shouldValidate?: boolean
+    shouldValidate?: boolean,
   ) => void;
   divingCylinderSets: DivingCylinderSet[];
 };
@@ -48,7 +48,7 @@ export const LogbookFillingEventRowComponent: React.FC<
             key={dcs.id}
             value={dcs.id}
             disabled={values.fillingEventRows.some(
-              (row) => row.divingCylinderSet === dcs.id
+              (row) => row.divingCylinderSet === dcs.id,
             )}
           >
             {dcs.name}
@@ -66,7 +66,9 @@ export const LogbookFillingEventRowComponent: React.FC<
         disabled={values.userConfirm}
         className="deleteRowButton"
         element={<BsTrash />}
-        onClick={() => remove(index)}
+        onClick={() => {
+          remove(index);
+        }}
       />
     </div>
   </div>
@@ -98,11 +100,11 @@ export const LogbookFillingTile: React.FC<AirLogbookFillingTileProps> = ({
             <div className={styles.addRow}>
               <PrimaryButton
                 disabled={values.userConfirm}
-                onClick={() =>
+                onClick={() => {
                   push({
                     ...EmptyLogbookFillingEventRow(),
-                  })
-                }
+                  });
+                }}
                 text="Lisää rivi"
                 type={ButtonType.button}
               />

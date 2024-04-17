@@ -1,4 +1,4 @@
-FROM node:18-alpine as build
+FROM node:20-alpine as build
 
 ENV NODE_ENV production
 
@@ -14,4 +14,4 @@ RUN npm run build
 # Serve app with nginx
 FROM nginx:1.25.1
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /react-app/build /usr/share/nginx/html
+COPY --from=build /react-app/dist /usr/share/nginx/html

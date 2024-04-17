@@ -1,4 +1,4 @@
-import { GasWithPricing } from '../queries/gasQuery';
+import { type GasWithPricing } from '../queries/gasQuery';
 import { authGetAsync } from './api';
 
 export const getGases = async (): Promise<GasWithPricing[]> => {

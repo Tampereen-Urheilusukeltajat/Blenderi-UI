@@ -19,7 +19,7 @@ export const linkIsActive = (timestamp: string): boolean => {
 
   // tokens expire in 10 minutes
   const tokenExpirationTime = new Date(
-    tokenCreationTime.getTime() + 10 * 60000
+    tokenCreationTime.getTime() + 10 * 60000,
   );
 
   return new Date() < tokenExpirationTime;
@@ -51,7 +51,7 @@ export const ResetPasswordForm: React.FC<{
         password: formFields.password,
       });
     },
-    [token, userId, mutate, tokenCreationTimestamp]
+    [token, userId, mutate, tokenCreationTimestamp],
   );
 
   return (
