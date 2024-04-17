@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { getUser, User } from '../apiRequests/userRequests';
-import { UseQuery } from './common';
+import { getUser, type User } from '../apiRequests/userRequests';
+import { type UseQuery } from './common';
 import { USER_QUERY_KEY } from './queryKeys';
 import { useEffect } from 'react';
 

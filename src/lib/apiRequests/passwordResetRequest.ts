@@ -9,11 +9,11 @@ export type ResetRequestResponse = {
 };
 
 export const passwordResetRequest = async (
-  payload: ResetRequestPayload
+  payload: ResetRequestPayload,
 ): Promise<ResetRequestResponse> =>
   (
     await postAsync<ResetRequestResponse, ResetRequestPayload>(
       '/api/reset-password/reset-request/',
-      payload
+      payload,
     )
   ).data;

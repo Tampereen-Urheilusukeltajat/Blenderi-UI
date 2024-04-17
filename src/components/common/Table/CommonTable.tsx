@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { BsPencil, BsTrash } from 'react-icons/bs';
-import { ElementButton, ElementButtonProps } from '../Button/Buttons';
+import { ElementButton, type ElementButtonProps } from '../Button/Buttons';
 import styles from './CommonTable.module.scss';
 
 type Row = Array<number | string | null>;
@@ -58,7 +58,7 @@ export const CommonTable: React.FC<CommonTableProps> = ({
     (id: string) => {
       onRowDelete?.(id);
     },
-    [onRowDelete]
+    [onRowDelete],
   );
 
   return (
@@ -124,7 +124,9 @@ export const CommonTable: React.FC<CommonTableProps> = ({
                   <ElementButtonCell
                     key={`row-${index + 1}-delete`}
                     element={<BsTrash className={styles.delete} />}
-                    onClick={() => handleDeleteButtonClick(row.id)}
+                    onClick={() => {
+                      handleDeleteButtonClick(row.id);
+                    }}
                   />
                 ) : null}
               </tr>

@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { UseMutation } from './common';
+import { type UseMutation } from './common';
 import { toast } from 'react-toastify';
 import {
-  RegisterPayload,
-  RegisterResponse,
+  type RegisterPayload,
+  type RegisterResponse,
   register,
 } from '../apiRequests/register';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export const useRegisterMutation = (): UseMutation<
     mutationFn: async (payload: RegisterPayload) => register(payload),
     onError: () => {
       toast.error(
-        'Rekistöröityminen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+        'Rekistöröityminen epäonnistui. Tarkista tiedot ja yritä uudelleen.',
       );
     },
     onSuccess: () => {

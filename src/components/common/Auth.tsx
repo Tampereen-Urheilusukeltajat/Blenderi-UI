@@ -40,10 +40,12 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
           (adminOnly && !isAdmin)
         ) {
           toast.error('Ei oikeutta näkymään');
-          return navigate('/logbook');
+          navigate('/logbook');
         }
       })
-      .catch(() => navigate('/'));
+      .catch(() => {
+        navigate('/');
+      });
   }, [navigate, blenderOnly, adminOnly]);
 
   useEffect(() => {

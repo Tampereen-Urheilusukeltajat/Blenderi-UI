@@ -6,7 +6,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'standard-with-typescript',
+    'eslint-config-love',
     'plugin:react-hooks/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -51,5 +51,6 @@ module.exports = {
       'error',
       { checksVoidReturn: { attributes: false } },
     ],
+    '@typescript-eslint/unbound-method': 'off',
   },
 };

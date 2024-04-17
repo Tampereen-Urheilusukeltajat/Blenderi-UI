@@ -20,7 +20,7 @@ export type RegisterResponse = {
   archivedAt: string;
 };
 export const register = async (
-  payload: RegisterPayload
+  payload: RegisterPayload,
 ): Promise<RegisterResponse> =>
   (await postAsync<RegisterResponse, RegisterPayload>('/api/user/', payload))
     .data;

@@ -1,4 +1,4 @@
-import { PatchUser } from '../../components/UserSettings/UserSettings';
+import { type PatchUser } from '../../components/UserSettings/UserSettings';
 import { authGetAsync, authPatchAsync } from './api';
 
 export type User = {
@@ -20,11 +20,11 @@ export const getUser = async (userId: string): Promise<User> => {
 
 export const patchUser = async (
   userId: string,
-  payload: Partial<PatchUser>
+  payload: Partial<PatchUser>,
 ): Promise<User> => {
   const response = await authPatchAsync<User, Partial<PatchUser>>(
     `/api/user/${userId}`,
-    payload
+    payload,
   );
 
   return response.data;

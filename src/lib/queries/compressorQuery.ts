@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { UseQuery } from './common';
+import { type UseQuery } from './common';
 import { COMPRESSOR_QUERY_KEY } from './queryKeys';
 import { getCompressors } from '../apiRequests/compressor';
 import { useEffect } from 'react';

@@ -3,8 +3,8 @@ import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import {
   CommonTable,
-  TableColumn,
-  TableRow,
+  type TableColumn,
+  type TableRow,
 } from '../common/Table/CommonTable';
 import { useMemo } from 'react';
 
@@ -45,7 +45,7 @@ export const ListFillEvents = (): JSX.Element => {
       fillEvents
         ?.sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
         .map((fillEvent) => ({
           id: fillEvent.id,
@@ -58,7 +58,7 @@ export const ListFillEvents = (): JSX.Element => {
             formatEurCentsToEur(fillEvent.price),
           ],
         })) ?? [],
-    [fillEvents]
+    [fillEvents],
   );
   return (
     <div>
@@ -68,7 +68,7 @@ export const ListFillEvents = (): JSX.Element => {
           Täyttöjen hinta yhteensä:{' '}
           {formatEurCentsToEur(
             fillEvents?.reduce((acc, fillEvent) => acc + fillEvent.price, 0) ??
-              0
+              0,
           )}{' '}
           €
         </h2>

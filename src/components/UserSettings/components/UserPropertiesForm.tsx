@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { FormUser } from '../UserSettings';
+import { type FormUser } from '../UserSettings';
 import { PrimaryButton, SecondaryButton } from '../../common/Button/Buttons';
 import { TextInput } from '../../common/Inputs';
 import { EditableUserVariableRow } from './EditableUserVariableRow';

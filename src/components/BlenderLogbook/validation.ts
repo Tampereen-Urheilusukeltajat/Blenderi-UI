@@ -37,11 +37,11 @@ export const BLENDER_FILLING_EVENT_VALIDATION_SCHEMA = yup.object().shape({
           .when(['startPressure'], (startPressure, schema) =>
             schema.max(
               startPressure as unknown as number,
-              'Loppupaine liian korkea'
-            )
+              'Loppupaine liian korkea',
+            ),
           ),
         storageCylinderId: yup.string().required(FIELD_REQUIRED),
-      })
+      }),
     )
     .required()
     .min(1),

@@ -1,4 +1,4 @@
-import { Compressor } from '../../../lib/queries/compressorQuery';
+import { type Compressor } from '../../../lib/queries/compressorQuery';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import React from 'react';
 

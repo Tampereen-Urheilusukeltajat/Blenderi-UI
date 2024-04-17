@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { getStorageCylinders } from '../apiRequests/storageCylinderRequests';
-import { UseQuery } from './common';
+import { type UseQuery } from './common';
 import { STORAGE_CYLINDERS_QUERY_KEY } from './queryKeys';
 import { useEffect } from 'react';
 

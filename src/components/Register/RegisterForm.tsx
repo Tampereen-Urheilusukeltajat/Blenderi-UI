@@ -45,7 +45,7 @@ export const RegisterForm: React.FC = () => {
         turnstileToken,
       });
     },
-    [mutate]
+    [mutate],
   );
 
   return (

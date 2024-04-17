@@ -9,7 +9,9 @@ import { Container } from 'react-bootstrap';
 export const FrontPage: React.FC = () => {
   const [showBackButton, setShowBackButton] = useState(false);
   const location = useLocation();
-  useEffect(() => setShowBackButton(location.pathname !== '/'), [location]);
+  useEffect(() => {
+    setShowBackButton(location.pathname !== '/');
+  }, [location]);
 
   return (
     <Container className="pt-4">
