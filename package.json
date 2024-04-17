@@ -31,6 +31,7 @@
     "react-tooltip": "^5.26.3",
     "typescript": "^5.4.5",
     "vite": "^5.2.9",
+    "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2",
     "web-vitals": "^3.5.2",
     "yup": "^1.4.0"
@@ -79,7 +80,6 @@
     "prettier": "^2.7.1",
     "sass": "^1.55.0",
     "sass-loader": "^13.3.2",
-    "start-server-and-test": "^1.14.0",
-    "vite-plugin-svgr": "^4.2.0"
+    "start-server-and-test": "^1.14.0"
   }
 }
