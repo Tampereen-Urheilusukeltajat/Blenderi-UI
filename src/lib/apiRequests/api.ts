@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getValidToken } from '../auth';
 
 const AXIOS_CONFIG: AxiosRequestConfig = {
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 };
 
 export const getAsync = async <Response>(
