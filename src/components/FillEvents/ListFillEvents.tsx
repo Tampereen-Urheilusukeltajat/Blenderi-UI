@@ -1,4 +1,4 @@
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import {

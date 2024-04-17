@@ -14,7 +14,7 @@ export const useRegisterMutation = (): UseMutation<
 > => {
   const navigate = useNavigate();
 
-  const { isError, isLoading, data, mutate } = useMutation({
+  const { isError, isPending, data, mutate } = useMutation({
     mutationFn: async (payload: RegisterPayload) => register(payload),
     onError: () => {
       toast.error(
@@ -29,7 +29,7 @@ export const useRegisterMutation = (): UseMutation<
 
   return {
     isError,
-    isLoading,
+    isPending,
     data,
     mutate,
   };

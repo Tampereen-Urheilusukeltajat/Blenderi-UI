@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 export const useLoginMutation = (
   onSuccess: () => void
 ): UseMutation<LoginResponse, LoginPayload> => {
-  const { isError, isLoading, data, mutate } = useMutation({
+  const { isError, data, mutate, isPending } = useMutation({
     mutationFn: async (payload: LoginPayload) => login(payload),
     onError: () => {
       toast.error(
@@ -22,8 +22,8 @@ export const useLoginMutation = (
   });
 
   return {
+    isPending,
     isError,
-    isLoading,
     data,
     mutate,
   };
