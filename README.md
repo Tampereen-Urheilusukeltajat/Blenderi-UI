@@ -5,7 +5,7 @@ Basic React app to provide UI for Tayttopaikka. Running at https://tayttopaikka.
 ## Tech
 
 This project uses Vite and React. Bootstrap is used for some general styles,
-but we mostly use CSS modules powered wutg `Sass`.
+but we mostly use CSS modules powered with `Sass`.
 
 ## Local development
 
