@@ -9,7 +9,7 @@ but we mostly use CSS modules powered with `Sass`.
 
 ## Local development
 
-Copy .env variables. **Please notice that every .env variable is public so do not store any real secrets there!**
+Copy example .env file and tweak some variables if needed. **Please notice that every .env variable is public so do not store any real secrets there!**
 
 ```
 cp .env.example .env
