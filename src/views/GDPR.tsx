@@ -2,7 +2,7 @@ import React from 'react';
 
 export const GDPR: React.FC = () => {
   return (
-    <div>
+    <div className="p-4">
       <h1>Rekisteri- ja tietosuojaseloste</h1>
       <h2>
         Tämä on Tampereen Urheilusukeltajat ry:n (Taursu) EU:n yleisen
