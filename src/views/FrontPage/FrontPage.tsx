@@ -10,7 +10,7 @@ export const FrontPage: React.FC = () => {
   const [showBackButton, setShowBackButton] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    setShowBackButton(location.pathname !== '/');
+    setShowBackButton(location.pathname !== '/login');
   }, [location]);
 
   return (
@@ -18,7 +18,7 @@ export const FrontPage: React.FC = () => {
       <div className={styles.content}>
         <div className={styles.contentPart}>
           {showBackButton && (
-            <Link className={styles.styledLink} to={'/'}>
+            <Link className={styles.styledLink} to={'/login'}>
               <BsArrowLeftCircle />
             </Link>
           )}

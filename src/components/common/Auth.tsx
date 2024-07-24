@@ -44,13 +44,13 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
         }
       })
       .catch(() => {
-        navigate('/');
+        navigate('/login');
       });
   }, [navigate, blenderOnly, adminOnly]);
 
   useEffect(() => {
     if (!loading && !authenticated) {
-      navigate('/');
+      navigate('/login');
     }
   }, [authenticated, loading, navigate]);
 

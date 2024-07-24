@@ -23,7 +23,7 @@ export const useRegisterMutation = (): UseMutation<
     },
     onSuccess: () => {
       toast.success('Rekistöröityminen onnistui! Kirjaudu sisään.');
-      navigate('/');
+      navigate('/login');
     },
   });
 

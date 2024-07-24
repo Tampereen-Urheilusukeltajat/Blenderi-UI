@@ -19,7 +19,7 @@ export const Navbar: React.FC = () => {
     // Invalidate React Query cache
     queryClient.clear();
 
-    navigate('/');
+    navigate('/login');
   }, [navigate, queryClient]);
 
   const { isAdmin, isBlender } = getUserRoles();
