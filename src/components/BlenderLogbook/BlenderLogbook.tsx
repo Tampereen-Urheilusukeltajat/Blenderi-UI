@@ -11,7 +11,7 @@ import { FillingTile } from './components/FillingTile';
 import { SavingTile } from './components/SavingTile';
 import {
   AvailableMixtureCompositions,
-  type AvailableMixtures,
+  AvailableMixtures,
   formalizeGasMixture,
   formatEurToEurCents,
 } from '../../lib/utils';
@@ -60,7 +60,7 @@ const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   divingCylinderSetId: '',
   heliumPercentage: '0',
   gasMixture: AvailableMixtureCompositions[0].id,
-  oxygenPercentage: '0',
+  oxygenPercentage: '21',
   userConfirm: false,
   compressorId: '',
 };
@@ -112,11 +112,16 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
           .reduce((partialSum, price) => partialSum + price, 0),
       );
 
+      // Allow user to do pure air fills via Happihäkki page
+      const filledAir =
+        values.gasMixture === AvailableMixtures.Nitrox &&
+        values.fillingEventRows.length === 0;
+
       fillEventMutation.mutate(
         {
           cylinderSetId: values.divingCylinderSetId,
           description: values.additionalInformation,
-          filledAir: false,
+          filledAir,
           gasMixture: formalizedGasMixture,
           price: totalPriceEurCents,
           storageCylinderUsageArr:
