@@ -11,8 +11,8 @@ import { type UseMutation } from '../../lib/queries/common';
 import { type Stripe, type StripeElements } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-if (!BASE_URL) throw new Error('Env variable "REACT_APP_BASE_URL" is not set');
+const BASE_URL = import.meta.env.VITE_BASE_URL as string;
+if (!BASE_URL) throw new Error('Env variable "VITE_BASE_URL" is not set');
 
 type StripePayFormProps = {
   paymentEvent: PaymentEvent;

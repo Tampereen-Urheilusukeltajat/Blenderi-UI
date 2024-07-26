@@ -5,9 +5,9 @@ import { loadStripe } from '@stripe/stripe-js';
 import { StripePayForm } from '../../components/Payments/StripePayForm';
 import { type PaymentEvent } from '../../lib/apiRequests/payment';
 
-const stripePublicApiKey = process.env.REACT_APP_STRIPE_PUBLIC_API_KEY;
+const stripePublicApiKey = import.meta.env.VITE_STRIPE_PUBLIC_API_KEY as string;
 if (!stripePublicApiKey) {
-  throw new Error('Missing env variable "REACT_APP_STRIPE_PUBLIC_API_KEY"');
+  throw new Error('Missing env variable "VITE_STRIPE_PUBLIC_API_KEY"');
 }
 
 const stripePromise = loadStripe(stripePublicApiKey);
