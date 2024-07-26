@@ -19,7 +19,7 @@ export const BlenderLogbook = (): JSX.Element => {
 
   const compressors = useMemo(
     () => allCompressors?.filter((c) => !c.airOnly) ?? [],
-    [allCompressors]
+    [allCompressors],
   );
 
   const requiredDataLoaded = useMemo(
@@ -30,10 +30,9 @@ export const BlenderLogbook = (): JSX.Element => {
         gases.length > 0 &&
         divingCylinderSets &&
         divingCylinderSets.length > 0 &&
-        compressors &&
         compressors.length > 0) ??
       false,
-    [compressors, divingCylinderSets, gases, storageCylinders]
+    [compressors, divingCylinderSets, gases, storageCylinders],
   );
 
   const anyErrors = useMemo(
@@ -47,7 +46,7 @@ export const BlenderLogbook = (): JSX.Element => {
       isStorageCylinderError,
       isGasesError,
       isDivingCylindersError,
-    ]
+    ],
   );
 
   return (

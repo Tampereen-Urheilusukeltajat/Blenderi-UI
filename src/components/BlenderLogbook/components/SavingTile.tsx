@@ -2,7 +2,7 @@ import { Field } from 'formik';
 import { ButtonType, PrimaryButton } from '../../common/Button/Buttons';
 import React from 'react';
 import styles from './SavingTile.module.scss';
-import { CommonTileProps } from '../BlenderLogbook';
+import { type CommonTileProps } from '../BlenderLogbook';
 
 type SavingTileProps = CommonTileProps & {
   totalPrice: number;

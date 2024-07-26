@@ -33,11 +33,11 @@ export const REGISTER_VALIDATION_SCHEMA = yup.object().shape({
         try {
           return phoneUtil.isValidNumberForRegion(
             phoneUtil.parse(phoneNumber),
-            'FI'
+            'FI',
           );
         } catch (error) {
           return false;
         }
-      }
+      },
     ),
 });

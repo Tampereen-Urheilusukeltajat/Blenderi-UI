@@ -1,4 +1,4 @@
-import { PaymentIntent } from '@stripe/stripe-js';
+import { type PaymentIntent } from '@stripe/stripe-js';
 import { authGetAsync, authPostAsync } from './api';
 
 export enum PaymentStatus {
@@ -22,10 +22,10 @@ export type PaymentEvent = {
 };
 
 export const getPaymentEvent = async (
-  paymentEventId: string
+  paymentEventId: string,
 ): Promise<PaymentEvent> => {
   const response = await authGetAsync<PaymentEvent>(
-    `/api/payment/${paymentEventId}`
+    `/api/payment/${paymentEventId}`,
   );
 
   return response.data;
@@ -40,7 +40,7 @@ export const getPaymentEvents = async (): Promise<PaymentEvent[]> => {
 export const createPaymentEvent = async (): Promise<PaymentEvent> => {
   const response = await authPostAsync<PaymentEvent, Record<string, unknown>>(
     '/api/payment',
-    {}
+    {},
   );
 
   return response.data;

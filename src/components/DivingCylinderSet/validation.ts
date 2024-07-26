@@ -36,14 +36,14 @@ export const NEW_CYLINDER_SET_VALIDATION_SCHEMA = yup.object().shape({
           .required(FIELD_REQUIRED)
           .min(
             MIN_INSPECT_YEAR,
-            `Katsastusvuoden täytyy olla vähintään ${MIN_INSPECT_YEAR}`
+            `Katsastusvuoden täytyy olla vähintään ${MIN_INSPECT_YEAR}`,
           )
           .max(
             new Date().getFullYear(),
-            'Katsastusvuosi ei voi olla tulevaisuudessa'
+            'Katsastusvuosi ei voi olla tulevaisuudessa',
           )
           .typeError(FIELD_NUMBER),
-      })
+      }),
     )
     .required()
     .min(1),

@@ -42,7 +42,7 @@ export const AvailableMixtureCompositions = [
 export const formalizeGasMixture = (
   gasMixture: AvailableMixtures,
   oxygenPercentage: string,
-  heliumPercentage: string
+  heliumPercentage: string,
 ): string => {
   switch (gasMixture) {
     case AvailableMixtures.Argon:
@@ -73,13 +73,14 @@ export const mapGasToName = (gas?: AvailableGasses): string => {
   }
 };
 
-export const formatEurCentsToEur = (eurCents: number): number => eurCents / 100;
+export const formatEurCentsToEur = (eurCents: number): number =>
+  parseFloat((eurCents / 100).toFixed(3));
 export const formatEurToEurCents = (eur: number): number => eur * 100;
 
 export const calculateGasConsumption = (
   cylinderVolume: number,
   startPressure: number,
-  endPressure: number
+  endPressure: number,
 ): number => (startPressure - endPressure) * cylinderVolume;
 
 export const tokenExpired = (exp: number): boolean =>
@@ -92,7 +93,7 @@ type TokenPayload<Payload> = {
 };
 
 export const getTokenFromLocalStorage = <Payload>(
-  tokenName: string
+  tokenName: string,
 ): TokenPayload<Payload> | undefined => {
   const token = localStorage.getItem(tokenName) ?? '';
   const splittedToken = token.split('.');
@@ -125,7 +126,7 @@ export const getUserIdFromAccessToken = (): string => {
  */
 export const getChangedFieldValues = (
   initialValues: Record<string, unknown>,
-  changedFields: Record<string, unknown>
+  changedFields: Record<string, unknown>,
 ): Record<string, unknown> => {
   const changedKeys = Object.keys(initialValues).filter((key) => {
     return initialValues[key] !== changedFields[key];
@@ -136,7 +137,7 @@ export const getChangedFieldValues = (
       ...previousValue,
       [currentValue]: changedFields[currentValue],
     }),
-    {}
+    {},
   );
 };
 

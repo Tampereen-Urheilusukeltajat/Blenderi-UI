@@ -27,7 +27,7 @@ export const LoginForm: React.FC = () => {
         password: formFields.password,
       });
     },
-    [mutate]
+    [mutate],
   );
 
   return (

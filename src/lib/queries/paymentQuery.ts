@@ -1,16 +1,16 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { UseMutation, UseQuery } from './common';
+import { type UseMutation, type UseQuery } from './common';
 import { PAYMENT_EVENTS, PAYMENT_EVENT_QUERY_KEY } from './queryKeys';
 import {
-  PaymentEvent,
+  type PaymentEvent,
   createPaymentEvent,
   getPaymentEvent,
   getPaymentEvents,
 } from '../apiRequests/payment';
 
 export const usePaymentEventQuery = (
-  paymentEventId?: string
+  paymentEventId?: string,
 ): UseQuery<PaymentEvent> => {
   const { isLoading, data, isError } = useQuery({
     enabled: !!paymentEventId,

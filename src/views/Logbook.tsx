@@ -10,7 +10,7 @@ export const Logbook = (): JSX.Element => {
 
   const compressors = useMemo(
     () => allCompressors?.filter((c) => c.airOnly) ?? [],
-    [allCompressors]
+    [allCompressors],
   );
   const { data: divingCylinderSets, isError: isDivingCylindersError } =
     useDivingCylinderQuery(userId);

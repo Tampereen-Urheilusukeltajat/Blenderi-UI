@@ -1,8 +1,8 @@
 import { FieldArray } from 'formik';
 import React, { useEffect } from 'react';
 import { BsTrash } from 'react-icons/bs';
-import { GasWithPricing } from '../../../lib/queries/gasQuery';
-import { StorageCylinder } from '../../../lib/queries/storageCylinderQuery';
+import { type GasWithPricing } from '../../../lib/queries/gasQuery';
+import { type StorageCylinder } from '../../../lib/queries/storageCylinderQuery';
 import {
   calculateGasConsumption,
   formatEurCentsToEur,
@@ -16,7 +16,7 @@ import {
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 
 import styles from './FillingTile.module.scss';
-import { CommonTileProps, emptyFillingRow } from '../BlenderLogbook';
+import { type CommonTileProps, emptyFillingRow } from '../BlenderLogbook';
 
 type FillingEventRowProps = CommonTileProps & {
   index: number;
@@ -26,7 +26,7 @@ type FillingEventRowProps = CommonTileProps & {
   setFieldValue: (
     field: string,
     value: unknown,
-    shouldValidate?: boolean
+    shouldValidate?: boolean,
   ) => void;
   storageCylinders: StorageCylinder[];
   gases: GasWithPricing[];
@@ -51,11 +51,11 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
     values.fillingEventRows.at(index)?.storageCylinderId;
 
   const storageCylinder = storageCylinders.find(
-    (sc) => sc.id === storageCylinderId
+    (sc) => sc.id === storageCylinderId,
   );
 
   const gasPriceEurCents = gases.find(
-    (price) => price.gasId === storageCylinder?.gasId
+    (price) => price.gasId === storageCylinder?.gasId,
   )?.priceEurCents;
   const storageCylinderVolume = storageCylinder?.volume;
 
@@ -67,9 +67,9 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
         calculateGasConsumption(
           storageCylinderVolume ?? 0,
           startPressure ?? 0,
-          endPressure ?? 0
-        ) * (gasPriceEurCents ?? 0)
-      )
+          endPressure ?? 0,
+        ) * (gasPriceEurCents ?? 0),
+      ),
     );
   }, [
     startPressure,
@@ -86,8 +86,8 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
       calculateGasConsumption(
         storageCylinderVolume ?? 0,
         startPressure ?? 0,
-        endPressure ?? 0
-      )
+        endPressure ?? 0,
+      ),
     );
   }, [
     startPressure,
@@ -105,13 +105,13 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           <ElementButton
             disabled={values.userConfirm}
             element={<BsTrash />}
-            onClick={() =>
+            onClick={() => {
               index === 0 && values.fillingEventRows.length === 1
                 ? replace(index, {
                     ...emptyFillingRow(),
                   })
-                : remove(index)
-            }
+                : remove(index);
+            }}
           />
         </div>
 
@@ -124,14 +124,14 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           {storageCylinders.map((sc) => (
             <option
               disabled={values.fillingEventRows.some(
-                (row) => row.storageCylinderId === sc.id
+                (row) => row.storageCylinderId === sc.id,
               )}
               key={sc.id}
               value={sc.id}
             >
               {sc.name} (
               {mapGasToName(
-                gases.find((gas) => gas.gasId === sc.gasId)?.gasName
+                gases.find((gas) => gas.gasId === sc.gasId)?.gasName,
               )}
               )
             </option>
@@ -168,11 +168,11 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
         <div className={styles.addRow}>
           <PrimaryButton
             disabled={values.userConfirm}
-            onClick={() =>
+            onClick={() => {
               push({
                 ...emptyFillingRow(),
-              })
-            }
+              });
+            }}
             type={ButtonType.button}
             text="Lisää uusi rivi"
           />
@@ -186,7 +186,7 @@ type FillingTileProps = CommonTileProps & {
   setFieldValue: (
     field: string,
     value: unknown,
-    shouldValidate?: boolean
+    shouldValidate?: boolean,
   ) => void;
   storageCylinders: StorageCylinder[];
   gases: GasWithPricing[];

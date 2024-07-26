@@ -1,12 +1,12 @@
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { formatEurCentsToEur } from '../../lib/utils';
 import {
   CommonTable,
-  TableColumn,
-  TableRow,
+  type TableColumn,
+  type TableRow,
 } from '../common/Table/CommonTable';
 import { useMemo } from 'react';
-import { FillEvent } from '../../interfaces/FillEvent';
+import { type FillEvent } from '../../interfaces/FillEvent';
 
 const FILL_EVENT_COLUMNS: TableColumn[] = [
   {
@@ -50,7 +50,7 @@ export const ListFillEvents: React.FC<ListFillEventsProps> = ({
       fillEvents
         .sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
         .map((fillEvent) => ({
           id: fillEvent.id,
@@ -63,7 +63,7 @@ export const ListFillEvents: React.FC<ListFillEventsProps> = ({
             formatEurCentsToEur(fillEvent.price),
           ],
         })) ?? [],
-    [fillEvents]
+    [fillEvents],
   );
   return (
     <div>
@@ -73,7 +73,7 @@ export const ListFillEvents: React.FC<ListFillEventsProps> = ({
           Täyttöjen hinta yhteensä:{' '}
           {formatEurCentsToEur(
             fillEvents?.reduce((acc, fillEvent) => acc + fillEvent.price, 0) ??
-              0
+              0,
           )}{' '}
           €
         </h2>

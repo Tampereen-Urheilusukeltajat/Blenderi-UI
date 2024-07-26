@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
-import { PaymentEvent, PaymentStatus } from '../../lib/apiRequests/payment';
+import {
+  type PaymentEvent,
+  PaymentStatus,
+} from '../../lib/apiRequests/payment';
 import {
   CommonTable,
-  TableColumn,
-  TableRow,
+  type TableColumn,
+  type TableRow,
 } from '../common/Table/CommonTable';
 import format from 'date-fns/format';
 import compareDesc from 'date-fns/compareDesc';
@@ -56,7 +59,7 @@ export const PaymentsList: React.FC<PaymentsListProps> = ({
     () =>
       paymentEvents
         .sort((a, b) =>
-          compareDesc(new Date(a.createdAt), new Date(b.createdAt))
+          compareDesc(new Date(a.createdAt), new Date(b.createdAt)),
         )
         .map(
           (pe): TableRow => ({
@@ -69,13 +72,15 @@ export const PaymentsList: React.FC<PaymentsListProps> = ({
                 <PrimaryButton
                   disabled={pe.status !== PaymentStatus.created}
                   text="Siirry maksamaan"
-                  onClick={() => navigate(`/payment/${pe.id}/pay`)}
+                  onClick={() => {
+                    navigate(`/payment/${pe.id}/pay`);
+                  }}
                 />
               </div>,
             ],
-          })
+          }),
         ),
-    [paymentEvents, navigate]
+    [paymentEvents, navigate],
   );
 
   return (

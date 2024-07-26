@@ -19,7 +19,7 @@ export const PasswordResetRequestForm: React.FC = () => {
   }, [navigate]);
 
   const { mutate } = usePasswordResetRequestMutation(
-    handleSuccessfulPasswordResetRequest
+    handleSuccessfulPasswordResetRequest,
   );
 
   const handleSubmit = useCallback(
@@ -28,7 +28,7 @@ export const PasswordResetRequestForm: React.FC = () => {
         email: formFields.email.trim(),
       });
     },
-    [mutate]
+    [mutate],
   );
 
   return (

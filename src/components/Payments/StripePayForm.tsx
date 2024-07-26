@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { AddressElement, PaymentElement } from '@stripe/react-stripe-js';
-import { FormEvent, useCallback } from 'react';
+import { type FormEvent, useCallback } from 'react';
 import styles from './StripePayForm.module.scss';
 import { PrimaryButton, SecondaryButton } from '../common/Button/Buttons';
-import { PaymentEvent } from '../../lib/apiRequests/payment';
+import { type PaymentEvent } from '../../lib/apiRequests/payment';
 import { formatEurCentsToEur } from '../../lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { UseMutation } from '../../lib/queries/common';
-import { Stripe, StripeElements } from '@stripe/stripe-js';
+import { type UseMutation } from '../../lib/queries/common';
+import { type Stripe, type StripeElements } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -23,9 +23,9 @@ type StripePayFormProps = {
 const useStripeConfirmPayment = (
   paymentEventId: string,
   stripe: Stripe,
-  elements: StripeElements
+  elements: StripeElements,
 ): UseMutation<void, void> => {
-  const { isLoading, isError, mutate } = useMutation({
+  const { isPending, isError, mutate } = useMutation({
     mutationFn: async () =>
       stripe.confirmPayment({
         elements,
@@ -47,7 +47,7 @@ const useStripeConfirmPayment = (
 
   return {
     mutate,
-    isLoading,
+    isPending,
     isError,
   };
 };
@@ -58,10 +58,10 @@ export const StripePayForm: React.FC<StripePayFormProps> = ({
   stripe,
 }) => {
   const navigate = useNavigate();
-  const { mutate: confirmStripePayment, isLoading } = useStripeConfirmPayment(
+  const { mutate: confirmStripePayment, isPending } = useStripeConfirmPayment(
     paymentEvent.id,
     stripe,
-    elements
+    elements,
   );
 
   const handleCancel = useCallback(() => {
@@ -74,7 +74,7 @@ export const StripePayForm: React.FC<StripePayFormProps> = ({
 
       confirmStripePayment();
     },
-    [confirmStripePayment]
+    [confirmStripePayment],
   );
 
   return (
@@ -102,13 +102,13 @@ export const StripePayForm: React.FC<StripePayFormProps> = ({
             <div className="d-flex pt-4 gap-2 justify-content-end w-100">
               <PrimaryButton
                 className="w-50"
-                disabled={isLoading}
+                disabled={isPending}
                 text="Maksa"
                 onClick={handleSubmit}
               />
               <SecondaryButton
                 className="w-50"
-                disabled={isLoading}
+                disabled={isPending}
                 text="Palaa takaisin"
                 onClick={handleCancel}
               />
@@ -127,7 +127,7 @@ export const StripePayForm: React.FC<StripePayFormProps> = ({
                   Hinta yhteensä{' '}
                   <span className={styles.sum}>
                     {formatEurCentsToEur(
-                      paymentEvent.stripeAmountEurCents ?? 0
+                      paymentEvent.stripeAmountEurCents ?? 0,
                     )}{' '}
                   </span>
                   €

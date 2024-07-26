@@ -87,7 +87,7 @@ export const UserSettings: React.FC = () => {
           password: fields.password,
           newPassword: fields.newPassword,
           newPasswordAgain: fields.newPasswordAgain,
-        }
+        },
       );
 
       userMutation.mutate({
@@ -99,7 +99,7 @@ export const UserSettings: React.FC = () => {
         currentPassword: changedValues.password,
       });
     },
-    [userMutation, user]
+    [userMutation, user],
   );
 
   return (

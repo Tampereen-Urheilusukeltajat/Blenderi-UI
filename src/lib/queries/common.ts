@@ -6,7 +6,7 @@ export type UseQuery<Data> = {
 
 export type UseMutation<Data, Payload> = {
   data?: Data;
+  isPending: boolean;
   isError: boolean;
-  isLoading: boolean;
   mutate: (payload: Payload) => void;
 };

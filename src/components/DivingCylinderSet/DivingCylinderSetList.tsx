@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import {
-  DivingCylinder,
-  DivingCylinderSet,
+  type DivingCylinder,
+  type DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
 import { archiveDivingCylinderSet } from '../../lib/apiRequests/divingCylinderSetRequests';
 import { useDivingCylinderQuery } from '../../lib/queries/divingCylinderQuery';
@@ -11,8 +11,8 @@ import { DIVING_CYLINDER_SETS_QUERY_KEY } from '../../lib/queries/queryKeys';
 import { getUserIdFromAccessToken } from '../../lib/utils';
 import {
   CommonTable,
-  TableColumn,
-  TableRow,
+  type TableColumn,
+  type TableRow,
 } from '../common/Table/CommonTable';
 
 const DIVING_CYLINDER_SET_COLUMNS: TableColumn[] = [
@@ -62,7 +62,7 @@ const DCMaterialFiTranslation = (enMaterial: string): string => {
 };
 
 const divingCylinderSetsToCommonTableRows = (
-  divingCylinderSets: DivingCylinderSet[]
+  divingCylinderSets: DivingCylinderSet[],
 ): TableRow[] => {
   return divingCylinderSets.map((dcs: DivingCylinderSet) => {
     // Single cylinder so only return mainRow
@@ -108,7 +108,7 @@ export const DivingCylinderSetList = (): JSX.Element => {
   const { data: divingCylinderSets } = useDivingCylinderQuery(userId);
   const rows = useMemo(
     () => divingCylinderSetsToCommonTableRows(divingCylinderSets ?? []),
-    [divingCylinderSets]
+    [divingCylinderSets],
   );
 
   const divingCylinderSetMutation = useMutation<
@@ -136,7 +136,7 @@ export const DivingCylinderSetList = (): JSX.Element => {
     (divingCylinderSetId: string) => {
       divingCylinderSetMutation.mutate({ divingCylinderSetId });
     },
-    [divingCylinderSetMutation]
+    [divingCylinderSetMutation],
   );
 
   return (

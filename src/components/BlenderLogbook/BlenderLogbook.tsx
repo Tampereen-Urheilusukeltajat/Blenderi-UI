@@ -1,23 +1,26 @@
 import React, { useCallback } from 'react';
 import styles from './BlenderLogbook.module.scss';
-import { Compressor } from '../../lib/queries/compressorQuery';
-import { GasWithPricing } from '../../lib/queries/gasQuery';
-import { DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
-import { StorageCylinder } from '../../lib/queries/storageCylinderQuery';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { type Compressor } from '../../lib/queries/compressorQuery';
+import { type GasWithPricing } from '../../lib/queries/gasQuery';
+import { type DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
+import { type StorageCylinder } from '../../lib/queries/storageCylinderQuery';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { BasicInfoTile } from './components/BasicInfoTile';
 import { PricingTile } from './components/PricingTile';
 import { FillingTile } from './components/FillingTile';
 import { SavingTile } from './components/SavingTile';
 import {
   AvailableMixtureCompositions,
-  AvailableMixtures,
+  type AvailableMixtures,
   formalizeGasMixture,
   formatEurToEurCents,
 } from '../../lib/utils';
 import { BLENDER_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useMutation } from '@tanstack/react-query';
-import { NewFillEvent, StorageCylinderUsage } from '../../interfaces/FillEvent';
+import {
+  type NewFillEvent,
+  type StorageCylinderUsage,
+} from '../../interfaces/FillEvent';
 import { postFillEvent } from '../../lib/apiRequests/fillEventRequests';
 import { toast } from 'react-toastify';
 
@@ -90,7 +93,7 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
     mutationFn: async (payload: NewFillEvent) => postFillEvent(payload),
     onError: () => {
       toast.error(
-        'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.'
+        'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.',
       );
     },
   });
@@ -100,13 +103,13 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
       const formalizedGasMixture = formalizeGasMixture(
         values.gasMixture,
         values.oxygenPercentage,
-        values.heliumPercentage
+        values.heliumPercentage,
       );
 
       const totalPriceEurCents = formatEurToEurCents(
         values.fillingEventRows
           .map((row) => row.priceEurCents)
-          .reduce((partialSum, price) => partialSum + price, 0)
+          .reduce((partialSum, price) => partialSum + price, 0),
       );
 
       fillEventMutation.mutate(
@@ -132,10 +135,10 @@ export const NewBlenderFillingEvent: React.FC<NewFillingEventProps> = ({
           onSettled: () => {
             helpers.setSubmitting(false);
           },
-        }
+        },
       );
     },
-    [fillEventMutation]
+    [fillEventMutation],
   );
 
   return (

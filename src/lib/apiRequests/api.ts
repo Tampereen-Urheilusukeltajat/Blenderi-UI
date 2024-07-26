@@ -1,33 +1,33 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 import { getValidToken } from '../auth';
 
 const AXIOS_CONFIG: AxiosRequestConfig = {
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 };
 
 export const getAsync = async <Response>(
-  url: string
+  url: string,
 ): Promise<AxiosResponse<Response>> => axios.get<Response>(url, AXIOS_CONFIG);
 
 export const postAsync = async <Response, Payload>(
   url: string,
-  payload: Payload
+  payload: Payload,
 ): Promise<AxiosResponse<Response>> =>
   axios.post<Response>(url, payload, AXIOS_CONFIG);
 
 export const patchAsync = async <Response, Payload>(
   url: string,
-  payload: Payload
+  payload: Payload,
 ): Promise<AxiosResponse<Response>> =>
   axios.patch<Response>(url, payload, AXIOS_CONFIG);
 
 export const deleteAsync = async <Response>(
-  url: string
+  url: string,
 ): Promise<AxiosResponse<Response>> =>
   axios.delete<Response>(url, AXIOS_CONFIG);
 
 export const authGetAsync = async <Response>(
-  url: string
+  url: string,
 ): Promise<AxiosResponse<Response>> => {
   const token = await getValidToken();
 
@@ -41,7 +41,7 @@ export const authGetAsync = async <Response>(
 
 export const authPostAsync = async <Response, Payload>(
   url: string,
-  payload: Payload
+  payload: Payload,
 ): Promise<AxiosResponse<Response>> => {
   const token = await getValidToken();
 
@@ -55,7 +55,7 @@ export const authPostAsync = async <Response, Payload>(
 
 export const authPatchAsync = async <Response, Payload>(
   url: string,
-  payload?: Payload
+  payload?: Payload,
 ): Promise<AxiosResponse<Response>> => {
   const token = await getValidToken();
 
@@ -68,7 +68,7 @@ export const authPatchAsync = async <Response, Payload>(
 };
 
 export const authDeleteAsync = async (
-  url: string
+  url: string,
 ): Promise<AxiosResponse<Response>> => {
   const token = await getValidToken();
 
