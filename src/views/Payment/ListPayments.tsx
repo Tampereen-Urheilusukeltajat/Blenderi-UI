@@ -7,8 +7,8 @@ import {
   usePaymentEventsQuery,
 } from '../../lib/queries/paymentQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
-import compareAsc from 'date-fns/compareAsc';
 import { useNavigate } from 'react-router-dom';
+import { compareAsc } from 'date-fns';
 
 export const ListPayments: React.FC = () => {
   const navigate = useNavigate();
@@ -20,15 +20,15 @@ export const ListPayments: React.FC = () => {
   const {
     mutate: createNewPaymentEvent,
     data: newPaymentEvent,
-    isLoading: isCreatingNewPaymentEventLoading,
+    isPending: isCreatingNewPaymentEventLoading,
   } = useCreatePaymentEventMutation();
 
   const sortedUnpaidFillEvents = useMemo(
     () =>
       unpaidFillEvents?.fillEvents.sort((a, b) =>
-        compareAsc(new Date(a.createdAt), new Date(b.createdAt))
+        compareAsc(new Date(a.createdAt), new Date(b.createdAt)),
       ) ?? [],
-    [unpaidFillEvents]
+    [unpaidFillEvents],
   );
 
   // Do not allow creating payment event if the amount due is less than 10 €
@@ -70,7 +70,7 @@ export const ListPayments: React.FC = () => {
               : undefined
           }
           totalPrice={formatEurCentsToEur(
-            unpaidFillEvents.totalPriceInEurCents
+            unpaidFillEvents.totalPriceInEurCents,
           )}
           onNewPaymentEventButtonClick={handleNewPaymentButtonClick}
         />

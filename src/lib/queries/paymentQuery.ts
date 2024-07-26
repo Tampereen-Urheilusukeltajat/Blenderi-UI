@@ -8,6 +8,7 @@ import {
   getPaymentEvent,
   getPaymentEvents,
 } from '../apiRequests/payment';
+import { useEffect } from 'react';
 
 export const usePaymentEventQuery = (
   paymentEventId?: string,
@@ -16,14 +17,16 @@ export const usePaymentEventQuery = (
     enabled: !!paymentEventId,
     queryKey: PAYMENT_EVENT_QUERY_KEY(paymentEventId ?? ''),
     queryFn: async () => getPaymentEvent(paymentEventId ?? ''),
-    onError: () => {
-      toast.error('Maksutapahtuman hakeminen epäonnistui. Yritä uudelleen.');
-    },
     retry: 0,
     refetchOnWindowFocus: false,
-    cacheTime: 0,
     staleTime: 0,
   });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Maksutapahtuman hakeminen epäonnistui. Yritä uudelleen.');
+    }
+  }, [isError]);
 
   return {
     data,
@@ -36,12 +39,15 @@ export const usePaymentEventsQuery = (): UseQuery<PaymentEvent[]> => {
   const { isLoading, data, isError } = useQuery({
     queryKey: PAYMENT_EVENTS,
     queryFn: async () => getPaymentEvents(),
-    onError: () => {
-      toast.error('Maksutapahtumien hakeminen epäonnistui. Yritä uudelleen.');
-    },
     retry: 0,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Maksutapahtumien hakeminen epäonnistui. Yritä uudelleen.');
+    }
+  }, [isError]);
 
   return {
     data,
@@ -54,7 +60,7 @@ export const useCreatePaymentEventMutation = (): UseMutation<
   PaymentEvent,
   void
 > => {
-  const { isLoading, data, isError, mutate } = useMutation({
+  const { isPending, data, isError, mutate } = useMutation({
     mutationFn: async () => createPaymentEvent(),
     onError: () => {
       toast.error('Maksutapahtuman luominen epäonnistui. Yritä uudelleen.');
@@ -65,7 +71,7 @@ export const useCreatePaymentEventMutation = (): UseMutation<
   return {
     mutate,
     data,
-    isLoading,
+    isPending,
     isError,
   };
 };
