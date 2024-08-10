@@ -20,9 +20,7 @@ import { type CommonTileProps, emptyFillingRow } from '../BlenderLogbook';
 
 type FillingEventRowProps = CommonTileProps & {
   index: number;
-  replace: (index: number, newValue: unknown) => void;
   remove: (index: number) => void;
-  push: (value: unknown) => void;
   setFieldValue: (
     field: string,
     value: unknown,
@@ -30,20 +28,16 @@ type FillingEventRowProps = CommonTileProps & {
   ) => void;
   storageCylinders: StorageCylinder[];
   gases: GasWithPricing[];
-  lastItem: boolean;
 };
 
 const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
   index,
   errors,
   values,
-  replace,
   remove,
-  push,
   setFieldValue,
   storageCylinders,
   gases,
-  lastItem,
 }) => {
   const startPressure = values.fillingEventRows.at(index)?.startPressure;
   const endPressure = values.fillingEventRows.at(index)?.endPressure;
@@ -106,11 +100,7 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
             disabled={values.userConfirm}
             element={<BsTrash />}
             onClick={() => {
-              index === 0 && values.fillingEventRows.length === 1
-                ? replace(index, {
-                    ...emptyFillingRow(),
-                  })
-                : remove(index);
+              remove(index);
             }}
           />
         </div>
@@ -164,20 +154,6 @@ const FillingEventRowComponent: React.FC<FillingEventRowProps> = ({
           unit="€"
         />
       </div>
-      {lastItem ? (
-        <div className={styles.addRow}>
-          <PrimaryButton
-            disabled={values.userConfirm}
-            onClick={() => {
-              push({
-                ...emptyFillingRow(),
-              });
-            }}
-            type={ButtonType.button}
-            text="Lisää uusi rivi"
-          />
-        </div>
-      ) : null}
     </div>
   );
 };
@@ -203,23 +179,32 @@ export const FillingTile: React.FC<FillingTileProps> = ({
     <div className="pt-3 pb-3 border-bottom">
       <h2>Täyttö</h2>
       <FieldArray name="fillingEventRows">
-        {({ replace, remove, push }) => (
+        {({ remove, push }) => (
           <>
             {values.fillingEventRows.map((row, index) => (
               <FillingEventRowComponent
                 key={row.uniqueId}
                 errors={errors}
                 index={index}
-                push={push}
                 gases={gases}
-                lastItem={values.fillingEventRows.length === index + 1}
                 remove={remove}
-                replace={replace}
                 setFieldValue={setFieldValue}
                 storageCylinders={storageCylinders}
                 values={values}
               />
             ))}
+            <div className={styles.addRow}>
+              <PrimaryButton
+                disabled={values.userConfirm}
+                onClick={() => {
+                  push({
+                    ...emptyFillingRow(),
+                  });
+                }}
+                type={ButtonType.button}
+                text="Lisää uusi rivi"
+              />
+            </div>
           </>
         )}
       </FieldArray>
