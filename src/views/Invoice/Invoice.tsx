@@ -102,6 +102,10 @@ export const Invoice: React.FC = () => {
           Huomaa, että kun viet laskut, ne merkitään järjestelmään
           automaattisesti maksetuiksi, eivätkä ne enää listaudu tälle sivulle.
           Älä siis hukkaa saamaasi Excel-tiedostoa!
+          <b>
+            TODO: Ei vielä oikeasti aseta laskuja maksetuiksi. Exportin testaus
+            on ok.
+          </b>
         </p>
         <p>
           Hätätilanteessa järjestelmän ylläpitäjät saavat taiottua laskut
