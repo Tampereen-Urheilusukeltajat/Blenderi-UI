@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   CommonTable,
   type TableRow,
@@ -7,6 +7,8 @@ import {
 import { useInvoiceQuery } from '../../lib/queries/invoiceQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import { format } from 'date-fns';
+import { PrimaryButton } from '../../components/common/Button/Buttons';
+import { utils, writeFileXLSX } from 'xlsx';
 
 const INVOICE_COLUMNS: TableColumn[] = [
   {
@@ -61,6 +63,32 @@ export const Invoice: React.FC = () => {
       };
     }) ?? [];
 
+  const onExportInvoicesButtonClick = useCallback(() => {
+    if (data) {
+      /* generate worksheet from state */
+      const ws = utils.json_to_sheet(
+        data.map((invoice) => ({
+          Nimi: `${invoice.user.surname}, ${invoice.user.forename}`,
+          Yhteystiedot: invoice.user.email,
+          'Hinta (€)': formatEurCentsToEur(invoice.invoiceTotal),
+          Tapahtumat: invoice.invoiceRows
+            .map(
+              (row) =>
+                `${format(new Date(row.date), 'dd.MM.yyyy HH:mm')} ${row.gasMixture} ${row.description} ${formatEurCentsToEur(row.price)} €`,
+            )
+            .join(', '),
+        })),
+      );
+
+      /* create workbook and append worksheet */
+      const wb = utils.book_new();
+      utils.book_append_sheet(wb, ws, 'Data');
+
+      /* export to XLSX */
+      writeFileXLSX(wb, `laskut-${new Date().toISOString()}.xlsx`);
+    }
+  }, [data]);
+
   return (
     <div>
       <h1>Laskutus</h1>
@@ -81,7 +109,17 @@ export const Invoice: React.FC = () => {
           lähetä sähköpostia palaute@tayttopaikka.fi.
         </p>
       </div>
-      <CommonTable columns={INVOICE_COLUMNS} rows={rows} />
+      <div>
+        <div className="d-flex flex-row justify-content-between pb-2">
+          <h2>Avoimet laskut</h2>
+          <PrimaryButton
+            disabled={data?.length === 0}
+            text="Vie laskut"
+            onClick={onExportInvoicesButtonClick}
+          />
+        </div>
+        <CommonTable columns={INVOICE_COLUMNS} rows={rows} />
+      </div>
     </div>
   );
 };
