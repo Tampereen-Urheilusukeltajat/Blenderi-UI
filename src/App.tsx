@@ -58,7 +58,7 @@ const Content: React.FC = () => {
         <Route element={<BaseElement />}>
           {/* Public routes */}
           <Route element={<FrontPage />}>
-            <Route path="/" element={<Login />} />
+            <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route
               path={'request-password-reset'}
@@ -86,7 +86,7 @@ const Content: React.FC = () => {
           </Route>
 
           {/* 404 */}
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to="/logbook" />} />
         </Route>
       </Routes>
     </main>
