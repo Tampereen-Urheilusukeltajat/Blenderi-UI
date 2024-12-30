@@ -20,3 +20,6 @@ export const GAS_QUERY = ['gas'];
 
 // Compressor
 export const COMPRESSOR_QUERY_KEY = ['compressor'];
+
+// Invoice
+export const INVOICE_QUERY_KEY = ['invoice'];
