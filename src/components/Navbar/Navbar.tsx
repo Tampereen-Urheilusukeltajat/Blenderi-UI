@@ -43,6 +43,8 @@ export const Navbar: React.FC = () => {
               <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
 
               <CustomLink to="/fill-events">Täyttöhistoria</CustomLink>
+
+              {isAdmin && <CustomLink to="/invoice">Laskutus</CustomLink>}
             </Nav>
             <Nav>
               <div className={styles.user}>

@@ -21,6 +21,7 @@ import { ResetPassword } from './views/ResetPassword/ResetPassword';
 import { Login } from './views/Login/Login';
 import { PrivateContent } from './components/common/PrivateContent';
 import { Footer } from './components/Footer/Footer';
+import { Invoice } from './views/Invoice/Invoice';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -83,6 +84,11 @@ const Content: React.FC = () => {
           {/* Blender only views */}
           <Route element={<PrivateContent blenderOnly />}>
             <Route path="blender-logbook" element={<BlenderLogbook />} />
+          </Route>
+
+          {/* Admin only views */}
+          <Route element={<PrivateContent adminOnly />}>
+            <Route path="invoice" element={<Invoice />} />
           </Route>
 
           {/* 404 */}
