@@ -65,7 +65,7 @@ export const Invoice: React.FC = () => {
 
   const onExportInvoicesButtonClick = useCallback(() => {
     if (data) {
-      /* generate worksheet from state */
+      // generate worksheet from state
       const ws = utils.json_to_sheet(
         data.map((invoice) => ({
           Nimi: `${invoice.user.surname}, ${invoice.user.forename}`,
@@ -80,12 +80,15 @@ export const Invoice: React.FC = () => {
         })),
       );
 
-      /* create workbook and append worksheet */
+      // create workbook and append worksheet
       const wb = utils.book_new();
       utils.book_append_sheet(wb, ws, 'Data');
 
-      /* export to XLSX */
-      writeFileXLSX(wb, `laskut-${new Date().toISOString()}.xlsx`);
+      // export to XLSX
+      writeFileXLSX(
+        wb,
+        `tayttopaikka_laskut_${new Date().toISOString().split('T')[0]}.xlsx`,
+      );
     }
   }, [data]);
 
