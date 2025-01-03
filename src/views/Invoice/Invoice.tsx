@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   CommonTable,
   type TableRow,
@@ -40,44 +40,61 @@ const INVOICE_COLUMNS: TableColumn[] = [
 export const Invoice: React.FC = () => {
   const { data } = useInvoiceQuery();
 
-  const rows: TableRow[] =
-    data?.map((invoice) => {
-      return {
-        id: invoice.user.id,
-        mainRow: [
-          `${invoice.user.surname}, ${invoice.user.forename}`,
-          invoice.user.email,
-          null,
-          null,
-          null,
-          formatEurCentsToEur(invoice.invoiceTotal),
-        ],
-        childRows: invoice.invoiceRows.map((row) => [
-          null,
-          null,
-          format(new Date(row.date), 'dd.MM.yyyy HH:mm'),
-          row.gasMixture,
-          row.description,
-          formatEurCentsToEur(row.price),
-        ]),
-      };
-    }) ?? [];
+  const rows: TableRow[] = useMemo(
+    () =>
+      data
+        ?.slice()
+        .sort((a, b) =>
+          `${a.user.surname} ${a.user.forename}`.localeCompare(
+            `${b.user.surname} ${b.user.forename}`,
+          ),
+        )
+        .map((invoice) => {
+          return {
+            id: invoice.user.id,
+            mainRow: [
+              `${invoice.user.surname}, ${invoice.user.forename}`,
+              invoice.user.email,
+              null,
+              null,
+              null,
+              formatEurCentsToEur(invoice.invoiceTotal),
+            ],
+            childRows: invoice.invoiceRows.map((row) => [
+              null,
+              null,
+              format(new Date(row.date), 'dd.MM.yyyy HH:mm'),
+              row.gasMixture,
+              row.description,
+              formatEurCentsToEur(row.price),
+            ]),
+          };
+        }) ?? [],
+    [data],
+  );
 
   const onExportInvoicesButtonClick = useCallback(() => {
     if (data) {
       // generate worksheet from state
       const ws = utils.json_to_sheet(
-        data.map((invoice) => ({
-          Nimi: `${invoice.user.surname}, ${invoice.user.forename}`,
-          Yhteystiedot: invoice.user.email,
-          'Hinta (€)': formatEurCentsToEur(invoice.invoiceTotal),
-          Tapahtumat: invoice.invoiceRows
-            .map(
-              (row) =>
-                `${format(new Date(row.date), 'dd.MM.yyyy HH:mm')} ${row.gasMixture} ${row.description} ${formatEurCentsToEur(row.price)} €`,
-            )
-            .join(', '),
-        })),
+        data
+          .slice()
+          .sort((a, b) =>
+            `${a.user.surname} ${a.user.forename}`.localeCompare(
+              `${b.user.surname} ${b.user.forename}`,
+            ),
+          )
+          .map((invoice) => ({
+            Nimi: `${invoice.user.surname} ${invoice.user.forename}`,
+            Yhteystiedot: invoice.user.email,
+            'Hinta (€)': formatEurCentsToEur(invoice.invoiceTotal),
+            Tapahtumat: invoice.invoiceRows
+              .map(
+                (row) =>
+                  `${format(new Date(row.date), 'dd.MM.yyyy HH:mm')} ${row.gasMixture} ${row.description} ${formatEurCentsToEur(row.price)} €`,
+              )
+              .join(', '),
+          })),
       );
 
       // create workbook and append worksheet
