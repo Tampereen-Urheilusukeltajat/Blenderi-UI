@@ -10,13 +10,17 @@ export const Login: React.FC = () => {
         <h1>Tervetuloa täyttöpaikalle!</h1>
         <p>
           Täyttöpaikka on Tampereen Urheilusukeltajien uusi täyttöpäiväkirja. Se
-          korvaa vaiheittain paperisen esikuvansa vuosien 2023 ja 2024 aikana.
+          korvaa vaiheittain paperisen esikuvansa vuoden 2025 aikana.
           Järjestelmää kehitetään vapaaehtoisvoimin ja sen lähdekoodi on
           saatavilla vapaasti{' '}
           <a href="https://github.com/orgs/Tampereen-Urheilusukeltajat/">
             GitHubissa
           </a>
           .
+        </p>
+        <p>
+          Palautetta ja kehitysehdotuksia voi lähettää osoitteeseen{' '}
+          <a href="mailto:palaute@tayttopaikka.fi">palaute@tayttopaikka.fi</a>.
         </p>
       </header>
       <div style={{ width: '220px' }}>
