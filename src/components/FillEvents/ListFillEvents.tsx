@@ -36,7 +36,7 @@ const FILL_EVENT_COLUMNS: TableColumn[] = [
 ];
 
 const dateFormatter = (date: string): string =>
-  format(new Date(date), 'd.MM.yy');
+  format(new Date(date), 'dd.MM.yy HH:mm');
 
 export const ListFillEvents = (): JSX.Element => {
   const { data: fillEvents } = useFillEventQuery();
