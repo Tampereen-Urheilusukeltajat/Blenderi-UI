@@ -13,7 +13,7 @@ export const createInvoicePaymentEvents = async (
 ): Promise<PaymentEvent[]> =>
   (
     await authPostAsync<PaymentEvent[], Invoice[]>(
-      '/api/invoicing/mark-as-paid',
+      '/api/invoicing/payment-events',
       invoices,
     )
   ).data;

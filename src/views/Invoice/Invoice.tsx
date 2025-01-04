@@ -159,7 +159,7 @@ export const InvoicePage: React.FC = () => {
       >
         <p>
           Tarkista ladattu Excel-tiedosto. Mikäli tiedosto on kunnossa, merkitse
-          laskut laskutetuiksi ja välitä tarvittava tieto rahastonhoitajalle.
+          laskut laskutetuiksi.
         </p>
       </Modal>
       <h1>Laskutus</h1>
