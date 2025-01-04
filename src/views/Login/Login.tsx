@@ -19,7 +19,9 @@ export const Login: React.FC = () => {
           .
         </p>
       </header>
-      <LoginForm />
+      <div style={{ width: '220px' }}>
+        <LoginForm />
+      </div>
       <div>
         <span>
           <Link to={'/register'}>Rekistöröidy käyttäjäksi</Link>
