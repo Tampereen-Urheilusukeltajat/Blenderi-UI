@@ -11,6 +11,7 @@ import { PrimaryButton } from '../../components/common/Button/Buttons';
 import { utils, writeFileXLSX } from 'xlsx';
 import { Modal } from '../../components/common/Modal/Modal';
 import { toast } from 'react-toastify';
+import { useInvoicePaymentEventsMutation } from '../../lib/queries/invoicePaymentEventMutation';
 
 const INVOICE_COLUMNS: TableColumn[] = [
   {
@@ -43,6 +44,15 @@ export const InvoicePage: React.FC = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [exportedData, setExportedData] = useState<Invoice[]>([]);
   const { data } = useInvoiceQuery();
+
+  const onMutationSuccess = useCallback(() => {
+    setIsConfirmModalOpen(false);
+    setExportedData([]);
+    toast.success('Laskut merkitty laskutetuiksi.');
+  }, []);
+
+  const { mutate: createInvoicePaymentEvents } =
+    useInvoicePaymentEventsMutation(onMutationSuccess);
 
   const rows: TableRow[] = useMemo(
     () =>
@@ -135,10 +145,8 @@ export const InvoicePage: React.FC = () => {
   }, []);
 
   const onConfirmModalConfirm = useCallback(() => {
-    setIsConfirmModalOpen(false);
-
-    // Mutate
-  }, []);
+    createInvoicePaymentEvents(exportedData);
+  }, [createInvoicePaymentEvents, exportedData]);
 
   return (
     <div>
