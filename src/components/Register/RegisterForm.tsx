@@ -56,7 +56,7 @@ export const RegisterForm: React.FC = () => {
           forename: '',
           surname: '',
           email: '',
-          phoneNumber: '',
+          phoneNumber: '+358',
           password: '',
           repeatPassword: '',
           turnstileToken: '',
