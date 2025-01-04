@@ -44,12 +44,14 @@ export const LoginForm: React.FC = () => {
       {({ errors, handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <TextInput
+            className="w-100"
             name="email"
             autoComplete="email"
             errorText={errors.email}
             label="Sähköpostiosoite"
           />
           <TextInput
+            className="w-100"
             name="password"
             autoComplete="password"
             errorText={errors.password}
