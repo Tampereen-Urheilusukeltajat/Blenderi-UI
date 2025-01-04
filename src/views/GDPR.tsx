@@ -31,7 +31,7 @@ export const GDPR: React.FC = () => {
           <h3>Rekisteristä vastaava yhteyshenkilö</h3>
           <span>Akseli Kolari</span>
           <br />
-          <a href="mailto:gdpr@taytttopaikka.fi">gdpr@tayttopaikka.fi</a>
+          <a href="mailto:gdpr@tayttopaikka.fi">gdpr@tayttopaikka.fi</a>
         </li>
         <li style={{ padding: '12px 0' }}>
           <h3>Rekisterin nimi</h3>
