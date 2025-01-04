@@ -1,14 +1,16 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   CommonTable,
   type TableRow,
   type TableColumn,
 } from '../../components/common/Table/CommonTable';
-import { useInvoiceQuery } from '../../lib/queries/invoiceQuery';
+import { type Invoice, useInvoiceQuery } from '../../lib/queries/invoiceQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import { format } from 'date-fns';
 import { PrimaryButton } from '../../components/common/Button/Buttons';
 import { utils, writeFileXLSX } from 'xlsx';
+import { Modal } from '../../components/common/Modal/Modal';
+import { toast } from 'react-toastify';
 
 const INVOICE_COLUMNS: TableColumn[] = [
   {
@@ -37,7 +39,9 @@ const INVOICE_COLUMNS: TableColumn[] = [
   },
 ];
 
-export const Invoice: React.FC = () => {
+export const InvoicePage: React.FC = () => {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [exportedData, setExportedData] = useState<Invoice[]>([]);
   const { data } = useInvoiceQuery();
 
   const rows: TableRow[] = useMemo(
@@ -106,41 +110,99 @@ export const Invoice: React.FC = () => {
         wb,
         `tayttopaikka_laskut_${new Date().toISOString().split('T')[0]}.xlsx`,
       );
+
+      toast.info(
+        'Laskut viety onnistuneesti Excel-tiedostoon. Voit nyt merkitä ladatut laskut laskutetuiksi.',
+        {
+          autoClose: 30000,
+          position: 'top-left',
+        },
+      );
+      setExportedData(data);
+    } else {
+      toast.error(
+        'Odottamaton virhe. Lataa sivu uudestaan ja yritä uudelleen.',
+      );
     }
   }, [data]);
 
+  const onConfirmModalOpen = useCallback(() => {
+    setIsConfirmModalOpen(true);
+  }, []);
+
+  const onConfirmModalClose = useCallback(() => {
+    setIsConfirmModalOpen(false);
+  }, []);
+
+  const onConfirmModalConfirm = useCallback(() => {
+    setIsConfirmModalOpen(false);
+
+    // Mutate
+  }, []);
+
   return (
     <div>
+      <Modal
+        onClose={onConfirmModalClose}
+        onConfirm={onConfirmModalConfirm}
+        isOpen={isConfirmModalOpen}
+        title="Merkitse tapahtumat laskutetuiksi"
+        confirmButtonText="Merkitse laskutetuiksi"
+      >
+        <p>
+          Tarkista ladattu Excel-tiedosto. Mikäli tiedosto on kunnossa, merkitse
+          laskut laskutetuiksi ja välitä tarvittava tieto rahastonhoitajalle.
+        </p>
+      </Modal>
       <h1>Laskutus</h1>
       <div>
         <p>
           Alle on listattu kaikki Täyttöpaikan käyttäjien tekemät{' '}
-          <b>maksamattomat</b> täytöt. Voit viedä laskut Excel-tiedostoon
+          <b>laskuttamattomat</b> täytöt. Voit viedä laskut Excel-tiedostoon
           painamalla oikeassa yläkulmassa olevaa "Vie laskut" -nappia.
         </p>
         <p>
-          Huomaa, että kun viet laskut, ne merkitään järjestelmään
-          automaattisesti maksetuiksi, eivätkä ne enää listaudu tälle sivulle.
-          Älä siis hukkaa saamaasi Excel-tiedostoa!
-          <b>
-            TODO: Ei vielä oikeasti aseta laskuja maksetuiksi. Exportin testaus
-            on ok.
-          </b>
+          Kun laskut on viety Excel-tiedostoon, ne voidaan merkitä
+          laskutetuiksi. Merkkaaminen on käytettävissä vain, kun laskut on viety
+          onnistuneesti. Järjestelmä ei sinänsä mene rikki vaikka laskuja ei
+          merkattaisikaan laskutetuiksi, mutta mikäli käyttäjille lähetetään
+          laskut ladatun tiedoston perusteella, mutta laskuja ei merkata
+          laskutetuksi, voi käyttäjälle pahimmillaan lähteä useampi lasku
+          samasta täyttötapahtumasta.
+        </p>
+        <p>
+          Kun "Merkitse laskutetuiksi" -nappia painetaan, käyttäjille ilmestyy
+          laskun luomisesta tieto. On suositeltavaa, että itse laskujen lähetys
+          tapahtuu mahdollisimman pian merkkauksen jälkeen, jotta käyttäjät
+          eivät jää ihmettelemään saapumatonta laskua.
+        </p>
+        <p>
+          Laskutettujen täyttöjen tiedot tallennetaan järjestelmään eikä mitään
+          tietoa katoa. Järjestelmä ei kuitenkaan tällä hetkellä tue laskujen
+          uudelleen esille ottamista.
         </p>
         <p>
           Hätätilanteessa järjestelmän ylläpitäjät saavat taiottua laskut
           uudelleen esille. Jos tarvitset apua, ota yhteyttä ylläpitoon tai
-          lähetä sähköpostia palaute@tayttopaikka.fi.
+          lähetä sähköpostia{' '}
+          <a href="mailto:info@tayttopaikka.fi">info@tayttopaikka.fi</a>.
         </p>
       </div>
       <div>
         <div className="d-flex flex-row justify-content-between pb-2">
-          <h2>Avoimet laskut</h2>
-          <PrimaryButton
-            disabled={data?.length === 0}
-            text="Vie laskut"
-            onClick={onExportInvoicesButtonClick}
-          />
+          <h2>Laskuttamattomat täyttötapahtumat</h2>
+          <div className="d-flex" style={{ gap: '8px' }}>
+            <PrimaryButton
+              text="Merkitse laskutetuiksi"
+              onClick={onConfirmModalOpen}
+              disabled={exportedData.length === 0}
+            />
+            <PrimaryButton
+              disabled={data?.length === 0}
+              text="Vie laskut"
+              onClick={onExportInvoicesButtonClick}
+            />
+          </div>
         </div>
         <CommonTable columns={INVOICE_COLUMNS} rows={rows} />
       </div>

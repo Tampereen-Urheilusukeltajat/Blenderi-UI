@@ -21,7 +21,7 @@ import { ResetPassword } from './views/ResetPassword/ResetPassword';
 import { Login } from './views/Login/Login';
 import { PrivateContent } from './components/common/PrivateContent';
 import { Footer } from './components/Footer/Footer';
-import { Invoice } from './views/Invoice/Invoice';
+import { InvoicePage } from './views/Invoice/Invoice';
 
 const QUERY_CLIENT = new QueryClient();
 
@@ -88,7 +88,7 @@ const Content: React.FC = () => {
 
           {/* Admin only views */}
           <Route element={<PrivateContent adminOnly />}>
-            <Route path="invoice" element={<Invoice />} />
+            <Route path="invoice" element={<InvoicePage />} />
           </Route>
 
           {/* 404 */}
