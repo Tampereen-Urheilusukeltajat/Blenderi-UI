@@ -119,7 +119,7 @@ export const RegisterForm: React.FC = () => {
 
               <Form.Group className="flex row">
                 <Form.Label>
-                  <div className="d-flex flex-row gx-5">
+                  <div className="d-flex flex-row" style={{ gap: '4px' }}>
                     <Form.Check
                       aria-label="Hyväksyn tietosuojaselosteen"
                       id="acceptDataProtectionPolicy"
