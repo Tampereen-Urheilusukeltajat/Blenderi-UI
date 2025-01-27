@@ -7,6 +7,7 @@ import { getUserRoles } from '../../lib/utils';
 import styles from './Navbar.module.scss';
 import { Navbar as BootNavbar, Container, Nav } from 'react-bootstrap';
 import { CustomLink } from './CustomLink';
+import { AdminDropdown } from './AdminDropdown';
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -44,7 +45,25 @@ export const Navbar: React.FC = () => {
 
               <CustomLink to="/fill-events">Täyttöhistoria</CustomLink>
 
-              {isAdmin && <CustomLink to="/invoice">Laskutus</CustomLink>}
+              {isAdmin && (
+                <AdminDropdown text="Ylläpito">
+                  <CustomLink
+                    className={styles.dropdownLink}
+                    to="/admin/invoice"
+                  >
+                    Laskutus
+                  </CustomLink>
+                  {/* <CustomLink className={styles.dropdownLink} to="/admin/users">
+                    Käyttäjät
+                  </CustomLink>
+                  <CustomLink
+                    className={styles.dropdownLink}
+                    to="/admin/filling-history"
+                  >
+                    Täyttöhistoria
+                  </CustomLink> */}
+                </AdminDropdown>
+              )}
             </Nav>
             <Nav>
               <div className={styles.user}>

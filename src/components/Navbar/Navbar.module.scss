@@ -52,8 +52,8 @@ nav {
 }
 
 .active {
-  background: $white-smoke;
-  color: $black;
+  background: $white-smoke !important;
+  color: $black !important;
 
   :hover {
     color: $black;
@@ -76,6 +76,67 @@ nav {
 
 .logout {
   align-self: center;
+}
+
+.dropdownButton {
+  align-items: center;
+  background-color: $blue;
+  border-radius: 0;
+  border: none;
+  color: $white;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  font-weight: 500;
+  font-family: roboto;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  height: 100%;
+
+  &:disabled {
+    background-color: $grey;
+  }
+
+  &:hover:not(.active) {
+    background-color: $blue-hover;
+    color: $white;
+  }
+
+  &.open {
+    background-color: $blue-hover;
+  }
+}
+
+.dropdownMenu {
+  background: $white-smoke;
+  border: 1px solid $grey;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  color: $grey;
+  position: absolute;
+
+  li {
+    color: $black;
+  }
+
+  li:last-child {
+    border-radius: 0 0 8px 8px;
+  }
+
+  li:hover:not(.active) {
+    background-color: $blue-hover;
+    color: $white;
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
+.dropdownLink {
+  &.active {
+    background-color: $timberwolf !important;
+  }
 }
 
 @media (max-width: 780px) {
