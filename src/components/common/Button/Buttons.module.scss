@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 // Tayttopaikka specific
 $primaryBlue: #0d4d7b;
 $primaryBlueHover: #1971b1;
@@ -10,7 +12,7 @@ $transparent: rgba(0, 0, 0, 0);
 $grey: #c7c7cd;
 $white: #ffffff;
 
-#commonButton {
+.commonButton {
   align-items: center;
   border-radius: 8px;
   border: none;

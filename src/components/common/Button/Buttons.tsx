@@ -12,6 +12,7 @@ export type CommonButtonProps = {
   className?: string;
   disabled?: boolean;
   key?: string;
+  id?: string;
   onClick?: React.MouseEventHandler;
   type?: ButtonType;
 };
@@ -29,6 +30,7 @@ export const ElementButton: React.FC<ElementButtonProps> = ({
   disabled,
   key,
   element,
+  id,
   onClick,
   tooltip,
   type = ButtonType.button,
@@ -41,11 +43,11 @@ export const ElementButton: React.FC<ElementButtonProps> = ({
   return (
     <>
       <button
-        className={styles.elementButton}
+        className={`${styles.commonButton} ${styles.elementButton}`}
         data-tooltip-id={tooltipId}
         data-tooltip-content={tooltip}
         disabled={disabled}
-        id={styles.commonButton}
+        id={id}
         key={key}
         onClick={onClick}
         type={type}
@@ -61,12 +63,13 @@ export const PrimaryButton: React.FC<TextButtonProps> = ({
   disabled,
   key,
   onClick,
+  id,
   text,
   type = ButtonType.button,
 }) => (
   <button
-    id={styles.commonButton}
-    className={styles.primaryButton}
+    id={id}
+    className={`${styles.commonButton} ${styles.primaryButton}`}
     disabled={disabled}
     key={key}
     onClick={onClick}
@@ -80,12 +83,13 @@ export const SecondaryButton: React.FC<TextButtonProps> = ({
   disabled,
   key,
   onClick,
+  id,
   text,
   type = ButtonType.button,
 }) => (
   <button
-    id={styles.commonButton}
-    className={styles.secondaryButton}
+    id={id}
+    className={`${styles.commonButton} ${styles.secondaryButton}`}
     disabled={disabled}
     key={key}
     onClick={onClick}
@@ -99,12 +103,13 @@ export const TertiaryButton: React.FC<TextButtonProps> = ({
   disabled,
   key,
   onClick,
+  id,
   text,
   type = ButtonType.button,
 }) => (
   <button
-    id={styles.commonButton}
-    className={styles.tertiaryButton}
+    id={id}
+    className={`${styles.commonButton} ${styles.tertiaryButton}`}
     disabled={disabled}
     key={key}
     onClick={onClick}

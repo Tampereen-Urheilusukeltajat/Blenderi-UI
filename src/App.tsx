@@ -87,7 +87,7 @@ const Content: React.FC = () => {
           </Route>
 
           {/* Admin only views */}
-          <Route element={<PrivateContent adminOnly />}>
+          <Route path="admin" element={<PrivateContent adminOnly />}>
             <Route path="invoice" element={<InvoicePage />} />
           </Route>
 
