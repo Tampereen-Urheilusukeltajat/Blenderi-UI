@@ -53,9 +53,9 @@ export const UsersPage: React.FC = () => {
           `${user.surname}, ${user.forename}`,
           user.phoneNumber,
           user.email,
-          user.isUser ? 'X' : '',
-          user.isBlender ? 'X' : '',
-          user.isAdmin ? 'X' : '',
+          user.isUser ? 'X' : null,
+          user.isBlender ? 'X' : null,
+          user.isAdmin ? 'X' : null,
         ],
       }));
   }, [data, isError, isLoading]);
