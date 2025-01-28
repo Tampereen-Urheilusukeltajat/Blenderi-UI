@@ -53,10 +53,10 @@ export const Navbar: React.FC = () => {
                   >
                     Laskutus
                   </CustomLink>
-                  {/* <CustomLink className={styles.dropdownLink} to="/admin/users">
+                  <CustomLink className={styles.dropdownLink} to="/admin/users">
                     Käyttäjät
                   </CustomLink>
-                  <CustomLink
+                  {/* <CustomLink
                     className={styles.dropdownLink}
                     to="/admin/filling-history"
                   >
