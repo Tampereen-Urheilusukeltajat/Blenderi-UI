@@ -1,9 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Formik } from 'formik';
 import React, { useCallback, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
-import { patchUser } from '../../lib/apiRequests/userRequests';
-import { USER_QUERY_KEY } from '../../lib/queries/queryKeys';
 import { useUserQuery } from '../../lib/queries/userQuery';
 import {
   getChangedFieldValues,
@@ -12,6 +8,7 @@ import {
 import { USER_SETTINGS_VALIDATION_SCHEMA } from './validation';
 import { UserPropertiesForm } from './components/UserPropertiesForm';
 import styles from './UserSettings.module.scss';
+import { useUserMutation } from '../../lib/queries/userMutations';
 
 export type FormUser = {
   forename: string;
@@ -34,10 +31,14 @@ export type PatchUser = {
 };
 
 export const UserSettings: React.FC = () => {
-  const queryClient = useQueryClient();
-
   const userId = useMemo(() => getUserIdFromAccessToken(), []);
   const { data: user } = useUserQuery(userId);
+  const { mutate: updateUser } = useUserMutation(() => {
+    setEditingName(false);
+    setEditingEmail(false);
+    setEditingPhone(false);
+    setEditingNewPassword(false);
+  });
 
   // Used to open and close editing panel for field
   // Only one can be open at the same time
@@ -46,25 +47,6 @@ export const UserSettings: React.FC = () => {
   const [editingEmail, setEditingEmail] = useState(false);
   const [editingPhone, setEditingPhone] = useState(false);
   const [editingNewPassword, setEditingNewPassword] = useState(false);
-
-  const userMutation = useMutation({
-    mutationFn: async (payload: Partial<PatchUser>) =>
-      patchUser(userId, payload),
-    mutationKey: USER_QUERY_KEY(userId),
-    onSuccess: (user) => {
-      queryClient.setQueryData(USER_QUERY_KEY(userId), user);
-      toast.success('Tiedot päivitetty!');
-
-      setEditingName(false);
-      setEditingEmail(false);
-      setEditingPhone(false);
-      setEditingNewPassword(false);
-    },
-    onError: () => {
-      toast.error('Tietojen päivitys epäonnistui. Yritä uudelleen.');
-    },
-    retry: 0,
-  });
 
   const handleFormSubmit = useCallback(
     (fields: Partial<FormUser>) => {
@@ -90,16 +72,19 @@ export const UserSettings: React.FC = () => {
         },
       );
 
-      userMutation.mutate({
-        email: changedValues.email,
-        phoneNumber: changedValues.phoneNumber,
-        forename: changedValues.forename,
-        surname: changedValues.surname,
-        password: changedValues.newPassword,
-        currentPassword: changedValues.password,
+      updateUser({
+        userId: user.id,
+        payload: {
+          email: changedValues.email,
+          phoneNumber: changedValues.phoneNumber,
+          forename: changedValues.forename,
+          surname: changedValues.surname,
+          password: changedValues.newPassword,
+          currentPassword: changedValues.password,
+        },
       });
     },
-    [userMutation, user],
+    [updateUser, user],
   );
 
   return (
