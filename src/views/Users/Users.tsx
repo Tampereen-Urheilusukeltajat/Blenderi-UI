@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   CommonTable,
   type TableRow,
   type TableColumn,
 } from '../../components/common/Table/CommonTable';
+import { useUsersQuery } from '../../lib/queries/userQuery';
 
 const USER_COLUMNS: TableColumn[] = [
   {
@@ -33,7 +34,31 @@ const USER_COLUMNS: TableColumn[] = [
 ];
 
 export const UsersPage: React.FC = () => {
-  const userRows: TableRow[] = [];
+  const { isError, isLoading, data } = useUsersQuery();
+
+  const userRows = useMemo((): TableRow[] => {
+    if (!data || isError || isLoading) {
+      return [];
+    }
+
+    return data
+      .sort((a, b) =>
+        `${a.surname} ${a.forename}`.localeCompare(
+          `${b.surname} ${b.forename}`,
+        ),
+      )
+      .map((user) => ({
+        id: user.id,
+        mainRow: [
+          `${user.surname}, ${user.forename}`,
+          user.phoneNumber,
+          user.email,
+          user.isUser ? 'X' : '',
+          user.isBlender ? 'X' : '',
+          user.isAdmin ? 'X' : '',
+        ],
+      }));
+  }, [data, isError, isLoading]);
 
   return (
     <>
