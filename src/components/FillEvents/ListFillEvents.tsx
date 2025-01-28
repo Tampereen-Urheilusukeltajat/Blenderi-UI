@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { compareDesc, format } from 'date-fns';
 import { useFillEventQuery } from '../../lib/queries/FillEventQuery';
 import { formatEurCentsToEur } from '../../lib/utils';
 import {
@@ -43,10 +43,7 @@ export const ListFillEvents = (): JSX.Element => {
   const rows: TableRow[] = useMemo(
     () =>
       fillEvents
-        ?.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-        )
+        ?.sort((a, b) => compareDesc(a.createdAt, b.createdAt))
         .map((fillEvent) => ({
           id: fillEvent.id,
           mainRow: [
