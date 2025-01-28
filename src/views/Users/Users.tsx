@@ -19,16 +19,16 @@ const USER_COLUMNS: TableColumn[] = [
     shortTitle: '@',
   },
   {
-    title: 'Ylläpitäjä',
-    shortTitle: 'Admin',
+    title: 'Jäsen',
+    shortTitle: 'Jäsen',
   },
   {
     title: 'Blender',
     shortTitle: 'Blender',
   },
   {
-    title: 'Jäsen',
-    shortTitle: 'Jäsen',
+    title: 'Ylläpitäjä',
+    shortTitle: 'Admin',
   },
 ];
 
@@ -73,7 +73,7 @@ export const UsersPage: React.FC = () => {
           </tbody>
         </table>
       </div>
-      <div>
+      <div className="mt-4">
         <h2>Käyttäjälistaus</h2>
         <CommonTable columns={USER_COLUMNS} rows={userRows} />
       </div>
