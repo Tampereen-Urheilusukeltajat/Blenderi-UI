@@ -41,6 +41,8 @@ const ElementButtonCell: React.FC<ElementButtonProps> = ({
  * Common table element which can be used in a number of situations.
  * HOX Row length MUST ALWAYS match the length of columns! Otherwise,
  * the styling will break! Empty values can be indicated by using null
+ *
+ * @deprecated
  */
 export const CommonTable: React.FC<CommonTableProps> = ({
   columns,

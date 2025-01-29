@@ -52,5 +52,6 @@ module.exports = {
       { checksVoidReturn: { attributes: false } },
     ],
     '@typescript-eslint/unbound-method': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
   },
 };
