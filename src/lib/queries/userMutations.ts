@@ -6,7 +6,7 @@ import {
   type UserRoles,
   type User,
 } from '../apiRequests/userRequests';
-import { USER_QUERY_KEY } from './queryKeys';
+import { USER_QUERY_KEY, USERS_QUERY_KEY } from './queryKeys';
 import { toast } from 'react-toastify';
 import { type UseMutation } from './common';
 
@@ -47,16 +47,16 @@ export const useUserMutation = (
 };
 
 export const useUserRolesMutation = (
-  onSuccess: () => void,
+  onSuccess?: () => void,
 ): UseMutation<User, UserRolesMutationPayload> => {
   const queryClient = useQueryClient();
   const { isPending, mutate, data, isError } = useMutation({
     mutationFn: async ({ userId, payload }: UserRolesMutationPayload) =>
       patchUserRoles(userId, payload),
     onSuccess: async (user) => {
-      await queryClient.setQueryData(USER_QUERY_KEY(user.id), user);
+      await queryClient.invalidateQueries({ queryKey: USERS_QUERY_KEY });
       toast.success('Käyttäjän rooli päivitetty');
-      onSuccess();
+      onSuccess?.();
     },
     onError: () => {
       toast.error('Roolin päivitys epäonnistui. Yritä uudelleen.');
