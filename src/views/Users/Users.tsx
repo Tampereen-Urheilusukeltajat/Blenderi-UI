@@ -145,10 +145,6 @@ export const UsersPage: React.FC = () => {
                 koulutuksensa mukaisia täyttöjä.
               </td>
             </tr>
-            <tr>
-              <td>Jäsen</td>
-              <td>Jäsenet voivat tehdä paineilmatäyttöjä omiin pulloihinsa.</td>
-            </tr>
           </tbody>
         </table>
       </div>
