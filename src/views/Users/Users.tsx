@@ -104,7 +104,12 @@ export const UsersPage: React.FC = () => {
         ),
       }),
     ],
-    data: data ?? [],
+    data:
+      data?.sort((a, b) =>
+        `${a.surname} ${a.forename}`.localeCompare(
+          `${b.surname} ${b.forename}`,
+        ),
+      ) ?? [],
     getCoreRowModel: getCoreRowModel(),
     state: {
       columnVisibility: {
