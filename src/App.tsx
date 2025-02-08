@@ -6,7 +6,7 @@ import {
   useIsFetching,
 } from '@tanstack/react-query';
 import { PageLoadingSpinner } from './components/Spinner';
-import { DivingCylinderSetManagement } from './views/DivingCylinderSetSettings/DivingCylinderSetSettings';
+import { DivingCylinders } from './views/DivingCylinders/DivingCylinders';
 import { UserSettings } from './components/UserSettings/UserSettings';
 import { BlenderLogbook } from './views/BlenderLogbook';
 import { Logbook } from './views/Logbook';
@@ -72,10 +72,7 @@ const Content: React.FC = () => {
 
           {/* Private routes */}
           <Route element={<PrivateContent />}>
-            <Route
-              path="diving-cylinder-set"
-              element={<DivingCylinderSetManagement />}
-            />
+            <Route path="diving-cylinder-set" element={<DivingCylinders />} />
             <Route path="logbook" element={<Logbook />} />
 
             <Route path="fill-events" element={<FillEvents />} />
