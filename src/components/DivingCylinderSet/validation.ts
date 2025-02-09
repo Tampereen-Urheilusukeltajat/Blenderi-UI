@@ -48,3 +48,16 @@ export const NEW_CYLINDER_SET_VALIDATION_SCHEMA = yup.object().shape({
     .required()
     .min(1),
 });
+
+export const PATCH_DIVING_CYLINDER_SET_VALIDATION_SCHEMA = yup.object().shape({
+  name: yup.string().required(FIELD_REQUIRED).min(1).max(255),
+  inspectionYear: yup
+    .number()
+    .required(FIELD_REQUIRED)
+    .min(
+      MIN_INSPECT_YEAR,
+      `Katsastusvuoden täytyy olla vähintään ${MIN_INSPECT_YEAR}`,
+    )
+    .max(new Date().getFullYear(), 'Katsastusvuosi ei voi olla tulevaisuudessa')
+    .typeError(FIELD_NUMBER),
+});

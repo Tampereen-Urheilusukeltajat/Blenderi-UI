@@ -3,7 +3,6 @@ import {
   type DivingCylinder,
   type DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
-import { type AxiosResponse } from 'axios';
 
 export type DivingCylinderSetTable = {
   divingCylinderSetName: string;
@@ -14,6 +13,11 @@ export type DivingCylinderSetPostRequest = {
   owner: string;
   name: string;
   cylinders: Array<Omit<DivingCylinder, 'id'>>;
+};
+
+export type PatchDivingCylinderSetPayload = {
+  name?: string;
+  cylinders?: Array<Partial<DivingCylinder> & { id: string }>;
 };
 
 export const postDivingCylinderSet = async (
@@ -38,5 +42,21 @@ export const getDivingCylinderSets = async (
 
 export const archiveDivingCylinderSet = async (
   divingCylinderSetId: string,
-): Promise<AxiosResponse> =>
-  authPatchAsync(`/api/cylinder-set/${divingCylinderSetId}/archive`);
+): Promise<string> => {
+  const res = await authPatchAsync<string, undefined>(
+    `/api/cylinder-set/${divingCylinderSetId}/archive`,
+  );
+  return res.data;
+};
+
+export const patchDivingCylinderSet = async (
+  divingCylinderSetId: string,
+  payload: PatchDivingCylinderSetPayload,
+): Promise<DivingCylinderSet> => {
+  const res = await authPatchAsync<
+    DivingCylinderSet,
+    PatchDivingCylinderSetPayload
+  >(`/api/cylinder-set/${divingCylinderSetId}`, payload);
+
+  return res.data;
+};
