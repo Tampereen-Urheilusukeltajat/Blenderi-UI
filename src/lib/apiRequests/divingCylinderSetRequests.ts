@@ -15,6 +15,11 @@ export type DivingCylinderSetPostRequest = {
   cylinders: Array<Omit<DivingCylinder, 'id'>>;
 };
 
+export type PatchDivingCylinderSetPayload = {
+  name?: string;
+  cylinders?: Array<Partial<DivingCylinder> & { id: string }>;
+};
+
 export const postDivingCylinderSet = async (
   payload: DivingCylinderSetPostRequest,
 ): Promise<DivingCylinderSet> => {
@@ -41,5 +46,17 @@ export const archiveDivingCylinderSet = async (
   const res = await authPatchAsync<string, undefined>(
     `/api/cylinder-set/${divingCylinderSetId}/archive`,
   );
+  return res.data;
+};
+
+export const patchDivingCylinderSet = async (
+  divingCylinderSetId: string,
+  payload: PatchDivingCylinderSetPayload,
+): Promise<DivingCylinderSet> => {
+  const res = await authPatchAsync<
+    DivingCylinderSet,
+    PatchDivingCylinderSetPayload
+  >(`/api/cylinder-set/${divingCylinderSetId}`, payload);
+
   return res.data;
 };

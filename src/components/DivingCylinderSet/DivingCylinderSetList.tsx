@@ -16,6 +16,8 @@ import { useArchieveDivingCylinderSetMutation } from '../../lib/queries/divingCy
 import { useCallback, useMemo, useState } from 'react';
 import { Modal } from '../common/Modal/Modal';
 import { toast } from 'react-toastify';
+import { type DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
+import { ModifyDivingCylinderSetModal } from './ModifyDivingCylinderSetModal';
 
 type DivingCylinderTableRow = {
   id: string;
@@ -63,6 +65,11 @@ export const DivingCylinderSetList = (): JSX.Element => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [toBeArchivedDivingCylinderSetId, setToBeArchivedDivingCylinderSetId] =
     useState<string | undefined>(undefined);
+
+  const [showModifyModal, setShowModifyModal] = useState(false);
+  const [modifiedCylinderSet, setModifiedCylinderSet] = useState<
+    DivingCylinderSet | undefined
+  >(undefined);
 
   const tableCylinders: DivingCylinderTableRow[] = useMemo(
     () =>
@@ -129,7 +136,12 @@ export const DivingCylinderSetList = (): JSX.Element => {
               <button
                 className="btn btn-primary"
                 onClick={() => {
-                  confirm('Moro');
+                  setModifiedCylinderSet(
+                    divingCylinderSets?.find(
+                      (dcs) => dcs.id === cell.row.getValue('id'),
+                    ),
+                  );
+                  setShowModifyModal(true);
                 }}
               >
                 <BsPencil />
@@ -187,6 +199,17 @@ export const DivingCylinderSetList = (): JSX.Element => {
       >
         Haluatko varmasti poistaa pullosetin? Tätä tekoa ei voi peruuttaa.
       </Modal>
+      {modifiedCylinderSet && (
+        <ModifyDivingCylinderSetModal
+          closeModal={() => {
+            setShowModifyModal(false);
+            setModifiedCylinderSet(undefined);
+          }}
+          showModifyDivingCylinderModal={showModifyModal}
+          divingCylinderSet={modifiedCylinderSet}
+          userId={userId}
+        />
+      )}
     </div>
   );
 };
