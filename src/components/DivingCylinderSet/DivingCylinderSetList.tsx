@@ -11,9 +11,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { BsTrash } from 'react-icons/bs';
+import { BsPencil, BsTrash } from 'react-icons/bs';
 import { useArchieveDivingCylinderSetMutation } from '../../lib/queries/divingCylinderSetMutation';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { Modal } from '../common/Modal/Modal';
+import { toast } from 'react-toastify';
 
 type DivingCylinderTableRow = {
   id: string;
@@ -57,6 +59,10 @@ export const DivingCylinderSetList = (): JSX.Element => {
         queryKey: DIVING_CYLINDER_SETS_QUERY_KEY(userId),
       });
     });
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [toBeArchivedDivingCylinderSetId, setToBeArchivedDivingCylinderSetId] =
+    useState<string | undefined>(undefined);
 
   const tableCylinders: DivingCylinderTableRow[] = useMemo(
     () =>
@@ -112,18 +118,27 @@ export const DivingCylinderSetList = (): JSX.Element => {
         header: 'Katsastusvuosi',
       }),
       columnHelper.display({
-        id: 'delete',
-        header: 'Poista',
+        id: 'actions',
+        header: 'Toiminnot',
         cell: (cell) => {
           const isSubRow = cell.row.depth > 0;
           if (isSubRow) return null;
 
           return (
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center gap-2">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  confirm('Moro');
+                }}
+              >
+                <BsPencil />
+              </button>
               <button
                 className="btn btn-danger"
                 onClick={() => {
-                  archiveDivingCylinder(cell.row.getValue('id'));
+                  setToBeArchivedDivingCylinderSetId(cell.row.getValue('id'));
+                  setConfirmModalOpen(true);
                 }}
               >
                 <BsTrash />
@@ -145,12 +160,33 @@ export const DivingCylinderSetList = (): JSX.Element => {
     },
   });
 
+  const handleArchiveConfirm = useCallback(() => {
+    if (!toBeArchivedDivingCylinderSetId) {
+      return toast.error(
+        'Jotain meni pieleen. Lataa sivu uudelleen ja yritä uudestaan',
+      );
+    }
+    archiveDivingCylinder(toBeArchivedDivingCylinderSetId);
+    setToBeArchivedDivingCylinderSetId(undefined);
+    setConfirmModalOpen(false);
+  }, [archiveDivingCylinder, toBeArchivedDivingCylinderSetId]);
+
   return (
     <div>
       <h1 className="pb-4">Omat pullot</h1>
       <div>
         <CommonTableV2 table={DivingCylinderTable} />
       </div>
+      <Modal
+        isOpen={confirmModalOpen}
+        title="Poista pullosetti"
+        onClose={() => {
+          setConfirmModalOpen(false);
+        }}
+        onConfirm={handleArchiveConfirm}
+      >
+        Haluatko varmasti poistaa pullosetin? Tätä tekoa ei voi peruuttaa.
+      </Modal>
     </div>
   );
 };
