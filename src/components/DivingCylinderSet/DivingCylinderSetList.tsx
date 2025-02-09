@@ -134,7 +134,7 @@ export const DivingCylinderSetList = (): JSX.Element => {
 
           const rowId = cell.row.id;
           return (
-            <div className="d-flex justify-content-center gap-2">
+            <div className="d-flex justify-content-center gap-2 py-1">
               <button
                 data-tooltip-id={`modify-set-${rowId}`}
                 data-tooltip-content={'Muokkaa pullosettiä'}
