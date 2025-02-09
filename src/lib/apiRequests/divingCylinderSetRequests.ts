@@ -3,7 +3,6 @@ import {
   type DivingCylinder,
   type DivingCylinderSet,
 } from '../../interfaces/DivingCylinderSet';
-import { type AxiosResponse } from 'axios';
 
 export type DivingCylinderSetTable = {
   divingCylinderSetName: string;
@@ -38,5 +37,9 @@ export const getDivingCylinderSets = async (
 
 export const archiveDivingCylinderSet = async (
   divingCylinderSetId: string,
-): Promise<AxiosResponse> =>
-  authPatchAsync(`/api/cylinder-set/${divingCylinderSetId}/archive`);
+): Promise<string> => {
+  const res = await authPatchAsync<string, undefined>(
+    `/api/cylinder-set/${divingCylinderSetId}/archive`,
+  );
+  return res.data;
+};

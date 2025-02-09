@@ -32,18 +32,27 @@ export const CommonTableV2 = <T,>({
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row, index) => (
-            <tr
-              key={row.id}
-              className={index % 2 === 0 ? styles.evenRow : styles.oddRow}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr
+                key={row.id}
+                className={
+                  // Ensure subrows have the same style. This is bit sketchy but
+                  // works here since we don't assign the id and by default the
+                  // parent row id is integer following the index
+                  (row.depth === 0 ? row.index : Number(row.parentId)) % 2 === 0
+                    ? styles.evenRow
+                    : styles.oddRow
+                }
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

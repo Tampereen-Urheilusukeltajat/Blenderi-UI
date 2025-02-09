@@ -11,14 +11,11 @@
 }
 
 table {
+  background-color: $timberwolf;
   width: 100%;
 
-  thead {
-    background-color: $timberwolf;
-  }
-
   .evenRow {
-    background-color: $ghost-white;
+    background-color: #f0f2f5;
   }
 
   .oddRow {
