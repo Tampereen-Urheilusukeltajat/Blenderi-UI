@@ -18,6 +18,7 @@ import { Modal } from '../common/Modal/Modal';
 import { toast } from 'react-toastify';
 import { type DivingCylinderSet } from '../../interfaces/DivingCylinderSet';
 import { ModifyDivingCylinderSetModal } from './ModifyDivingCylinderSetModal';
+import { Tooltip } from 'react-tooltip';
 
 type DivingCylinderTableRow = {
   id: string;
@@ -131,9 +132,12 @@ export const DivingCylinderSetList = (): JSX.Element => {
           const isSubRow = cell.row.depth > 0;
           if (isSubRow) return null;
 
+          const rowId = cell.row.id;
           return (
             <div className="d-flex justify-content-center gap-2">
               <button
+                data-tooltip-id={`modify-set-${rowId}`}
+                data-tooltip-content={'Muokkaa pullosettiä'}
                 className="btn btn-primary"
                 onClick={() => {
                   setModifiedCylinderSet(
@@ -147,6 +151,8 @@ export const DivingCylinderSetList = (): JSX.Element => {
                 <BsPencil />
               </button>
               <button
+                data-tooltip-id={`delete-set-${rowId}`}
+                data-tooltip-content={'Poista pullosetti'}
                 className="btn btn-danger"
                 onClick={() => {
                   setToBeArchivedDivingCylinderSetId(cell.row.getValue('id'));
@@ -155,6 +161,8 @@ export const DivingCylinderSetList = (): JSX.Element => {
               >
                 <BsTrash />
               </button>
+              <Tooltip id={`modify-set-${rowId}`} />
+              <Tooltip id={`delete-set-${rowId}`} />
             </div>
           );
         },
@@ -197,7 +205,7 @@ export const DivingCylinderSetList = (): JSX.Element => {
         }}
         onConfirm={handleArchiveConfirm}
       >
-        Haluatko varmasti poistaa pullosetin? Tätä tekoa ei voi peruuttaa.
+        Haluatko varmasti poistaa pullosetin? Tätä toimintoa ei voi peruuttaa.
       </Modal>
       {modifiedCylinderSet && (
         <ModifyDivingCylinderSetModal
