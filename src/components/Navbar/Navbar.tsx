@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
     navigate('/login');
   }, [navigate, queryClient]);
 
-  const { isAdmin, isBlender } = getUserRoles();
+  const { isAdmin, isBlender, isAdvancedBlender, isUser } = getUserRoles();
   const fullName = getUserFullName();
 
   return (
@@ -36,11 +36,14 @@ export const Navbar: React.FC = () => {
         <BootNavbar.Collapse id="basic-navbar-nav">
           <div className="d-flex flex-row justify-content-between w-100">
             <Nav>
-              <CustomLink to="/logbook">Paineilmatäyttö</CustomLink>
-
-              {(isAdmin || isBlender) && (
-                <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
+              {(isUser || isAdmin) && (
+                <CustomLink to="/logbook">Paineilmatäyttö</CustomLink>
               )}
+
+              {(isUser || isAdmin) &&
+                (isBlender || isAdvancedBlender || isAdmin) && (
+                  <CustomLink to="/blender-logbook">Happihäkki</CustomLink>
+                )}
 
               <CustomLink to="/diving-cylinder-set">Omat pullot</CustomLink>
 

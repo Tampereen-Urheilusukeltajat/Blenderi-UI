@@ -10,9 +10,14 @@ type PrivateContentProps = Omit<PrivateRouteProps, 'children'>;
 export const PrivateContent: React.FC<PrivateContentProps> = ({
   adminOnly,
   blenderOnly,
+  userOnly,
 }) => {
   return (
-    <ProtectedRoute adminOnly={adminOnly} blenderOnly={blenderOnly}>
+    <ProtectedRoute
+      adminOnly={adminOnly}
+      blenderOnly={blenderOnly}
+      userOnly={userOnly}
+    >
       <Navbar />
       <Container className="justify-self-start pt-4">
         <Outlet />

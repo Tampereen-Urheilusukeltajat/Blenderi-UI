@@ -1,10 +1,5 @@
+import { type UserRoles } from './apiRequests/userRequests';
 import { type AccessToken } from './auth';
-
-type UserRoles = {
-  isAdmin: boolean;
-  isBlender: boolean;
-  isUser: boolean;
-};
 
 export enum AvailableGasses {
   air = 'Air',
@@ -161,11 +156,14 @@ export const getUserRoles = (): UserRoles => {
   const token = getTokenFromLocalStorage<AccessToken>('accessToken');
   if (!token) throw new Error('accessToken not found');
 
-  const { isAdmin, isBlender, isUser } = token.payload;
+  const { isAdmin, isBlender, isUser, isAdvancedBlender, isInstructor } =
+    token.payload;
 
   return {
     isAdmin,
     isBlender,
     isUser,
+    isAdvancedBlender,
+    isInstructor,
   };
 };

@@ -1,14 +1,12 @@
 import { postAsync } from './apiRequests/api';
 import { type LoginResponse } from './apiRequests/login';
+import { type UserRoles } from './apiRequests/userRequests';
 import { getTokenFromLocalStorage, tokenExpired } from './utils';
 
-export type AccessToken = {
+export type AccessToken = UserRoles & {
   exp: number;
   iat: number;
   id: string;
-  isAdmin: boolean;
-  isBlender: boolean;
-  isUser: boolean;
   isRefreshToken: boolean;
   fullName: string;
 };
