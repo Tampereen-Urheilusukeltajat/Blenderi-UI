@@ -14,6 +14,8 @@ export type UserRoles = {
   isAdmin: boolean;
   isBlender: boolean;
   isUser: boolean;
+  isAdvancedBlender: boolean;
+  isInstructor: boolean;
 };
 
 export const getUser = async (userId: string): Promise<User> => {
