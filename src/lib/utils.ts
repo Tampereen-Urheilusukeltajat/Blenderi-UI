@@ -3,6 +3,7 @@ import { type AccessToken } from './auth';
 type UserRoles = {
   isAdmin: boolean;
   isBlender: boolean;
+  isUser: boolean;
 };
 
 export enum AvailableGasses {
@@ -142,6 +143,17 @@ export const getChangedFieldValues = (
 };
 
 /**
+ * Get users full name stored inside the token
+ * @returns full name (string)
+ */
+export const getUserFullName = (): string => {
+  const token = getTokenFromLocalStorage<AccessToken>('accessToken');
+  if (!token) throw new Error('accessToken not found');
+
+  return token.payload.fullName;
+};
+
+/**
  * @returns User roles
  * @throws If accessToken is not found (shouldn't happen)
  */
@@ -149,10 +161,11 @@ export const getUserRoles = (): UserRoles => {
   const token = getTokenFromLocalStorage<AccessToken>('accessToken');
   if (!token) throw new Error('accessToken not found');
 
-  const { isAdmin, isBlender } = token.payload;
+  const { isAdmin, isBlender, isUser } = token.payload;
 
   return {
     isAdmin,
     isBlender,
+    isUser,
   };
 };

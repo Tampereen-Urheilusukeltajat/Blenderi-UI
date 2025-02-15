@@ -8,6 +8,9 @@ export type AccessToken = {
   id: string;
   isAdmin: boolean;
   isBlender: boolean;
+  isUser: boolean;
+  isRefreshToken: boolean;
+  fullName: string;
 };
 
 export type RefreshToken = AccessToken & {

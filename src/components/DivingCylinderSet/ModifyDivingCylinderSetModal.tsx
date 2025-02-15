@@ -70,12 +70,13 @@ export const ModifyDivingCylinderSetModal: React.FC<
           }}
           onConfirm={handleSubmit}
         >
-          <Form>
+          <Form className="d-flex flex-column gap-2">
             <TextInput
               className="w-100"
               name="name"
               errorText={errors.name}
               label="Nimi"
+              opIgnore
             />
             <TextInput
               className="w-100"
@@ -83,6 +84,7 @@ export const ModifyDivingCylinderSetModal: React.FC<
               autoComplete="family-name"
               errorText={errors.inspectionYear}
               label="Katsastusvuosi"
+              opIgnore
             />
           </Form>
         </Modal>

@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { TertiaryButton } from '../common/Button/Buttons';
-import { getUserRoles } from '../../lib/utils';
+import { getUserFullName, getUserRoles } from '../../lib/utils';
 import styles from './Navbar.module.scss';
 import { Navbar as BootNavbar, Container, Nav } from 'react-bootstrap';
 import { CustomLink } from './CustomLink';
@@ -24,6 +24,7 @@ export const Navbar: React.FC = () => {
   }, [navigate, queryClient]);
 
   const { isAdmin, isBlender } = getUserRoles();
+  const fullName = getUserFullName();
 
   return (
     <BootNavbar expand="lg">
@@ -65,12 +66,12 @@ export const Navbar: React.FC = () => {
                 </AdminDropdown>
               )}
             </Nav>
-            <Nav>
+            <Nav className="d-flex gap-2">
               <div className={styles.user}>
                 <CustomLink to="/user">
                   <div className={styles.iconLink}>
                     <BsPersonCircle size={35} />
-                    <span>Omat tiedot</span>
+                    <span>{fullName}</span>
                   </div>
                 </CustomLink>
               </div>
