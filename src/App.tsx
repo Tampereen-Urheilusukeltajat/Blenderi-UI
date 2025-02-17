@@ -73,14 +73,18 @@ const Content: React.FC = () => {
           {/* Private routes */}
           <Route element={<PrivateContent />}>
             <Route path="diving-cylinder-set" element={<DivingCylinders />} />
-            <Route path="logbook" element={<Logbook />} />
 
             <Route path="fill-events" element={<FillEvents />} />
             <Route path="user" element={<UserSettings />} />
           </Route>
 
+          {/* User only views */}
+          <Route element={<PrivateContent userOnly />}>
+            <Route path="logbook" element={<Logbook />} />
+          </Route>
+
           {/* Blender only views */}
-          <Route element={<PrivateContent blenderOnly />}>
+          <Route element={<PrivateContent blenderOnly userOnly />}>
             <Route path="blender-logbook" element={<BlenderLogbook />} />
           </Route>
 

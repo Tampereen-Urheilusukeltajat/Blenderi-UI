@@ -15,6 +15,7 @@ export type CommonInputProps = {
   unit?: string;
   validate?: (fieldValue: never) => void;
   type?: string;
+  opIgnore?: boolean;
 };
 
 export type SelectInputProps = CommonInputProps & React.PropsWithChildren;
@@ -31,6 +32,7 @@ export const TextInput: React.FC<CommonInputProps> = ({
   unit,
   validate,
   type,
+  opIgnore,
   ...props
 }) => {
   return (
@@ -56,6 +58,7 @@ export const TextInput: React.FC<CommonInputProps> = ({
           placeholder={placeholder}
           validate={validate}
           type={type}
+          data-op-ignore={!!opIgnore}
         />
         {unit !== undefined ? <InputGroup.Text>{unit}</InputGroup.Text> : null}
         <span className="invalid-feedback">{errorText}</span>
@@ -74,6 +77,7 @@ export const DropdownMenu: React.FC<SelectInputProps> = ({
   placeholder,
   unit,
   type,
+  opIgnore,
   ...props
 }) => {
   return (
@@ -95,6 +99,7 @@ export const DropdownMenu: React.FC<SelectInputProps> = ({
           placeholder={placeholder}
           type={type}
           defaultValue={undefined}
+          data-op-ignore={!!opIgnore}
         >
           <option hidden value={undefined}></option>
           {children}

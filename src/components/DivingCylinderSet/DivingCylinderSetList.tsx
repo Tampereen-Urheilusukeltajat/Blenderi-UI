@@ -96,8 +96,8 @@ export const DivingCylinderSetList = (): JSX.Element => {
     [divingCylinderSets],
   );
 
-  const DivingCylinderTable = useReactTable({
-    columns: [
+  const tableColumns = useMemo(
+    () => [
       columnHelper.accessor('id', {
         id: 'id',
       }),
@@ -168,6 +168,11 @@ export const DivingCylinderSetList = (): JSX.Element => {
         },
       }),
     ],
+    [divingCylinderSets],
+  );
+
+  const DivingCylinderTable = useReactTable({
+    columns: tableColumns,
     data: tableCylinders,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),

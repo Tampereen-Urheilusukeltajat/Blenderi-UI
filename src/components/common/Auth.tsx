@@ -8,12 +8,14 @@ import { PageLoadingSpinner } from '../Spinner';
 
 export type PrivateRouteProps = {
   children: React.ReactNode;
+  userOnly?: boolean;
   blenderOnly?: boolean;
   adminOnly?: boolean;
 };
 
 export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
   children,
+  userOnly = false,
   blenderOnly = false,
   adminOnly = false,
 }) => {
@@ -34,9 +36,17 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
 
     validateAuth()
       .then(() => {
-        const { isAdmin, isBlender } = getUserRoles();
+        const { isAdmin, isBlender, isUser, isAdvancedBlender } =
+          getUserRoles();
+
+        if (userOnly && !(isUser || isAdmin)) {
+          toast.error('Sinua ei ole merkattu seuran jäseneksi');
+          navigate('/diving-cylinder-set');
+          return;
+        }
+
         if (
-          (blenderOnly && !(isBlender || isAdmin)) ||
+          (blenderOnly && !(isBlender || isAdvancedBlender || isAdmin)) ||
           (adminOnly && !isAdmin)
         ) {
           toast.error('Ei oikeutta näkymään');
@@ -46,7 +56,7 @@ export const ProtectedRoute: React.FC<PrivateRouteProps> = ({
       .catch(() => {
         navigate('/login');
       });
-  }, [navigate, blenderOnly, adminOnly]);
+  }, [navigate, blenderOnly, adminOnly, userOnly]);
 
   useEffect(() => {
     if (!loading && !authenticated) {
