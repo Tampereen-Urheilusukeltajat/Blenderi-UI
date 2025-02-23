@@ -2,11 +2,6 @@ import { type Compressor } from '../../../lib/queries/compressorQuery';
 import { DropdownMenu, TextInput } from '../../common/Inputs';
 import React from 'react';
 
-export type LogbookFillingEventRow = {
-  divingCylinderSet: string;
-  uniqueId: string;
-};
-
 type LogbookFillingEventBasicInfo = {
   additionalInformation: string;
   gasMixture: string;
@@ -14,7 +9,7 @@ type LogbookFillingEventBasicInfo = {
 };
 
 type LogbookFormFields = LogbookFillingEventBasicInfo & {
-  fillingEventRows: LogbookFillingEventRow[];
+  divingCylinderSetIds: string[];
 };
 
 export type LogbookCommonTileProps = {
@@ -39,12 +34,6 @@ export const LogbookBasicInfoTile: React.FC<LogbookBasicInfoTileProps> = ({
     <div className="pb-3 border-bottom">
       <h2>Esitiedot</h2>
       <div className="d-flex gap-3">
-        <TextInput
-          name="gasMixture"
-          label="Kaasu"
-          disabled
-          placeholder="Paineilma"
-        />
         <DropdownMenu
           name="compressorId"
           label="Kompressori"
@@ -63,6 +52,7 @@ export const LogbookBasicInfoTile: React.FC<LogbookBasicInfoTileProps> = ({
           label="Lisätiedot"
           name="additionalInformation"
         />
+        <TextInput name="gasMixture" label="Kaasu" disabled />
       </div>
     </div>
   );

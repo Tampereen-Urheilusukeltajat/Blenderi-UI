@@ -9,3 +9,4 @@ export const PASSWORD_MIN_LENGTH =
   'Salasanan on oltava vähintään 8 merkin mittainen';
 export const PASSWORDS_DO_NOT_MATCH = 'Salasanat eivät vastaa toisiaan';
 export const FIELD_NUMBER = 'Annetun arvon on oltava numero';
+export const ATLEAST_ONE = 'Valitse ainakin yksi vaihtoehto';

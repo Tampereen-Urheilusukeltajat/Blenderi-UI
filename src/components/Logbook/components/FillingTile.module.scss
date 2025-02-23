@@ -1,6 +1,6 @@
 @import '../../../variables.scss';
 
-.cylinderSet {
+.fillingTile {
   background: $white-smoke-light;
   border-radius: 12px;
   border: 1px solid $timberwolf;
@@ -11,28 +11,4 @@
   margin-bottom: 1rem;
   padding: 0.5rem;
   position: relative;
-}
-
-.deleteButtonWrapper {
-  align-items: flex-end;
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  button {
-    background: transparent;
-    color: $red;
-
-    &:disabled {
-      background: transparent !important;
-      color: $grey60;
-    }
-  }
-}
-
-.addRow {
-  button {
-    width: 100%;
-  }
 }
