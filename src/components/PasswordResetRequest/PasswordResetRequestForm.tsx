@@ -6,12 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import { usePasswordResetRequestMutation } from '../../lib/queries/passwordResetRequestMutation';
 import { PASSWORD_RESET_REQUEST_VALIDATION_SCHEMA } from './validation';
 import { TextInput } from '../common/Inputs';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 type ResetFields = {
   email: string;
 };
 
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+
 export const PasswordResetRequestForm: React.FC = () => {
+  if (TURNSTILE_SITE_KEY === undefined) {
+    throw new Error('Turnstile initiation failed');
+  }
+
   const navigate = useNavigate();
 
   const handleSuccessfulPasswordResetRequest = useCallback(() => {
@@ -36,13 +43,14 @@ export const PasswordResetRequestForm: React.FC = () => {
       <Formik
         initialValues={{
           email: '',
+          turnstileToken: '',
         }}
         validateOnChange={false}
         validateOnBlur={false}
         validationSchema={PASSWORD_RESET_REQUEST_VALIDATION_SCHEMA}
         onSubmit={async (values) => handleSubmit(values)}
       >
-        {({ errors, handleSubmit }) => (
+        {({ errors, handleSubmit, setFieldValue, values }) => (
           <Form onSubmit={handleSubmit}>
             <TextInput
               name="email"
@@ -50,10 +58,21 @@ export const PasswordResetRequestForm: React.FC = () => {
               errorText={errors.email}
               label="Sähköpostiosoite"
             />
+            <Turnstile
+              siteKey={TURNSTILE_SITE_KEY}
+              onSuccess={async (token) =>
+                setFieldValue('turnstileToken', token)
+              }
+              options={{
+                appearance: 'interaction-only',
+                theme: 'light',
+              }}
+            />
             <div className="d-flex justify-content-center">
               <PrimaryButton
                 text="Tilaa palautuslinkki"
                 type={ButtonType.submit}
+                disabled={!values.turnstileToken}
               />
             </div>
           </Form>
