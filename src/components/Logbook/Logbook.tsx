@@ -1,10 +1,7 @@
-import { Form, Formik, type FormikValues } from 'formik';
+import { Form, Formik, type FormikHelpers } from 'formik';
 import { AirLogbookSavingTile } from './components/SavingTile';
 import { LogbookFillingTile } from './components/FillingTile';
-import {
-  LogbookBasicInfoTile,
-  type LogbookFillingEventRow,
-} from './components/LogBookBasicInfoTile';
+import { LogbookBasicInfoTile } from './components/LogBookBasicInfoTile';
 import { AIR_FILLING_EVENT_VALIDATION_SCHEMA } from './validation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
@@ -21,14 +18,9 @@ type FillingEventBasicInfo = {
   compressorId: string;
 };
 
-export const EmptyLogbookFillingEventRow = (): LogbookFillingEventRow => ({
-  divingCylinderSet: '',
-  uniqueId: crypto.randomUUID(),
-});
-
 const EMPTY_FILLING_EVENT_BASIC_INFO: FillingEventBasicInfo = {
   additionalInformation: '',
-  gasMixture: 'Paineilma',
+  gasMixture: 'Paineilma (EAN21)',
   userConfirm: false,
   compressorId: '',
 };
@@ -38,27 +30,24 @@ type NewFillingEventProps = {
   divingCylinderSets: DivingCylinderSet[];
 };
 
+type FormFields = FillingEventBasicInfo & { divingCylinderSetIds: string[] };
+
 export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
   compressors,
   divingCylinderSets,
 }) => {
   const fillEventMutation = useMutation({
     mutationFn: async (payload: NewFillEvent) => postFillEvent(payload),
-    onSuccess: () => {
-      toast.success('Uusi täyttötapahtuma lisätty!');
-    },
-    onError: () => {
-      toast.error(
-        'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen.',
-      );
-    },
   });
 
-  const handleSubmit = async (values: FormikValues): Promise<void> => {
-    for (const { divingCylinderSet } of values.fillingEventRows) {
+  const handleSubmit = async (
+    values: FormFields,
+    helpers: FormikHelpers<FormFields>,
+  ): Promise<void> => {
+    for (const divingCylinderSetId of values.divingCylinderSetIds) {
       fillEventMutation.mutate(
         {
-          cylinderSetId: divingCylinderSet,
+          cylinderSetId: divingCylinderSetId,
           gasMixture: 'EAN21',
           filledAir: true,
           description: values.additionalInformation,
@@ -66,7 +55,17 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
           storageCylinderUsageArr: [],
           compressorId: values.compressorId,
         },
-        {},
+        {
+          onSuccess: () => {
+            toast.success('Uusi täyttötapahtuma lisätty');
+            helpers.resetForm();
+          },
+          onError: () => {
+            toast.error(
+              'Uuden täyttötapahtuman luominen epäonnistui. Tarkista tiedot ja yritä uudelleen',
+            );
+          },
+        },
       );
     }
   };
@@ -77,12 +76,8 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
       <Formik
         initialValues={{
           ...EMPTY_FILLING_EVENT_BASIC_INFO,
-          compressorId: compressors[0].id ?? '',
-          fillingEventRows: [
-            {
-              ...EmptyLogbookFillingEventRow(),
-            },
-          ],
+          compressorId: compressors[0]?.id ?? '',
+          divingCylinderSetIds: [] as string[],
         }}
         validateOnBlur={false}
         validateOnChange={false}
@@ -98,7 +93,6 @@ export const NewFillingEvent: React.FC<NewFillingEventProps> = ({
             />
             <LogbookFillingTile
               errors={errors}
-              setFieldValue={setFieldValue}
               values={values}
               divingCylinderSets={divingCylinderSets}
             />

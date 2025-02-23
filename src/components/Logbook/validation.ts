@@ -1,16 +1,12 @@
 import * as yup from 'yup';
-import { FIELD_REQUIRED } from '../../lib/validationUtils';
+import { ATLEAST_ONE } from '../../lib/validationUtils';
 
 export const AIR_FILLING_EVENT_VALIDATION_SCHEMA = yup.object().shape({
   additionalInformation: yup.string().optional(),
   userConfirm: yup.boolean().isTrue(),
-  fillingEventRows: yup
+  divingCylinderSetIds: yup
     .array()
-    .of(
-      yup.object().shape({
-        divingCylinderSet: yup.string().required(FIELD_REQUIRED),
-      }),
-    )
-    .required()
-    .min(1),
+    .of(yup.string().uuid())
+    .required(ATLEAST_ONE)
+    .min(1, ATLEAST_ONE),
 });
