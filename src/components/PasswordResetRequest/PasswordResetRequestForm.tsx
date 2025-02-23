@@ -10,6 +10,7 @@ import { Turnstile } from '@marsidev/react-turnstile';
 
 type ResetFields = {
   email: string;
+  turnstileToken: string;
 };
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
@@ -33,6 +34,7 @@ export const PasswordResetRequestForm: React.FC = () => {
     async (formFields: ResetFields) => {
       mutate({
         email: formFields.email.trim(),
+        turnstileToken: formFields.turnstileToken,
       });
     },
     [mutate],

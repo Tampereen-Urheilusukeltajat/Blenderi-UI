@@ -2,6 +2,7 @@ import { postAsync } from './api';
 
 export type ResetRequestPayload = {
   email: string;
+  turnstileToken: string;
 };
 
 export type ResetRequestResponse = {
